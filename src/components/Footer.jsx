@@ -70,7 +70,7 @@ function FooterLinkColumn({ title, links, Icon }) {
           <li key={link.label} className="min-w-0">
             <Link
               to={link.href}
-              className="group flex items-center justify-between gap-[10px] font-poppins text-[14.5px] font-normal leading-[1.4] text-[#5c5866] no-underline transition-colors duration-200 ease-in-out hover:text-[#ed0055]"
+              className="group flex items-center justify-between gap-[10px] font-poppins text-[14.5px] font-normal leading-[1.4] text-[#5c5866] no-underline transition-colors duration-200 ease-in-out hover:text-[#D4145A]"
             >
               <span className="min-w-0 truncate">{link.label}</span>
               <FaChevronRight className="h-[11px] w-[11px] shrink-0 text-[#c9962f] transition-transform duration-200 ease-in-out group-hover:translate-x-[3px]" />
@@ -105,7 +105,7 @@ export default function Footer() {
               />
 
               <span className="flex flex-col pl-[3px] pt-[11px] max-[540px]:pt-[2px] max-[540px]:pl-[6px]">
-                <span className="font-playfair bg-gradient-to-r from-[#ed0055] to-[#ff7900] bg-clip-text text-[40px] font-bold leading-none text-transparent translate-y-[5px] max-[540px]:text-[26px] whitespace-nowrap">
+                <span className="font-playfair bg-gradient-to-r from-[#D4145A] to-[#FF7628] bg-clip-text text-[40px] font-bold leading-none text-transparent translate-y-[5px] max-[540px]:text-[26px] whitespace-nowrap">
                   HarEvent
                 </span>
 
@@ -143,7 +143,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-full bg-[#ed0055] text-white no-underline transition-[transform,box-shadow,background] duration-200 ease-in-out hover:-translate-y-[3px] hover:bg-[#d4145a] hover:shadow-[0_5px_12px_rgba(120,10,60,0.25)]"
+                  className="flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white no-underline transition-[transform,box-shadow,filter] duration-200 ease-in-out hover:-translate-y-[3px] hover:brightness-110 hover:shadow-[0_5px_12px_rgba(120,10,60,0.25)]"
                 >
                   <Icon className="block h-[15px] w-[15px]" />
                 </a>
@@ -156,7 +156,7 @@ export default function Footer() {
                 100% VERIFIED
               </span>
 
-              <span className="inline-flex min-h-[30px] items-center justify-center gap-[7px] rounded-[30px] bg-[#fce3ea] px-[14px] py-[6px] font-poppins text-[11.5px] font-semibold leading-[1.2] whitespace-nowrap text-[#ed0055]">
+              <span className="inline-flex min-h-[30px] items-center justify-center gap-[7px] rounded-[30px] bg-[#fce3ea] px-[14px] py-[6px] font-poppins text-[11.5px] font-semibold leading-[1.2] whitespace-nowrap text-[#D4145A]">
                 <FaMapMarkerAlt className="h-[12px] w-[12px] shrink-0" />
                 PAN INDIA
               </span>

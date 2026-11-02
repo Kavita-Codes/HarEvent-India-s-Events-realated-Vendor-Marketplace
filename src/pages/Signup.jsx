@@ -66,8 +66,8 @@ function Signup({ vendorMode: initialVendorMode = false }) {
         <div
           className={`relative hidden overflow-hidden transition-colors duration-500 lg:block lg:w-[34%] ${
             vendorMode
-              ? "bg-gradient-to-br from-[#A80F46] via-[#E60059] to-[#FF790D]"
-              : "bg-gradient-to-br from-[#D4145A] via-[#E60059] to-[#FF790D]"
+              ? "bg-gradient-to-br from-[#A80F46] to-[#FF7628]"
+              : "bg-gradient-to-br from-[#D4145A] to-[#FF7628]"
           }`}
         >
           <div className="absolute inset-0 bg-black/5" />

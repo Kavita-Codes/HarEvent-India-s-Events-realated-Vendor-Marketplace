@@ -71,7 +71,7 @@ function BlogCard({ article, index }) {
 
       {/* Body */}
       <div className="flex min-h-0 grow flex-col p-5">
-        <span className="inline-flex w-fit items-center gap-[7px] rounded-full bg-[#FFF0F5] px-[11px] py-[5px] font-poppins text-[10.5px] font-bold uppercase tracking-[0.13em] text-[#E60059] transition-colors duration-300 group-hover:bg-[#FFE3EC]">
+        <span className="inline-flex w-fit items-center gap-[7px] rounded-full bg-[#FFF0F5] px-[11px] py-[5px] font-poppins text-[10.5px] font-bold uppercase tracking-[0.13em] text-[#D4145A] transition-colors duration-300 group-hover:bg-[#FFE3EC]">
           <Icon size={12} strokeWidth={2.4} />
           {category}
         </span>
@@ -80,7 +80,7 @@ function BlogCard({ article, index }) {
           {title}
         </h3>
 
-        <span className="mt-[10px] block h-[2px] w-[34px] rounded-full bg-gradient-to-r from-[#E60059] to-[#FF790D] transition-all duration-500 ease-out group-hover:w-[62px]" />
+        <span className="mt-[10px] block h-[2px] w-[34px] rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] transition-all duration-500 ease-out group-hover:w-[62px]" />
 
         <p className="mt-[11px] line-clamp-3 font-poppins text-[13px] leading-[1.62] text-[#897A81]">
           {description}
@@ -93,7 +93,7 @@ function BlogCard({ article, index }) {
             {readTime}
           </span>
 
-          <span className="flex items-center gap-[5px] font-poppins text-[12.5px] font-bold whitespace-nowrap text-[#E60059] transition-colors duration-300 group-hover:text-[#FF790D]">
+          <span className="flex items-center gap-[5px] font-poppins text-[12.5px] font-bold whitespace-nowrap text-[#D4145A] transition-colors duration-300 group-hover:text-[#D4145A]">
             Read Article
             <ArrowRight
               size={13}
@@ -126,7 +126,7 @@ function LatestBlogs() {
           </div>
           <Link
             to="/blogs"
-            className="inline-flex h-9 w-fit shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#E60059] to-[#FF790D] px-4 !text-[12px] !font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            className="inline-flex h-9 w-fit shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-4 !text-[12px] !font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
           >
             Explore All Articles <ArrowRight size={14} />
           </Link>

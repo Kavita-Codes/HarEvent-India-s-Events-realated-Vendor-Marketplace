@@ -70,7 +70,7 @@ function Enquiry() {
               <p>Your inquiry details will be ready to share with the selected event professional.</p>
             </div>
 
-            <button type="submit" className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-[#D4145A] px-5 py-3 text-xs font-semibold text-white shadow-[0_8px_18px_rgba(212,20,90,0.25)] transition hover:-translate-y-0.5 hover:bg-[#A80F46] hover:shadow-lg">
+            <button type="submit" className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 py-3 text-xs font-semibold text-white shadow-[0_8px_18px_rgba(212,20,90,0.25)] transition hover:-translate-y-0.5 hover:brightness-105 hover:shadow-lg">
               <Send size={15} /> Submit Inquiry
             </button>
             {submitted && (

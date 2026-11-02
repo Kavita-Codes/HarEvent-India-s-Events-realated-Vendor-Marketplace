@@ -84,7 +84,7 @@ export default function HowItWorks() {
             whileInView={{ opacity: 1, scaleX: 1 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none absolute left-[10%] right-[10%] top-[4.5rem] hidden h-[2px] origin-left bg-gradient-to-r from-[#ed0055]/20 via-[#ff7900]/25 to-[#ed0055]/20 lg:block"
+            className="pointer-events-none absolute left-[10%] right-[10%] top-[4.5rem] hidden h-[2px] origin-left bg-gradient-to-r from-[#D4145A]/20 to-[#FF7628]/25 lg:block"
           />
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4">
@@ -102,24 +102,24 @@ export default function HowItWorks() {
                     delay: index * 0.1,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="group relative flex flex-col items-center rounded-2xl border border-white/90 bg-white/85 p-6 text-center shadow-[0_10px_28px_rgba(237,0,85,0.06)] backdrop-blur-md transition-[border-color,background-color,box-shadow,translate] duration-300 hover:-translate-y-2 hover:border-[#ed0055]/30 hover:bg-white hover:shadow-[0_20px_40px_rgba(237,0,85,0.15)]"
+                  className="group relative flex flex-col items-center rounded-2xl border border-white/90 bg-white/85 p-6 text-center shadow-[0_10px_28px_rgba(212,20,90,0.06)] backdrop-blur-md transition-[border-color,background-color,box-shadow,translate] duration-300 hover:-translate-y-2 hover:border-[#D4145A]/30 hover:bg-white hover:shadow-[0_20px_40px_rgba(212,20,90,0.15)]"
                 >
                   {/* Step Pill */}
-                  <span className="mb-4 inline-flex items-center gap-1 rounded-full border border-[#ed0055]/15 bg-gradient-to-r from-[#ed0055]/8 to-[#ff7900]/8 px-3 py-0.5 text-[11px] font-bold tracking-wider text-[#ed0055] transition-all duration-300 group-hover:scale-105 group-hover:bg-gradient-to-r group-hover:from-[#ed0055] group-hover:to-[#ff7900] group-hover:text-white">
+                  <span className="mb-4 inline-flex items-center gap-1 rounded-full border border-[#D4145A]/15 bg-gradient-to-r from-[#D4145A]/8 to-[#FF7628]/8 px-3 py-0.5 text-[11px] font-bold tracking-wider text-[#D4145A] transition-all duration-300 group-hover:scale-105 group-hover:bg-gradient-to-r group-from-[#D4145A] group-to-[#FF7628] group-hover:text-white">
                     STEP {step.number}
                   </span>
 
                   {/* Icon Container with glowing micro-interaction */}
                   <div className="relative mb-4 flex h-16 w-16 items-center justify-center">
                     {/* Radial hover glow */}
-                    <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-[#ed0055] to-[#ff7900] opacity-0 blur-lg transition-all duration-300 group-hover:scale-125 group-hover:opacity-40" />
+                    <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-[#D4145A] to-[#FF7628] opacity-0 blur-lg transition-all duration-300 group-hover:scale-125 group-hover:opacity-40" />
 
                     {/* Gradient icon box */}
                     <span
                       className={`relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-md transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${
                         step.isFinal
-                          ? "bg-gradient-to-br from-[#ff7900] to-[#ed0055] shadow-[#ff7900]/30"
-                          : "bg-gradient-to-br from-[#ed0055] to-[#ff7900] shadow-[#ed0055]/30"
+                          ? "bg-gradient-to-br from-[#D4145A] to-[#FF7628] shadow-[#D4145A]/30"
+                          : "bg-gradient-to-br from-[#D4145A] to-[#FF7628] shadow-[#D4145A]/30"
                       }`}
                     >
                       <Icon size={24} strokeWidth={2} />
@@ -127,7 +127,7 @@ export default function HowItWorks() {
                   </div>
 
                   {/* Step Title */}
-                  <h3 className="font-poppins text-[15px] font-bold tracking-wider text-[#24151B] transition-colors duration-200 group-hover:text-[#ed0055] sm:text-[16px]">
+                  <h3 className="font-poppins text-[15px] font-bold tracking-wider text-[#24151B] transition-colors duration-200 group-hover:text-[#D4145A] sm:text-[16px]">
                     {step.title}
                   </h3>
 
@@ -138,7 +138,7 @@ export default function HowItWorks() {
 
                   {/* Next Step Arrow Connector for Desktop */}
                   {index < steps.length - 1 && (
-                    <div className="pointer-events-none absolute -right-3.5 top-[4.5rem] z-20 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-rose-100 bg-white text-[#ff7900] shadow-sm transition-transform duration-300 group-hover:translate-x-1 lg:flex">
+                    <div className="pointer-events-none absolute -right-3.5 top-[4.5rem] z-20 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white shadow-md transition-transform duration-300 group-hover:translate-x-1 lg:flex">
                       <ChevronRight size={15} strokeWidth={2.5} />
                     </div>
                   )}

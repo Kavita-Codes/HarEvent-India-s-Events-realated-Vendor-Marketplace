@@ -1,11 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-} from "motion/react";
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import {
   Search,
   CalendarDays,
@@ -76,72 +70,6 @@ function Hero() {
   const [keywordIndex, setKeywordIndex] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-
-  /* Flashlight reveal: the dark overlay is masked away around the pointer so
-     the venue photo shows through crisp underneath. The section rect is cached
-     on enter and only re-measured once when the pointer leaves it, so every
-     pointermove stays free of forced layout reads. */
-  const prefersReducedMotion = useReducedMotion();
-  const revealX = useSpring(useMotionValue(-9999), {
-    stiffness: 140,
-    damping: 24,
-    mass: 0.5,
-  });
-  const revealY = useSpring(useMotionValue(-9999), {
-    stiffness: 140,
-    damping: 24,
-    mass: 0.5,
-  });
-  const revealRadius = useSpring(useMotionValue(0), {
-    stiffness: 120,
-    damping: 26,
-    mass: 0.6,
-  });
-  const heroBoundsRef = useRef(null);
-
-  const revealMask = useMotionTemplate`radial-gradient(circle ${revealRadius}px at ${revealX}px ${revealY}px, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.7) 76%, rgba(0,0,0,1) 100%)`;
-
-  const trackPointer = (pointerEvent) => {
-    if (prefersReducedMotion || pointerEvent.pointerType === "touch") return;
-
-    // The cursor can already be inside the hero on load, where no pointerenter
-    // fires, so the first move also opens the reveal.
-    if (revealRadius.get() === 0) revealRadius.set(240);
-
-    let bounds = heroBoundsRef.current;
-
-    if (!bounds) {
-      bounds = pointerEvent.currentTarget.getBoundingClientRect();
-      heroBoundsRef.current = bounds;
-    }
-
-    let x = pointerEvent.clientX - bounds.left;
-    let y = pointerEvent.clientY - bounds.top;
-
-    // Scroll, resize or the sticky header can move the cached box.
-    if (x < -20 || y < -20 || x > bounds.width + 20 || y > bounds.height + 20) {
-      bounds = pointerEvent.currentTarget.getBoundingClientRect();
-      heroBoundsRef.current = bounds;
-      x = pointerEvent.clientX - bounds.left;
-      y = pointerEvent.clientY - bounds.top;
-    }
-
-    revealX.set(x);
-    revealY.set(y);
-  };
-
-  const openReveal = (pointerEvent) => {
-    if (prefersReducedMotion || pointerEvent.pointerType === "touch") return;
-
-    heroBoundsRef.current = pointerEvent.currentTarget.getBoundingClientRect();
-    revealRadius.set(240);
-    trackPointer(pointerEvent);
-  };
-
-  const closeReveal = () => {
-    heroBoundsRef.current = null;
-    revealRadius.set(0);
-  };
 
   useEffect(() => {
     const word = rotatingKeywords[keywordIndex];
@@ -271,12 +199,7 @@ function Hero() {
 
   return (
     <main>
-      <section
-        onPointerEnter={openReveal}
-        onPointerMove={trackPointer}
-        onPointerLeave={closeReveal}
-        className="relative flex min-h-[640px] items-center justify-center bg-[#24151B] px-4 py-12 sm:min-h-[660px] lg:min-h-[calc(100svh-68px)]"
-      >
+      <section className="relative flex min-h-[640px] items-center justify-center bg-[#24151B] px-4 py-12 sm:min-h-[660px] lg:min-h-[calc(100svh-68px)]">
         <style>{`
           /* The venue photo settles into place right as the brand intro lifts away */
           .hero-bg {
@@ -307,18 +230,17 @@ function Hero() {
           />
         </div>
 
-        <motion.div
+        <div
           aria-hidden="true"
-          style={{ WebkitMaskImage: revealMask, maskImage: revealMask }}
           className="absolute inset-0 bg-[#000000]/60"
         />
 
         <div className="relative z-10 mx-auto w-full max-w-[1250px] text-center">
           <motion.div
             {...rise(0.1)}
-            className="inline-flex max-w-full items-center gap-2 rounded-full border border-orange-300/30 bg-black/40 px-4 py-2 font-poppins text-[10px] font-semibold uppercase tracking-wide text-[#FF8429] sm:text-[11px]"
+            className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/25 bg-black/40 px-4 py-2 font-poppins text-[10px] font-semibold uppercase tracking-wide text-[#FF7628] sm:text-[11px]"
           >
-            <span className="flex h-[15px] w-[15px] shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#FF8429] to-[#FF7628]">
+            <span className="flex h-[15px] w-[15px] shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628]">
               <Star
                 size={9}
                 strokeWidth={2.5}
@@ -337,11 +259,11 @@ function Hero() {
             <span className="block">Plan Your Perfect Event</span>
 
             <span className="mt-1 flex flex-wrap items-baseline justify-center gap-x-3 text-center sm:inline-flex sm:flex-nowrap">
-              <span className="shrink-0 bg-gradient-to-r from-[#E50059] via-[#FF4D63] to-[#FF8429] bg-clip-text text-transparent">
+              <span className="shrink-0 bg-gradient-to-r from-[#D4145A] to-[#FF7628] bg-clip-text text-transparent">
                 All in One Place..
               </span>
 
-              <span className="relative inline-block h-[1.2em] w-[290px] max-w-full overflow-visible whitespace-nowrap text-center align-baseline bg-gradient-to-r from-[#E50059] via-[#FF4D63] to-[#FF8429] bg-clip-text text-transparent sm:w-[380px] sm:text-left md:w-[480px]">
+              <span className="relative inline-block h-[1.2em] w-[290px] max-w-full overflow-visible whitespace-nowrap text-center align-baseline bg-gradient-to-r from-[#D4145A] to-[#FF7628] bg-clip-text text-transparent sm:w-[380px] sm:text-left md:w-[480px]">
                 <span className="inline-block">{typedText}</span>
 
                 <span

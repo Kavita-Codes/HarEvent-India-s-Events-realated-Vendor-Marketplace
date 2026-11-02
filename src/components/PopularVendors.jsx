@@ -83,12 +83,12 @@ function VendorCard({ vendor, index }) {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.55, delay: index * 0.08, ease: EASE_OUT }}
       whileHover={{ y: -8, transition: { duration: 0.3, ease: EASE_OUT } }}
-      className="group relative flex min-h-[430px] flex-col overflow-hidden rounded-[15px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)] transition-[border-color,box-shadow] duration-300 hover:border-[#E9A0BA] hover:shadow-[0_18px_38px_rgba(71,34,52,0.16)] sm:min-h-[445px] lg:min-h-[460px]"
+      className="group relative flex min-h-[396px] flex-col overflow-hidden rounded-[15px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)] transition-[border-color,box-shadow] duration-300 hover:border-[#E9A0BA] hover:shadow-[0_18px_38px_rgba(71,34,52,0.16)] sm:min-h-[408px] lg:min-h-[420px]"
     >
       {/* Gradient hairline that runs across the top on hover */}
-      <span className="pointer-events-none absolute left-0 top-0 z-30 h-[3px] w-0 bg-gradient-to-r from-[#E60059] via-[#FF4E6B] to-[#FF7628] transition-[width] duration-[700ms] ease-out group-hover:w-full" />
+      <span className="pointer-events-none absolute left-0 top-0 z-30 h-[3px] w-0 bg-gradient-to-r from-[#D4145A] to-[#FF7628] transition-[width] duration-[700ms] ease-out group-hover:w-full" />
 
-      <div className="relative h-[222px] shrink-0 overflow-hidden bg-gradient-to-br from-[#FFF0F5] via-[#FFF8F2] to-[#FCE4EC] sm:h-[232px] lg:h-[244px]">
+      <div className="relative h-[186px] shrink-0 overflow-hidden bg-gradient-to-br from-[#FFF0F5] via-[#FFF8F2] to-[#FCE4EC] sm:h-[196px] lg:h-[206px]">
         <img
           src={vendor.portfolioImage}
           alt={vendor.imageAlt}
@@ -102,45 +102,45 @@ function VendorCard({ vendor, index }) {
         </span>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col px-4 pb-4 pt-4 sm:px-5">
+      <div className="flex min-h-0 flex-1 flex-col px-4 pb-4 pt-3.5 sm:px-5">
         {/* Price left, location right — plain text row under the photo */}
         <div className="flex items-center justify-between gap-3">
-          <p className="flex items-baseline gap-1 text-[16px] font-bold leading-none text-[#382832]">
+          <p className="flex items-baseline gap-1 text-[15px] font-bold leading-none text-[#382832]">
             {vendor.priceFrom}
-            <span className="text-[11px] font-semibold text-[#8A7580]">
+            <span className="text-[11px] font-medium text-[#8A7580]">
               {vendor.priceNote}
             </span>
           </p>
 
-          <p className="flex shrink-0 items-center gap-1 text-[13px] font-medium text-[#8A7580]">
-            <MapPin size={14} className="shrink-0 text-[#E60059]" />
+          <p className="flex shrink-0 items-center gap-1 text-[12px] font-medium text-[#8A7580]">
+            <MapPin size={13} className="shrink-0 text-[#D4145A]" />
             {vendor.location}
           </p>
         </div>
 
-        <p className="mt-3 text-[13px] font-bold uppercase tracking-[0.6px] text-[#E60059]">
+        <p className="mt-2.5 truncate text-[11px] font-bold uppercase tracking-[0.8px] text-[#D4145A]">
           {vendor.category}
         </p>
 
-        <h3 className="mt-1.5 font-sans text-[19px] font-bold leading-6 text-[#2E2230] transition-colors duration-300 group-hover:text-[#B41049]">
+        <h3 className="mt-1 truncate text-[17px] font-bold leading-[1.3] text-[#2E2230] transition-colors duration-300 group-hover:text-[#B41049]">
           {vendor.businessName}
         </h3>
 
-        <p className="mt-2 line-clamp-2 text-[14px] leading-[1.55] text-[#7C6A74]">
+        <p className="mt-1.5 line-clamp-2 text-[13px] leading-[1.5] text-[#7C6A74]">
           {vendor.description}
         </p>
 
-        <div className="mt-auto flex gap-2.5 pt-4">
+        <div className="mt-auto flex gap-2 pt-3.5">
           <Link
             to={vendor.inquiryUrl}
-            className="inline-flex h-11 min-w-0 flex-[1.35] items-center justify-center rounded-full bg-[#E60059] px-3 text-[14px] font-bold text-white shadow-[0_8px_18px_rgba(230,0,89,0.25)] transition hover:bg-[#A80F46] active:scale-[0.97]"
+            className="inline-flex h-10 min-w-0 flex-[1.3] items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white shadow-[0_6px_14px_rgba(212,20,90,0.22)] transition hover:-translate-y-0.5 hover:brightness-105 hover:shadow-md active:scale-[0.97]"
           >
             Send Inquiry
           </Link>
 
           <Link
             to={vendor.profileUrl}
-            className="inline-flex h-11 min-w-0 flex-1 items-center justify-center rounded-full border border-[#F3DFC8] bg-[#FFF4E4] px-3 text-[14px] font-bold text-[#3A2B33] transition hover:border-[#E6C48F] hover:bg-[#FFEEDA] active:scale-[0.97]"
+            className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full border border-[#F3DFC8] bg-[#FFF4E4] px-3 text-[13px] font-semibold text-[#3A2B33] transition hover:border-[#E6C48F] hover:bg-[#FFEEDA] active:scale-[0.97]"
           >
             View Profile
           </Link>
@@ -152,8 +152,8 @@ function VendorCard({ vendor, index }) {
 
 function EmptyVendorCard({ category }) {
   return (
-    <article className="flex min-h-[336px] flex-col overflow-hidden rounded-[18px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)]">
-      <div className="flex h-[190px] items-center justify-center bg-gradient-to-br from-[#FFF0F5] via-[#FFF8F2] to-[#FCE4EC] text-[#D4145A]/50">
+    <article className="flex min-h-[396px] flex-col overflow-hidden rounded-[15px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)]">
+      <div className="flex h-[186px] shrink-0 items-center justify-center bg-gradient-to-br from-[#FFF0F5] via-[#FFF8F2] to-[#FCE4EC] text-[#D4145A]/50 sm:h-[196px] lg:h-[206px]">
         {category === "All" ? (
           <BriefcaseBusiness size={28} strokeWidth={1.5} />
         ) : (
@@ -161,33 +161,33 @@ function EmptyVendorCard({ category }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
-        <p className="text-[9px] font-bold uppercase tracking-wide text-[#D4145A]">
+      <div className="flex min-h-0 flex-1 flex-col p-4">
+        <p className="truncate text-[11px] font-bold uppercase tracking-[0.8px] text-[#D4145A]">
           {category === "All" ? "Vendor Portfolio" : category}
         </p>
 
-        <h3 className="mt-1 text-sm font-semibold text-[#382832]">
+        <h3 className="mt-1 truncate text-[15px] font-bold leading-[1.3] text-[#382832]">
           Vendor listing coming soon
         </h3>
 
-        <p className="mt-1 text-xs leading-5 text-[#8A7580]">
+        <p className="mt-1.5 line-clamp-2 text-[13px] leading-[1.5] text-[#8A7580]">
           Business details and portfolio will appear when available.
         </p>
 
-        <div className="mt-auto pt-3">
+        <div className="mt-auto pt-3.5">
           <div className="mb-3 border-t border-[#F7E8EE]" />
 
           <div className="flex gap-2">
             <Link
               to="/enquiry"
-              className="flex h-10 flex-1 items-center justify-center rounded-full bg-[#D4145A] px-2 text-center text-[10px] font-semibold text-white transition hover:bg-[#A80F46] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
+              className="inline-flex h-10 min-w-0 flex-[1.3] items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white shadow-[0_6px_14px_rgba(212,20,90,0.22)] transition hover:-translate-y-0.5 hover:brightness-105 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
             >
               Send Inquiry
             </Link>
 
             <Link
               to="/vendor-categories"
-              className="flex h-10 flex-1 items-center justify-center rounded-full border border-[#F1DDE5] bg-white px-2 text-center text-[10px] font-semibold text-[#493640] transition hover:border-[#D4145A] hover:text-[#D4145A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
+              className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full border border-[#F3DFC8] bg-[#FFF4E4] px-3 text-[13px] font-semibold text-[#3A2B33] transition hover:border-[#E6C48F] hover:bg-[#FFEEDA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
             >
               View Profile
             </Link>
@@ -245,7 +245,7 @@ export default function PopularVendors() {
                 Featured Professionals
               </p>
 
-              <h2 className="text-3xl font-semibold tracking-tight text-[#30232B] sm:text-4xl">
+              <h2 className="font-playfair text-3xl font-bold tracking-tight text-[#30232B] sm:text-4xl">
                 Popular Vendors
               </h2>
 
@@ -264,7 +264,7 @@ export default function PopularVendors() {
                     onClick={() => setActiveFilter(filter)}
                     className={`shrink-0 rounded-full border px-4 py-2 text-[12px] font-semibold transition ${
                       activeFilter === filter
-                        ? "border-[#D4145A] bg-[#D4145A] text-white"
+                        ? "border-transparent bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white shadow-[0_8px_18px_rgba(212,20,90,0.25)]"
                         : "border-[#F1DDE5] bg-white text-[#78646E] hover:border-[#D4145A] hover:text-[#D4145A]"
                     }`}
                   >

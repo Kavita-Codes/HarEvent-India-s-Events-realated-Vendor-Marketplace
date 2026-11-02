@@ -189,12 +189,12 @@ export default function WhyChooseHarEvent() {
           padding: 2px;
           background: conic-gradient(
             from var(--why-angle),
-            rgba(237, 8, 112, 0) 0deg,
-            rgba(237, 8, 112, 0.95) 45deg,
-            rgba(255, 121, 0, 0.95) 130deg,
+            rgba(212,20,90, 0) 0deg,
+            rgba(212,20,90, 0.95) 45deg,
+            rgba(255,118,40, 0.95) 130deg,
             rgba(255, 200, 140, 0.4) 200deg,
-            rgba(237, 8, 112, 0) 290deg,
-            rgba(237, 8, 112, 0) 360deg
+            rgba(212,20,90, 0) 290deg,
+            rgba(212,20,90, 0) 360deg
           );
           -webkit-mask:
             linear-gradient(#000, #000) content-box,
@@ -215,8 +215,8 @@ export default function WhyChooseHarEvent() {
 
         .why-grid-lines {
           background-image:
-            linear-gradient(to right, rgba(237, 8, 112, 0.055) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(237, 8, 112, 0.055) 1px, transparent 1px);
+            linear-gradient(to right, rgba(212,20,90, 0.055) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(212,20,90, 0.055) 1px, transparent 1px);
           background-size: 46px 46px;
           -webkit-mask-image: radial-gradient(80% 60% at 50% 45%, #000, transparent 75%);
           mask-image: radial-gradient(80% 60% at 50% 45%, #000, transparent 75%);
@@ -231,8 +231,8 @@ export default function WhyChooseHarEvent() {
 
       {/* Ambient backdrop */}
       <div className="why-grid-lines pointer-events-none absolute inset-0 -z-10" />
-      <div className="pointer-events-none absolute -left-24 top-10 -z-10 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(237,8,112,0.14),transparent_70%)]" />
-      <div className="pointer-events-none absolute -right-20 bottom-0 -z-10 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(255,121,0,0.16),transparent_70%)]" />
+      <div className="pointer-events-none absolute -left-24 top-10 -z-10 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(212,20,90,0.14),transparent_70%)]" />
+      <div className="pointer-events-none absolute -right-20 bottom-0 -z-10 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(255,118,40,0.16),transparent_70%)]" />
 
       {/* Section heading */}
       <motion.div
@@ -248,10 +248,10 @@ export default function WhyChooseHarEvent() {
             whileInView={{ scaleX: 1, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
-            className="h-[2px] w-[30px] origin-left rounded-full bg-[#ed0870]"
+            className="h-[2px] w-[30px] origin-left rounded-full bg-[#D4145A]"
           />
 
-          <p className="text-[13px] font-bold uppercase tracking-[2px] text-[#ed0870]">
+          <p className="text-[13px] font-bold uppercase tracking-[2px] text-[#D4145A]">
             Your Event, Your Way
           </p>
 
@@ -260,7 +260,7 @@ export default function WhyChooseHarEvent() {
             whileInView={{ scaleX: 1, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
-            className="h-[2px] w-[30px] origin-right rounded-full bg-[#ed0870]"
+            className="h-[2px] w-[30px] origin-right rounded-full bg-[#D4145A]"
           />
         </div>
 
@@ -313,22 +313,22 @@ export default function WhyChooseHarEvent() {
                 }}
                 whileHover={{ x: 5, transition: { duration: 0.25, ease: "easeOut" } }}
                 whileTap={{ scale: 0.985, transition: { duration: 0.12 } }}
-                className="group relative isolate flex w-full cursor-pointer items-center gap-4 rounded-[18px] px-4 py-3.5 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#ed0870] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fef0e1] sm:px-5"
+                className="group relative isolate flex w-full cursor-pointer items-center gap-4 rounded-[18px] px-4 py-3.5 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#D4145A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fef0e1] sm:px-5"
               >
                 {/* Sliding glass background - shared layout animation */}
                 {selected && (
                   <motion.span
                     layoutId="why-active-row"
                     transition={{ type: "spring", stiffness: 340, damping: 32 }}
-                    className="absolute inset-0 -z-10 rounded-[18px] bg-white shadow-[0_14px_34px_rgba(237,8,112,0.13)] ring-1 ring-[#FFD9C6]"
+                    className="absolute inset-0 -z-10 rounded-[18px] bg-white shadow-[0_14px_34px_rgba(212,20,90,0.13)] ring-1 ring-[#FFD9C6]"
                   >
-                    <span className="absolute left-0 top-0 h-full w-[3px] rounded-l-[18px] bg-gradient-to-b from-[#ed0870] to-[#ff7900]" />
+                    <span className="absolute left-0 top-0 h-full w-[3px] rounded-l-[18px] bg-gradient-to-b from-[#D4145A] to-[#FF7628]" />
                   </motion.span>
                 )}
 
                 <span
                   className={`font-playfair text-[26px] leading-none transition-colors duration-300 ${
-                    selected ? "text-[#ed0870]" : "text-[#eaa9a2]"
+                    selected ? "text-[#D4145A]" : "text-[#eaa9a2]"
                   }`}
                 >
                   {String(index + 1).padStart(2, "0")}
@@ -347,11 +347,11 @@ export default function WhyChooseHarEvent() {
                   <span className="mt-2.5 block h-[3px] w-full overflow-hidden rounded-full bg-[#f7ddcd]">
                     {selected &&
                       (reduced ? (
-                        <span className="block h-full w-full rounded-full bg-gradient-to-r from-[#ed0870] to-[#ff7900]" />
+                        <span className="block h-full w-full rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628]" />
                       ) : (
                         <motion.span
                           style={{ width: barWidth }}
-                          className="block h-full rounded-full bg-gradient-to-r from-[#ed0870] to-[#ff7900]"
+                          className="block h-full rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628]"
                         />
                       ))}
                   </span>
@@ -362,7 +362,7 @@ export default function WhyChooseHarEvent() {
                   strokeWidth={2.3}
                   className={`shrink-0 transition-all duration-300 ease-out ${
                     selected
-                      ? "translate-x-0 text-[#ed0870] opacity-100"
+                      ? "translate-x-0 text-[#D4145A] opacity-100"
                       : "-translate-x-2 text-[#c9a79c] opacity-0 group-hover:translate-x-0 group-hover:opacity-60"
                   }`}
                 />
@@ -418,7 +418,7 @@ export default function WhyChooseHarEvent() {
                   animate={{ opacity: 1, scale: 1, rotate: 0 }}
                   exit={reduced ? undefined : { opacity: 0, scale: 1.1 }}
                   transition={{ duration: 0.5, ease: EASE_OUT }}
-                  className="absolute -right-3 -top-6 font-playfair text-[130px] font-bold leading-none text-[#ed0870]/[0.07] sm:text-[160px]"
+                  className="absolute -right-3 -top-6 font-playfair text-[130px] font-bold leading-none text-[#D4145A]/[0.07] sm:text-[160px]"
                 >
                   {String(active + 1).padStart(2, "0")}
                 </motion.span>
@@ -439,7 +439,7 @@ export default function WhyChooseHarEvent() {
                 >
                   <motion.span
                     variants={lineVariants}
-                    className="flex h-[64px] w-[64px] items-center justify-center rounded-[20px] bg-gradient-to-br from-[#ed0870] to-[#ff7900] text-white shadow-[0_16px_32px_rgba(237,8,112,0.3)]"
+                    className="flex h-[64px] w-[64px] items-center justify-center rounded-[20px] bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white shadow-[0_16px_32px_rgba(212,20,90,0.3)]"
                   >
                     <Icon size={30} strokeWidth={1.7} />
                   </motion.span>
@@ -453,7 +453,7 @@ export default function WhyChooseHarEvent() {
 
                   <motion.span
                     variants={lineVariants}
-                    className="mt-4 block h-[3px] w-[64px] rounded-full bg-gradient-to-r from-[#ed0870] to-[#ff7900]"
+                    className="mt-4 block h-[3px] w-[64px] rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628]"
                   />
 
                   <motion.p
@@ -477,7 +477,7 @@ export default function WhyChooseHarEvent() {
                     aria-label={`Show ${feature.title}`}
                     className={`h-[7px] rounded-full transition-all duration-500 ease-out ${
                       active === index
-                        ? "w-9 bg-gradient-to-r from-[#ed0870] to-[#ff7900]"
+                        ? "w-9 bg-gradient-to-r from-[#D4145A] to-[#FF7628]"
                         : "w-[7px] bg-[#e9c6b4] hover:w-4 hover:bg-[#d99f88]"
                     }`}
                   />
@@ -495,7 +495,7 @@ export default function WhyChooseHarEvent() {
                   type="button"
                   onClick={() => setPaused((value) => !value)}
                   aria-label={paused ? "Resume auto play" : "Pause auto play"}
-                  className="ml-auto flex h-9 w-9 items-center justify-center rounded-full border border-[#F3D6C4] bg-white/80 text-[#ed0870] transition-all duration-300 hover:border-[#ed0870]/40 hover:bg-white hover:shadow-[0_8px_18px_rgba(237,8,112,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ed0870]"
+                  className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white shadow-[0_8px_18px_rgba(212,20,90,0.18)] transition-[transform,box-shadow,filter] duration-300 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_10px_22px_rgba(212,20,90,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4145A]"
                 >
                   {paused ? (
                     <Play size={14} strokeWidth={2.4} className="translate-x-[1px]" />

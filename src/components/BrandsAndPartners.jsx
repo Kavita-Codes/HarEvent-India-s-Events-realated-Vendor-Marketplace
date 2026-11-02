@@ -131,18 +131,14 @@ function BrandsAndPartners() {
     >
       {/* Popular Badge */}
       {popular && (
-        <span className="absolute -top-[9px] right-2 flex h-5 items-center gap-1 rounded-full bg-[#E60059] px-2.5 font-poppins text-[11px] font-semibold text-white">
+        <span className="absolute -top-[9px] right-2 flex h-5 items-center gap-1 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-2.5 font-poppins text-[11px] font-semibold text-white shadow-[0_4px_10px_rgba(212,20,90,0.28)]">
           <Star size={11} fill="currentColor" />
           Popular
         </span>
       )}
 
       {/* Icon */}
-      <span
-        className={`mb-3 flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-[15px] text-white transition-transform duration-300 group-hover:scale-110 ${
-          color === "pink" ? "bg-[#E60059]" : "bg-[#FF790D]"
-        }`}
-      >
+      <span className="mb-3 flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-[15px] bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white transition-transform duration-300 group-hover:scale-110">
         {name === "Royal Florist" ? (
           <LotusIcon size={35} />
         ) : name === "After Weddings" ? (
@@ -163,8 +159,8 @@ function BrandsAndPartners() {
           popular
             ? "bg-[#F9C9DB] text-[#D4145A]"
             : color === "pink"
-              ? "bg-[#FFF0F5] text-[#E60059]"
-              : "bg-[#FFF3E8] text-[#F07816]"
+              ? "bg-[#FFF0F5] text-[#D4145A]"
+              : "bg-[#FFF3E8] text-[#D4145A]"
         }`}
       >
         {category}
@@ -182,7 +178,7 @@ function BrandsAndPartners() {
         >
           {/* Left Content */}
           <div className="min-w-0">
-            <p className="mb-[10px] flex items-center gap-[9px] font-poppins text-[13px] font-bold uppercase tracking-[1.25px] text-[#E60059]">
+            <p className="mb-[10px] flex items-center gap-[9px] font-poppins text-[13px] font-bold uppercase tracking-[1.25px] text-[#D4145A]">
               <span className="h-[2px] w-[30px] bg-[#fef0e1]" />
               Network Excellence
             </p>
@@ -198,7 +194,7 @@ function BrandsAndPartners() {
           {/* View All Partners */}
           <Link
             to="/vendor-categories"
-            className="group inline-flex h-[38px] w-fit shrink-0 items-center justify-center gap-2 self-start rounded-full bg-gradient-to-r from-[#E60059] to-[#FF790D] px-5 font-poppins text-[12px] font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:self-auto"
+            className="group inline-flex h-[38px] w-fit shrink-0 items-center justify-center gap-2 self-start rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 font-poppins text-[12px] font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:self-auto"
           >
             View all partners
             <ArrowRight

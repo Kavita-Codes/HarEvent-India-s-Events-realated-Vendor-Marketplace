@@ -466,14 +466,14 @@ function Navbar({ onLoginClick }) {
     currentMegaData?.tabs[0];
 
   const loginClassBase =
-    "btn-sheen btn-glow btn-lift group inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#ed0055] to-[#ff7900] px-[18px] py-2 text-[14px] font-semibold font-poppins text-white hover:brightness-105";
+    "btn-sheen btn-glow btn-lift group inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-[18px] py-2 text-[14px] font-semibold font-poppins text-white hover:brightness-105";
 
   /* The motion pill animates its own tap, so it opts out of the global CSS
      press (`press-off`) to avoid stacking two shrinks on top of each other. */
   const loginClass = `press-off ${loginClassBase}`;
 
   const mobileLoginClass =
-    "btn-sheen btn-glow btn-lift group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#ed0055] to-[#ff7900] px-3 py-3 text-center text-sm font-semibold font-poppins text-white hover:brightness-105";
+    "btn-sheen btn-glow btn-lift group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 py-3 text-center text-sm font-semibold font-poppins text-white hover:brightness-105";
 
   const loginSpring = {
     type: "spring",
@@ -522,7 +522,7 @@ function Navbar({ onLoginClick }) {
             className="h-17 w-17 object-contain"
           />
 
-          <span className="font-playfair bg-gradient-to-r from-[#ed0055] to-[#ff7900] bg-clip-text text-[28px] font-bold leading-none text-transparent">
+          <span className="font-playfair bg-gradient-to-r from-[#D4145A] to-[#FF7628] bg-clip-text text-[28px] font-bold leading-none text-transparent">
             HarEvent
           </span>
         </Link>
@@ -549,8 +549,8 @@ function Navbar({ onLoginClick }) {
                     className={({ isActive }) =>
                       `flex items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-2 text-[16px] font-semibold transition-colors ${
                         isActive || isMegaActive
-                          ? "text-[#ed0055]"
-                          : "text-[#51434B] hover:text-[#ed0055]"
+                          ? "text-[#D4145A]"
+                          : "text-[#51434B] hover:text-[#D4145A]"
                       }`
                     }
                   >
@@ -560,7 +560,7 @@ function Navbar({ onLoginClick }) {
                       size={14}
                       className={`transition-transform duration-200 ${
                         isMegaActive
-                          ? "rotate-180 text-[#ed0055]"
+                          ? "rotate-180 text-[#D4145A]"
                           : "text-[#7d6f76]"
                       }`}
                     />
@@ -578,8 +578,8 @@ function Navbar({ onLoginClick }) {
                 className={({ isActive }) =>
                   `whitespace-nowrap rounded-md px-2.5 py-2 text-[16px] font-semibold transition-colors ${
                     isActive
-                      ? "text-[#ed0055]"
-                      : "text-[#51434B] hover:text-[#ed0055]"
+                      ? "text-[#D4145A]"
+                      : "text-[#51434B] hover:text-[#D4145A]"
                   }`
                 }
               >
@@ -594,7 +594,7 @@ function Navbar({ onLoginClick }) {
           {/* Search */}
           <form
             onSubmit={handleSearch}
-            className="flex h-9 w-[220px] items-center gap-2 rounded-full border border-[#F0DDE5] bg-[#fef0e1] px-3 focus-within:border-[#ed0055] 2xl:w-[240px]"
+            className="flex h-9 w-[220px] items-center gap-2 rounded-full border border-[#F0DDE5] bg-[#fef0e1] px-3 focus-within:border-[#D4145A] 2xl:w-[240px]"
           >
             <Search size={18} className="shrink-0 text-[#907D87]" />
 
@@ -631,7 +631,7 @@ function Navbar({ onLoginClick }) {
           onClick={() => setOpen(!open)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#F0DDE5] text-[#ed0055] xl:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#F0DDE5] text-[#D4145A] xl:hidden"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -675,8 +675,8 @@ function Navbar({ onLoginClick }) {
                     }}
                     className={`relative cursor-pointer whitespace-nowrap px-5 py-3.5 text-[14px] font-semibold transition-colors ${
                       isActive
-                        ? "text-[#ed0055]"
-                        : "text-[#584852] hover:text-[#ed0055]"
+                        ? "text-[#D4145A]"
+                        : "text-[#584852] hover:text-[#D4145A]"
                     }`}
                   >
                     <span>{tab.name}</span>
@@ -689,7 +689,7 @@ function Navbar({ onLoginClick }) {
                           stiffness: 420,
                           damping: 34,
                         }}
-                        className="absolute bottom-0 left-0 right-0 h-[3px] rounded-t-full bg-gradient-to-r from-[#ed0055] to-[#ff7900]"
+                        className="absolute bottom-0 left-0 right-0 h-[3px] rounded-t-full bg-gradient-to-r from-[#D4145A] to-[#FF7628]"
                       />
                     )}
                   </button>
@@ -705,8 +705,8 @@ function Navbar({ onLoginClick }) {
                     key={col.title || cIdx}
                     className="flex flex-col"
                   >
-                    <h4 className="mb-3.5 flex items-center gap-1.5 text-[16px] font-bold tracking-tight text-[#ed0055]">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#ed0055]" />
+                    <h4 className="mb-3.5 flex items-center gap-1.5 text-[16px] font-bold tracking-tight text-[#D4145A]">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#D4145A]" />
                       <span>{col.title}</span>
                     </h4>
 
@@ -716,11 +716,11 @@ function Navbar({ onLoginClick }) {
                           <Link
                             to={`/search?query=${encodeURIComponent(item)}`}
                             onClick={closeMenu}
-                            className="group flex items-center gap-1.5 text-[15px] text-[#4d3e47] transition-all duration-150 hover:translate-x-1 hover:text-[#ed0055]"
+                            className="group flex items-center gap-1.5 text-[15px] text-[#4d3e47] transition-all duration-150 hover:translate-x-1 hover:text-[#D4145A]"
                           >
                             <ChevronRight
                               size={13}
-                              className="text-gray-300 transition-colors group-hover:text-[#ed0055]"
+                              className="text-gray-300 transition-colors group-hover:text-[#D4145A]"
                             />
                             <span>{item}</span>
                           </Link>
@@ -734,7 +734,7 @@ function Navbar({ onLoginClick }) {
               {/* Bottom Quick Bar inside Mega Menu */}
               <div className="mt-8 flex items-center justify-between border-t border-rose-100/70 pt-4">
                 <div className="flex items-center gap-2 text-[12px] text-[#7a6c75]">
-                  <Sparkles size={14} className="text-[#ff7900]" />
+                  <Sparkles size={14} className="text-[#D4145A]" />
                   <span>
                     Discover 1000+ verified professionals across India
                   </span>
@@ -743,7 +743,7 @@ function Navbar({ onLoginClick }) {
                 <Link
                   to={currentMegaData.path}
                   onClick={closeMenu}
-                  className="group inline-flex items-center gap-1.5 text-[12px] font-bold text-[#ed0055] transition hover:text-[#ff7900]"
+                  className="group inline-flex items-center gap-1.5 text-[12px] font-bold text-[#D4145A] transition hover:text-[#D4145A]"
                 >
                   <span>View all {currentMegaData.label}</span>
 
@@ -766,7 +766,7 @@ function Navbar({ onLoginClick }) {
             onSubmit={handleSearch}
             className="mb-4 flex h-11 items-center gap-2 rounded-full border border-[#F0DDE5] bg-[#fef0e1] px-3"
           >
-            <Search size={17} className="text-[#ed0055]" />
+            <Search size={17} className="text-[#D4145A]" />
 
             <input
               type="search"
@@ -789,7 +789,7 @@ function Navbar({ onLoginClick }) {
               className={({ isActive }) =>
                 `rounded-lg px-4 py-2.5 text-[16px] font-medium ${
                   isActive
-                    ? "text-[#ed0055]"
+                    ? "text-[#D4145A]"
                     : "text-[#51434B] hover:bg-[#FFF7FA]"
                 }`
               }
@@ -803,7 +803,7 @@ function Navbar({ onLoginClick }) {
               className={({ isActive }) =>
                 `rounded-lg px-4 py-2.5 text-[16px] font-medium ${
                   isActive
-                    ? "text-[#ed0055]"
+                    ? "text-[#D4145A]"
                     : "text-[#51434B] hover:bg-[#FFF7FA]"
                 }`
               }
@@ -816,7 +816,7 @@ function Navbar({ onLoginClick }) {
               <button
                 type="button"
                 onClick={() => setMobileEventOpen(!mobileEventOpen)}
-                className="flex w-full items-center justify-between px-2 py-1.5 text-left text-[14px] font-semibold text-[#ed0055]"
+                className="flex w-full items-center justify-between px-2 py-1.5 text-left text-[14px] font-semibold text-[#D4145A]"
               >
                 <span>Event Category</span>
 
@@ -832,7 +832,7 @@ function Navbar({ onLoginClick }) {
                 <div className="mt-2 flex flex-col gap-3 border-t border-rose-100/50 pl-3 pr-2 pt-2">
                   {EVENT_MEGA_MENU.tabs.map((tab) => (
                     <div key={tab.id}>
-                      <p className="text-[12px] font-bold uppercase tracking-wide text-[#ff7900]">
+                      <p className="text-[12px] font-bold uppercase tracking-wide text-[#D4145A]">
                         {tab.name}
                       </p>
 
@@ -845,7 +845,7 @@ function Navbar({ onLoginClick }) {
                               key={item}
                               to={`/search?query=${encodeURIComponent(item)}`}
                               onClick={closeMenu}
-                              className="rounded-md border border-rose-100 bg-white px-2 py-1 text-[11px] text-[#4d3e47] hover:text-[#ed0055]"
+                              className="rounded-md border border-rose-100 bg-white px-2 py-1 text-[11px] text-[#4d3e47] hover:text-[#D4145A]"
                             >
                               {item}
                             </Link>
@@ -857,7 +857,7 @@ function Navbar({ onLoginClick }) {
                   <Link
                     to="/event-categories"
                     onClick={closeMenu}
-                    className="inline-flex items-center gap-1 pt-1 text-[12px] font-bold text-[#ed0055]"
+                    className="inline-flex items-center gap-1 pt-1 text-[12px] font-bold text-[#D4145A]"
                   >
                     <span>View all event categories →</span>
                   </Link>
@@ -870,7 +870,7 @@ function Navbar({ onLoginClick }) {
               <button
                 type="button"
                 onClick={() => setMobileVendorOpen(!mobileVendorOpen)}
-                className="flex w-full items-center justify-between px-2 py-1.5 text-left text-[14px] font-semibold text-[#ed0055]"
+                className="flex w-full items-center justify-between px-2 py-1.5 text-left text-[14px] font-semibold text-[#D4145A]"
               >
                 <span>Vendor Category</span>
 
@@ -886,7 +886,7 @@ function Navbar({ onLoginClick }) {
                 <div className="mt-2 flex flex-col gap-3 border-t border-rose-100/50 pl-3 pr-2 pt-2">
                   {VENDOR_MEGA_MENU.tabs.map((tab) => (
                     <div key={tab.id}>
-                      <p className="text-[12px] font-bold uppercase tracking-wide text-[#ff7900]">
+                      <p className="text-[12px] font-bold uppercase tracking-wide text-[#D4145A]">
                         {tab.name}
                       </p>
 
@@ -899,7 +899,7 @@ function Navbar({ onLoginClick }) {
                               key={item}
                               to={`/search?query=${encodeURIComponent(item)}`}
                               onClick={closeMenu}
-                              className="rounded-md border border-rose-100 bg-white px-2 py-1 text-[11px] text-[#4d3e47] hover:text-[#ed0055]"
+                              className="rounded-md border border-rose-100 bg-white px-2 py-1 text-[11px] text-[#4d3e47] hover:text-[#D4145A]"
                             >
                               {item}
                             </Link>
@@ -911,7 +911,7 @@ function Navbar({ onLoginClick }) {
                   <Link
                     to="/vendor-categories"
                     onClick={closeMenu}
-                    className="inline-flex items-center gap-1 pt-1 text-[12px] font-bold text-[#ed0055]"
+                    className="inline-flex items-center gap-1 pt-1 text-[12px] font-bold text-[#D4145A]"
                   >
                     <span>View all vendor categories →</span>
                   </Link>
