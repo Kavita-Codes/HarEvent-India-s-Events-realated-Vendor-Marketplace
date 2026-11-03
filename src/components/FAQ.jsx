@@ -44,13 +44,13 @@ function FAQ() {
           <span className="animate-float-soft mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#D4145A] shadow-sm ring-1 ring-[#F5DCE6]">
             <CircleHelp size={23} />
           </span>
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-[#D4145A]">
+          <p className="mb-2 text-[13px] font-bold uppercase tracking-[1.5px] text-[#D4145A]">
             Need a Little Help?
           </p>
-          <h2 className="text-3xl font-semibold tracking-tight text-[#30232B] sm:text-4xl">
+          <h2 className="text-[36px] font-semibold leading-tight tracking-tight text-[#30232B]">
             Frequently Asked Questions
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-[#8A7580]">
+          <p className="mx-auto mt-3 max-w-xl text-[16px] leading-6 text-[#8A7580]">
             Helpful answers for planning your event and discovering the right professionals.
           </p>
         </Reveal>

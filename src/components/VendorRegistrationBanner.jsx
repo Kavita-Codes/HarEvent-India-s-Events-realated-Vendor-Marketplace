@@ -8,7 +8,7 @@ function VendorRegistrationBanner({
   onVendorRegisterClick,
 }) {
   return (
-    <section className="px-5 py-10 sm:px-8 lg:px-12">
+    <section className="px-5 py-6 sm:px-8 lg:px-12">
       <Reveal
         className="mx-auto max-w-[1440px] overflow-hidden rounded-3xl bg-cover bg-center bg-no-repeat px-6 py-10 text-white sm:px-10 lg:flex lg:items-center lg:justify-between lg:px-14 lg:py-12"
         style={{
@@ -30,20 +30,20 @@ function VendorRegistrationBanner({
           y={18}
           duration={0.55}
         >
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-white/80">
+          <p className="mb-2 text-[13px] font-bold uppercase tracking-[1.5px] text-white/80">
             Grow Your Event Business
           </p>
 
-          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h2 className="text-[36px] font-semibold leading-tight tracking-tight">
             Are You an Event Professional?
           </h2>
 
-          <p className="mt-3 max-w-xl text-sm leading-6 text-white/90">
+          <p className="mt-3 max-w-xl text-[14px] leading-6 text-white/90">
             Showcase your services, connect with potential customers, and grow
             your business with HarEvent.
           </p>
 
-          <p className="mt-2 max-w-xl text-sm leading-6 text-white/80">
+          <p className="mt-2 max-w-xl text-[14px] leading-6 text-white/80">
             Make your work discoverable to people looking for event
             professionals and services.
           </p>

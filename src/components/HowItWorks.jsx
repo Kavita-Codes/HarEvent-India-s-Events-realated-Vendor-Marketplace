@@ -65,11 +65,11 @@ export default function HowItWorks() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center"
         >
-          <h2 className="font-playfair text-[30px] font-bold tracking-tight text-[#24151B] sm:text-[36px] lg:text-[42px]">
+          <h2 className="font-playfair text-[36px] font-bold leading-tight tracking-tight text-[#24151B]">
             How HarEvent Works
           </h2>
 
-          <p className="mx-auto mt-2 max-w-2xl text-[14px] leading-relaxed text-[#776c74] sm:text-[15px]">
+          <p className="mx-auto mt-2 max-w-2xl text-[16px] leading-relaxed text-[#776c74]">
             Planning your dream celebration starts with the right connections.
             Discover, compare, and book trusted professionals in 5 simple
             steps.

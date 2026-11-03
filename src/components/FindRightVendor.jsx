@@ -255,12 +255,12 @@ function FindRightVendor() {
         {/* Section Heading */}
         <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="mb-1 flex items-center gap-2 font-poppins text-[12px] font-bold uppercase tracking-[1.2px] text-[#D4145A]">
+            <p className="mb-1 flex items-center gap-2 font-poppins text-[13px] font-bold uppercase tracking-[1.2px] text-[#D4145A]">
               <span className="h-[2px] w-6 bg-gradient-to-r from-[#D4145A] to-[#FF7628]" />
               Curated Specialists
             </p>
 
-            <h2 className="font-playfair text-3xl font-bold tracking-tight text-[#30232B] sm:text-4xl">
+            <h2 className="font-playfair text-[36px] font-bold leading-tight tracking-tight text-[#30232B]">
               Find the Right Vendor
             </h2>
 

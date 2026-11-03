@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Heart,
   Cake,
@@ -54,121 +53,47 @@ const events = [
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
-function EventRow({
-  event,
-  index,
-  dimmed,
-  reduced,
-  onActivate,
-  onDeactivate,
-  navigate,
-}) {
+function EventCapsule({ event, index, reduced }) {
   const Icon = event.icon;
-  const number = String(index + 1).padStart(2, "0");
-  /* Each visual column restarts its cascade, so both columns fill in step */
-  const delay = (index % 6) * 0.07;
+  const delay = index * 0.055;
 
   return (
     <motion.div
-      /* The wrapper owns the focus dim so it never fights the row entrance */
-      animate={{ opacity: dimmed ? 0.4 : 1 }}
-      transition={{ duration: 0.4, ease: EASE_OUT }}
+      initial={reduced ? false : { opacity: 0, y: 26, scale: 0.94 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, delay, ease: EASE_OUT }}
+      className="h-full"
     >
-      <motion.button
-        type="button"
-        onClick={() => navigate(event.path)}
-        onMouseEnter={() => onActivate(index)}
-        onMouseLeave={onDeactivate}
-        onFocus={() => onActivate(index)}
-        onBlur={onDeactivate}
-        initial={reduced ? false : { opacity: 0, y: 18 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.45, delay, ease: EASE_OUT }}
-        whileTap={{ opacity: 0.75 }}
-        className="group relative flex w-full items-center gap-3 overflow-hidden py-[16px] pl-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#D4145A] focus-visible:ring-offset-2 sm:gap-4"
+      <Link
+        to={event.path}
+        className="group relative flex h-full items-center gap-3 overflow-hidden rounded-full border border-[#F1DDE5] bg-white px-3.5 py-3 no-underline shadow-[0_2px_10px_rgba(71,34,52,0.04)] outline-none transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-[#E9A0BA] hover:shadow-[0_14px_30px_rgba(71,34,52,0.12)] focus-visible:ring-2 focus-visible:ring-[#D4145A] focus-visible:ring-offset-2 active:translate-y-0 sm:gap-3.5 sm:px-4"
       >
-        {/* Highlighter wash: wipes in from the left, no box around the row */}
-        <span className="pointer-events-none absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4145A]/[0.07] via-[#FF7628]/[0.05] to-transparent transition-transform duration-500 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100" />
+        {/* Soft gradient wash fades in behind the pill — no shapes, no circles */}
+        <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#D4145A]/[0.08] via-[#FF7628]/[0.05] to-transparent opacity-0 transition-opacity duration-400 ease-out group-hover:opacity-100 group-focus-visible:opacity-100" />
 
-        <span className="w-[34px] shrink-0 font-playfair text-[17px] font-semibold text-[#C9AEBB] transition-colors duration-300 group-hover:text-[#D4145A]">
-          {number}
+        <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-[11px] bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white shadow-[0_4px_10px_rgba(71,34,52,0.14)] transition-transform duration-300 ease-out group-hover:-rotate-6 group-hover:scale-105">
+          <Icon size={16.5} strokeWidth={2.1} />
         </span>
 
-        <Icon
-          strokeWidth={1.9}
-          className="h-[19px] w-[19px] shrink-0 text-[#B08A9C] transition-[color,transform] duration-[400ms] ease-out group-hover:-rotate-6 group-hover:scale-110 group-hover:text-[#D4145A]"
-        />
-
-        <span className="min-w-0 flex-1 truncate text-[16px] font-semibold leading-tight text-[#2E2230] transition-[color,transform] duration-[400ms] ease-out group-hover:translate-x-1.5 group-hover:text-[#D4145A] sm:text-[17px]">
+        <span className="relative min-w-0 flex-1 truncate text-[14.5px] font-semibold leading-tight text-[#2E2230] transition-colors duration-300 group-hover:text-[#D4145A] sm:text-[15px]">
           {event.title}
         </span>
 
-        <ArrowRight className="h-[18px] w-[18px] shrink-0 -translate-x-1.5 text-[#D4145A] opacity-0 transition-[opacity,transform] duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 max-sm:translate-x-0 max-sm:opacity-100" />
-
-        {/* Hairline draws itself left to right as the row lands */}
-        <motion.span
-          aria-hidden="true"
-          initial={reduced ? false : { scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.75, delay, ease: EASE_OUT }}
-          className="pointer-events-none absolute bottom-0 left-0 h-px w-full origin-left bg-[#F0E1E8]"
+        <ArrowRight
+          size={15}
+          className="relative shrink-0 -translate-x-1.5 text-[#D4145A] opacity-0 transition-[opacity,transform] duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 max-sm:translate-x-0 max-sm:opacity-100"
         />
-
-        {/* Gradient rule grows over it on hover */}
-        <span className="pointer-events-none absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 bg-gradient-to-r from-[#D4145A] to-[#FF7628] transition-transform duration-[550ms] ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100" />
-      </motion.button>
+      </Link>
     </motion.div>
   );
 }
 
 export default function Events() {
-  const navigate = useNavigate();
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
-  const [active, setActive] = useState(null);
-
-  const handleLeave = () => {
-    setActive(null);
-  };
 
   return (
-    <section
-      onMouseLeave={handleLeave}
-      className="relative isolate w-full overflow-hidden bg-white px-4 py-12 font-poppins sm:px-6 sm:py-14 lg:px-8 lg:py-16 motion-reduce:[&_*]:transition-none"
-    >
-      {/* Ambient brand washes, counter-drifting so the section never sits still */}
-      <motion.span
-        aria-hidden="true"
-        initial={{ opacity: 0 }}
-        animate={reduced ? { opacity: 1 } : { opacity: 1, x: [0, 26, 0], y: [0, -18, 0] }}
-        transition={
-          reduced
-            ? { duration: 0 }
-            : {
-                opacity: { duration: 1 },
-                x: { duration: 9, repeat: Infinity, ease: "easeInOut" },
-                y: { duration: 7, repeat: Infinity, ease: "easeInOut" },
-              }
-        }
-        className="pointer-events-none absolute -left-36 top-10 -z-10 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(212,20,90,0.09),transparent_70%)]"
-      />
-      <motion.span
-        aria-hidden="true"
-        initial={{ opacity: 0 }}
-        animate={reduced ? { opacity: 1 } : { opacity: 1, x: [0, -22, 0], y: [0, 20, 0] }}
-        transition={
-          reduced
-            ? { duration: 0 }
-            : {
-                opacity: { duration: 1.2 },
-                x: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-                y: { duration: 11, repeat: Infinity, ease: "easeInOut" },
-              }
-        }
-        className="pointer-events-none absolute -right-32 bottom-0 -z-10 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(255,118,40,0.11),transparent_70%)]"
-      />
-
+    <section className="relative isolate w-full overflow-hidden bg-white px-4 py-12 font-poppins sm:px-6 sm:py-14 lg:px-8 lg:py-16 motion-reduce:[&_*]:transition-none">
       <div className="mx-auto w-full max-w-[1440px]">
         <header className="mb-10 text-center sm:mb-12">
           <motion.div
@@ -205,35 +130,15 @@ export default function Events() {
           </motion.p>
         </header>
 
-        {/* Occasion index: twelve hairline rows, six per column on desktop */}
-        <div className="relative mx-auto w-full max-w-[1180px]">
-          {/* A slow band of light drifting behind the list keeps the section alive */}
-          {!reduced && (
-            <motion.span
-              aria-hidden="true"
-              initial={{ x: "-70%" }}
-              animate={{ x: ["-70%", "235%"] }}
-              transition={{
-                duration: 9,
-                repeat: Infinity,
-                ease: "easeInOut",
-                repeatDelay: 1.5,
-              }}
-              className="pointer-events-none absolute inset-y-0 -z-10 w-[42%] bg-gradient-to-r from-transparent via-[#D4145A]/[0.05] to-transparent"
-            />
-          )}
-
-          <div className="grid grid-cols-1 gap-x-16 lg:grid-cols-2 lg:grid-rows-6 lg:[grid-auto-flow:column]">
+        {/* Capsule grid: twelve aligned pills, no numbers, no drifting shapes */}
+        <div className="mx-auto w-full max-w-[1180px]">
+          <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {events.map((event, index) => (
-              <EventRow
+              <EventCapsule
                 key={event.title}
                 event={event}
                 index={index}
-                dimmed={active !== null && active !== index}
                 reduced={reduced}
-                onActivate={setActive}
-                onDeactivate={() => setActive(null)}
-                navigate={navigate}
               />
             ))}
           </div>

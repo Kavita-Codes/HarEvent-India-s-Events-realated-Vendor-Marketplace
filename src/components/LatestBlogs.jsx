@@ -4,6 +4,7 @@ import {
   Clock,
   Landmark,
   Lightbulb,
+  Sparkles,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
@@ -38,6 +39,15 @@ const articles = [
     image: "/Joyful Indian Wedding Procession.png",
     icon: Lightbulb,
     readTime: "4 min read",
+  },
+  {
+    category: "Mehndi & Rituals",
+    title: "Designing a Memorable Mehndi and Haldi Stage",
+    description:
+      "From floral backdrops and seating to lighting and props, plan the most Instagram-worthy ritual moments of your wedding.",
+    image: "/Circle of Henna Hands.png",
+    icon: Sparkles,
+    readTime: "5 min read",
   },
 ];
 
@@ -113,7 +123,7 @@ function LatestBlogs() {
       <div className="mx-auto max-w-[1440px]">
         <div className="mb-6 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
           <div className="min-w-0">
-            <p className="mb-1 text-[12px] font-bold uppercase tracking-[0.5px] text-[#D4145A]">
+            <p className="mb-1 text-[13px] font-bold uppercase tracking-[0.5px] text-[#D4145A]">
               Guides & Inspiration
             </p>
             <h2 className="!font-playfair !text-[36px] !font-bold !leading-[1.2] !tracking-[-0.5px] !text-[#292329]">
@@ -132,7 +142,7 @@ function LatestBlogs() {
           </Link>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3 md:gap-6 lg:gap-[7.2%]">
+        <div className="grid gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-4">
           {articles.map((article, index) => (
             <BlogCard key={article.title} article={article} index={index} />
           ))}

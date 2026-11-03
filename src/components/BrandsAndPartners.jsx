@@ -183,7 +183,7 @@ function BrandsAndPartners() {
               Network Excellence
             </p>
 
-            <h2 className="font-playfair text-[30px] font-bold leading-[1.2] tracking-tight text-[#292327] sm:text-[36px]">
+            <h2 className="font-playfair text-[36px] font-bold leading-[1.2] tracking-tight text-[#292327]">
               Trusted Brands &{" "}
               <span className="font-playfair font-bold text-[#D4145A]">
                 Partners

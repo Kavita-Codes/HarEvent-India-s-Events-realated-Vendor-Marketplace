@@ -104,7 +104,7 @@ function VendorCard({ vendor, index }) {
 
       <div className="flex min-h-0 flex-1 flex-col px-4 pb-4 sm:px-5">
         {/* Price left, location right — plain text row under the photo */}
-        <div className="mb-3.5 mt-3.5 flex items-center justify-between gap-3">
+        <div className="mb-0 mt-3.5 flex items-center justify-between gap-3">
           <p className="flex items-baseline gap-1 text-[15px] font-bold leading-none text-[#382832]">
             {vendor.priceFrom}
             <span className="text-[11px] font-medium text-[#8A7580]">
@@ -131,7 +131,7 @@ function VendorCard({ vendor, index }) {
           {vendor.description}
         </p>
 
-        <div className="mt-auto flex gap-2">
+        <div className="mt-auto flex gap-2 pt-2.5">
           <Link
             to={vendor.inquiryUrl}
             className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105 active:scale-[0.97]"
@@ -163,8 +163,8 @@ function EmptyVendorCard({ category }) {
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col px-4 pb-4">
-        {/* Same rhythm as a filled card: 14px above and below the top row */}
-        <p className="mb-3.5 mt-3.5 truncate text-[11px] font-bold uppercase tracking-[0.8px] text-[#D4145A]">
+        {/* Same rhythm as a filled card: 14px above, 10px below the top row */}
+        <p className="mb-2.5 mt-3.5 truncate text-[11px] font-bold uppercase tracking-[0.8px] text-[#D4145A]">
           {category === "All" ? "Vendor Portfolio" : category}
         </p>
 
@@ -245,11 +245,11 @@ export default function PopularVendors() {
                 Featured Professionals
               </p>
 
-              <h2 className="font-playfair text-3xl font-bold tracking-tight text-[#30232B] sm:text-4xl">
+              <h2 className="font-playfair text-[36px] font-bold leading-tight tracking-tight text-[#30232B]">
                 Popular Vendors
               </h2>
 
-              <p className="mt-2 text-sm leading-6 text-[#8A7580]">
+              <p className="mt-2 text-[16px] leading-6 text-[#8A7580]">
                 Explore trusted event professionals near you.
               </p>
             </div>

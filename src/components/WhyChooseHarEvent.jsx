@@ -264,11 +264,11 @@ export default function WhyChooseHarEvent() {
           />
         </div>
 
-        <h2 className="font-playfair text-[30px] font-bold leading-tight text-[#35121e] sm:text-[38px]">
+        <h2 className="font-playfair text-[36px] font-bold leading-tight text-[#35121e]">
           Why Choose HarEvent?
         </h2>
 
-        <p className="mx-auto mt-2 max-w-[1000px] text-[15px] leading-[1.6] text-[#69534d]">
+        <p className="mx-auto mt-2 max-w-[1000px] text-[16px] leading-[1.6] text-[#69534d]">
           Finding the right event professionals shouldn't be complicated.
           HarEvent brings event discovery and vendor connections together in
           one convenient place.
@@ -446,7 +446,7 @@ export default function WhyChooseHarEvent() {
 
                   <motion.h3
                     variants={lineVariants}
-                    className="mt-6 max-w-[720px] font-playfair text-[27px] font-bold leading-[1.15] text-[#35121e] sm:text-[33px] lg:text-[37px]"
+                    className="mt-6 max-w-[720px] font-playfair text-[36px] font-bold leading-[1.15] text-[#35121e]"
                   >
                     {title}
                   </motion.h3>
@@ -458,7 +458,7 @@ export default function WhyChooseHarEvent() {
 
                   <motion.p
                     variants={lineVariants}
-                    className="mt-4 max-w-[740px] text-[15px] leading-[1.75] text-[#69534d] sm:text-[16px]"
+                    className="mt-4 max-w-[740px] text-[16px] leading-[1.75] text-[#69534d]"
                   >
                     {description}
                   </motion.p>

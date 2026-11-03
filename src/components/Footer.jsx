@@ -57,13 +57,16 @@ const socialLinks = [
 function FooterLinkColumn({ title, links, Icon }) {
   return (
     <div className="group min-w-0">
-      <Icon className="block h-[21px] w-[21px] text-[#c9962f] transition-transform duration-300 group-hover:-translate-y-[2px]" />
+      {/* Icon sits inline, in front of the heading */}
+      <div className="flex items-center gap-[9px]">
+        <Icon className="block h-[19px] w-[19px] shrink-0 text-[#D4145A] transition-transform duration-300 group-hover:-translate-y-[2px]" />
 
-      <h3 className="mt-[7px] font-playfair text-[21px] font-bold leading-[1.3] text-[#26233c]">
-        {title}
-      </h3>
+        <h3 className="font-playfair text-[21px] font-bold leading-[1.3] text-[#26233c]">
+          {title}
+        </h3>
+      </div>
 
-      <span className="mt-[8px] block h-[2px] w-[44px] rounded-full bg-[#c9962f] transition-[width] duration-300 ease-out group-hover:w-[68px]" />
+      <span className="mt-[8px] block h-[2px] w-[44px] rounded-full bg-[#D4145A] transition-[width] duration-300 ease-out group-hover:w-[68px]" />
 
       <ul className="mt-[18px] flex list-none flex-col gap-[13px] p-0">
         {links.map((link) => (
@@ -73,7 +76,7 @@ function FooterLinkColumn({ title, links, Icon }) {
               className="group flex items-center justify-between gap-[10px] font-poppins text-[14.5px] font-normal leading-[1.4] text-[#5c5866] no-underline transition-colors duration-200 ease-in-out hover:text-[#D4145A]"
             >
               <span className="min-w-0 truncate">{link.label}</span>
-              <FaChevronRight className="h-[11px] w-[11px] shrink-0 text-[#c9962f] transition-transform duration-200 ease-in-out group-hover:translate-x-[3px]" />
+              <FaChevronRight className="h-[11px] w-[11px] shrink-0 text-[#D4145A] transition-transform duration-200 ease-in-out group-hover:translate-x-[3px]" />
             </Link>
           </li>
         ))}
@@ -99,25 +102,10 @@ export default function Footer() {
               className="mb-[18px] flex items-start max-w-full -ml-[15px] max-[540px]:-ml-[9px]"
             >
               <img
-                src="/logoForm.jpeg"
+                src="/logo.png"
                 alt="HarEvent Logo"
-                className="block h-[100px] w-[100px] shrink-0 object-contain mix-blend-multiply max-[540px]:h-[58px] max-[540px]:w-[58px]"
+                className="block h-[116px] w-[116px] shrink-0 object-contain mix-blend-multiply contrast-[1.25] max-[540px]:h-[66px] max-[540px]:w-[66px]"
               />
-
-              <span className="flex flex-col pl-[3px] pt-[11px] max-[540px]:pt-[2px] max-[540px]:pl-[6px]">
-                <span className="font-playfair bg-gradient-to-r from-[#D4145A] to-[#FF7628] bg-clip-text text-[40px] font-bold leading-none text-transparent translate-y-[5px] max-[540px]:text-[26px] whitespace-nowrap">
-                  HarEvent
-                </span>
-
-                <span className="relative mt-[12px] flex items-center gap-[8px] max-[540px]:mt-[8px] max-[540px]:gap-[5px]">
-
-                  <span className="h-[1px] flex-1 bg-[#c9962f]/70" />
-                  <span className="whitespace-nowrap font-poppins text-[11px] font-semibold tracking-[0.2em] text-[#7a5c2e] max-[540px]:text-[8px] max-[540px]:tracking-[0.14em]">
-                    PLAN • CONNECT • CELEBRATE
-                  </span>
-                  <span className="h-[1px] flex-1 bg-[#c9962f]/70" />
-                </span>
-              </span>
             </Link>
 
             <h2 className="max-w-[340px] font-playfair text-[23px] font-bold leading-[1.35] text-[#26233c] max-[540px]:text-[21px]">
@@ -172,7 +160,7 @@ export default function Footer() {
             />
           </div>
 
-          <div className="min-w-0 border-l border-[#ecd9c6] pl-[38px] self-center max-[1100px]:border-l-0 max-[1100px]:pl-0 max-[860px]:border-l-0 max-[860px]:pl-0">
+          <div className="min-w-0 border-l border-[#ecd9c6] pl-[38px] self-center min-[1100px]:-translate-y-[16px] max-[1100px]:border-l-0 max-[1100px]:pl-0 max-[860px]:border-l-0 max-[860px]:pl-0">
             <FooterLinkColumn
               title="Company"
               links={companyLinks}
@@ -180,7 +168,7 @@ export default function Footer() {
             />
           </div>
 
-          <div className="min-w-0 border-l border-[#ecd9c6] pl-[38px] self-center max-[1100px]:col-start-1 max-[1100px]:row-start-3 max-[1100px]:col-span-3 max-[1100px]:border-l-0 max-[1100px]:pl-0 max-[860px]:col-start-2 max-[860px]:row-start-auto max-[860px]:col-span-1 max-[540px]:col-start-1 max-[540px]:col-span-1">
+          <div className="min-w-0 border-l border-[#ecd9c6] pl-[38px] self-center min-[1100px]:-translate-y-[16px] max-[1100px]:col-start-1 max-[1100px]:row-start-3 max-[1100px]:col-span-3 max-[1100px]:border-l-0 max-[1100px]:pl-0 max-[860px]:col-start-2 max-[860px]:row-start-auto max-[860px]:col-span-1 max-[540px]:col-start-1 max-[540px]:col-span-1">
             <FooterLinkColumn
               title="For Vendors"
               links={vendorLinks}
