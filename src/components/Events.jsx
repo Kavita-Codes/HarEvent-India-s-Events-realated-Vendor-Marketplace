@@ -14,7 +14,7 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { motion } from "motion/react";
 import useMediaQuery from "../hooks/useMediaQuery";
 
 const events = [
@@ -128,52 +128,15 @@ export default function Events() {
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
   const [active, setActive] = useState(null);
 
-  /* Cursor light: springs make it trail instead of sticking to the pointer */
-  const spotX = useSpring(useMotionValue(-9999), {
-    stiffness: 120,
-    damping: 24,
-    mass: 0.6,
-  });
-  const spotY = useSpring(useMotionValue(-9999), {
-    stiffness: 120,
-    damping: 24,
-    mass: 0.6,
-  });
-  /* Fading beats teleporting the light away when the pointer leaves */
-  const spotVisibility = useMotionValue(0);
-  const spotOpacity = useSpring(spotVisibility, { stiffness: 140, damping: 26 });
-
-  const handlePointer = (pointerEvent) => {
-    if (reduced) return;
-
-    /* Measured on the section: it carries no transform, so the box stays
-       correct while the page scrolls under the pointer */
-    const bounds = pointerEvent.currentTarget.getBoundingClientRect();
-    spotVisibility.set(1);
-    spotX.set(pointerEvent.clientX - bounds.left);
-    spotY.set(pointerEvent.clientY - bounds.top);
-  };
-
   const handleLeave = () => {
-    spotVisibility.set(0);
     setActive(null);
   };
 
   return (
     <section
-      onMouseMove={handlePointer}
       onMouseLeave={handleLeave}
       className="relative isolate w-full overflow-hidden bg-white px-4 py-12 font-poppins sm:px-6 sm:py-14 lg:px-8 lg:py-16 motion-reduce:[&_*]:transition-none"
     >
-      {/* Cursor light */}
-      {!reduced && (
-        <motion.span
-          aria-hidden="true"
-          style={{ left: spotX, top: spotY, opacity: spotOpacity }}
-          className="pointer-events-none absolute -z-10 -ml-[260px] -mt-[260px] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(212,20,90,0.10),rgba(255,118,40,0.07)_45%,transparent_72%)]"
-        />
-      )}
-
       {/* Ambient brand washes, counter-drifting so the section never sits still */}
       <motion.span
         aria-hidden="true"
@@ -285,7 +248,7 @@ export default function Events() {
         >
           <Link
             to="/event-categories"
-            className="group inline-flex h-11 items-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-6 text-[13px] font-semibold text-white shadow-[0_8px_18px_rgba(212,20,90,0.25)] transition duration-300 hover:-translate-y-0.5 hover:brightness-105 hover:shadow-lg active:scale-[0.97]"
+            className="group inline-flex h-11 items-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-6 text-[13px] font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:brightness-105 active:scale-[0.97]"
           >
             View All Event Categories
             <ArrowRight

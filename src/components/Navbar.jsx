@@ -466,14 +466,14 @@ function Navbar({ onLoginClick }) {
     currentMegaData?.tabs[0];
 
   const loginClassBase =
-    "btn-sheen btn-glow btn-lift group inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-[18px] py-2 text-[14px] font-semibold font-poppins text-white hover:brightness-105";
+    "btn-sheen btn-lift group inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-[18px] py-2 text-[14px] font-semibold font-poppins text-white hover:brightness-105";
 
   /* The motion pill animates its own tap, so it opts out of the global CSS
      press (`press-off`) to avoid stacking two shrinks on top of each other. */
   const loginClass = `press-off ${loginClassBase}`;
 
   const mobileLoginClass =
-    "btn-sheen btn-glow btn-lift group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 py-3 text-center text-sm font-semibold font-poppins text-white hover:brightness-105";
+    "btn-sheen btn-lift group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 py-3 text-center text-sm font-semibold font-poppins text-white hover:brightness-105";
 
   const loginSpring = {
     type: "spring",

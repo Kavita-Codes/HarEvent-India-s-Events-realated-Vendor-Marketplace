@@ -194,7 +194,7 @@ function BrandsAndPartners() {
           {/* View All Partners */}
           <Link
             to="/vendor-categories"
-            className="group inline-flex h-[38px] w-fit shrink-0 items-center justify-center gap-2 self-start rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 font-poppins text-[12px] font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:self-auto"
+            className="group inline-flex h-[38px] w-fit shrink-0 items-center justify-center gap-2 self-start rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 font-poppins text-[12px] font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:brightness-105 sm:self-auto"
           >
             View all partners
             <ArrowRight

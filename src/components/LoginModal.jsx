@@ -217,7 +217,7 @@ function LoginModal({ onClose, onRegister, initialMode = "login" }) {
 
             <button
               type="submit"
-              className="flex h-11 w-full items-center justify-center rounded-xl bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-sm font-semibold text-white shadow-md transition hover:brightness-105"
+              className="flex h-11 w-full items-center justify-center rounded-xl bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-sm font-semibold text-white transition hover:brightness-105"
             >
               {view === "signup" ? "Create Account" : "Sign In & Continue"}
             </button>

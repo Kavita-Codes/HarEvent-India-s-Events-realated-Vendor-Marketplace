@@ -105,7 +105,7 @@ export default function HowItWorks() {
                   className="group relative flex flex-col items-center rounded-2xl border border-white/90 bg-white/85 p-6 text-center shadow-[0_10px_28px_rgba(212,20,90,0.06)] backdrop-blur-md transition-[border-color,background-color,box-shadow,translate] duration-300 hover:-translate-y-2 hover:border-[#D4145A]/30 hover:bg-white hover:shadow-[0_20px_40px_rgba(212,20,90,0.15)]"
                 >
                   {/* Step Pill */}
-                  <span className="mb-4 inline-flex items-center gap-1 rounded-full border border-[#D4145A]/15 bg-gradient-to-r from-[#D4145A]/8 to-[#FF7628]/8 px-3 py-0.5 text-[11px] font-bold tracking-wider text-[#D4145A] transition-all duration-300 group-hover:scale-105 group-hover:bg-gradient-to-r group-from-[#D4145A] group-to-[#FF7628] group-hover:text-white">
+                  <span className="mb-4 inline-flex items-center gap-1 rounded-full border border-[#D4145A]/15 bg-gradient-to-r from-[#D4145A]/8 to-[#FF7628]/8 px-3 py-0.5 text-[11px] font-bold tracking-wider text-[#D4145A] transition-all duration-300 group-hover:scale-105 group-hover:bg-gradient-to-r group-from-[#D4145A] group-to-[#FF7628] group-hover:text-black">
                     STEP {step.number}
                   </span>
 

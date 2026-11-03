@@ -495,7 +495,7 @@ export default function WhyChooseHarEvent() {
                   type="button"
                   onClick={() => setPaused((value) => !value)}
                   aria-label={paused ? "Resume auto play" : "Pause auto play"}
-                  className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white shadow-[0_8px_18px_rgba(212,20,90,0.18)] transition-[transform,box-shadow,filter] duration-300 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_10px_22px_rgba(212,20,90,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4145A]"
+                  className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white transition-[transform,filter] duration-300 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4145A]"
                 >
                   {paused ? (
                     <Play size={14} strokeWidth={2.4} className="translate-x-[1px]" />

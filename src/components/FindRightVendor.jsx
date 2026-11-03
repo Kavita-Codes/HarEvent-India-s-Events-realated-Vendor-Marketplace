@@ -271,7 +271,7 @@ function FindRightVendor() {
 
           <Link
             to="/vendor-categories"
-            className="group inline-flex h-10 w-fit shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 font-poppins text-[13px] font-semibold text-white shadow-[0_8px_18px_rgba(212,20,90,0.25)] transition duration-300 hover:-translate-y-0.5 hover:brightness-105 hover:shadow-lg active:scale-[0.97]"
+            className="group inline-flex h-10 w-fit shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 font-poppins text-[13px] font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:brightness-105 active:scale-[0.97]"
           >
             View All Vendors
             <ArrowRight

@@ -151,7 +151,7 @@ export default function Footer() {
             </div>
 
             <div className="mt-[20px] flex flex-wrap items-center gap-[10px]">
-              <span className="inline-flex min-h-[30px] items-center justify-center gap-[7px] rounded-[30px] border border-[#e3c98b] bg-[#fdf6e9] px-[14px] py-[6px] font-poppins text-[11.5px] font-semibold leading-[1.2] whitespace-nowrap text-[#a87b1f]">
+              <span className="inline-flex min-h-[30px] items-center justify-center gap-[7px] rounded-[30px] border border-[#e3c98b] bg-[#fdf6e9] px-[14px] py-[6px] font-poppins text-[11.5px] font-semibold leading-[1.2] whitespace-nowrap text-[#D4145A]">
                 <FaShieldAlt className="h-[12px] w-[12px] shrink-0" />
                 100% VERIFIED
               </span>
@@ -190,7 +190,7 @@ export default function Footer() {
         </Reveal>
 
         {/* Copyright bar */}
-        <div className="bg-[#4a1420] px-[16px] py-[16px] text-center font-poppins text-[13.5px] font-medium leading-[1.5] text-white/95 max-[540px]:text-[11.5px]">
+        <div className="bg-[#ffffff] px-[16px] py-[16px] text-center font-poppins text-[13.5px] font-medium leading-[1.5] text-black max-[540px]:text-[11.5px]">
           © 2026 HarEvent India Private Limited. All rights reserved.
         </div>
       </div>

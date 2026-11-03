@@ -43,7 +43,7 @@ function VendorRegistrationBanner({
             your business with HarEvent.
           </p>
 
-          <p className="mt-2 text-xs leading-5 text-white/80">
+          <p className="mt-2 max-w-xl text-sm leading-6 text-white/80">
             Make your work discoverable to people looking for event
             professionals and services.
           </p>

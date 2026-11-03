@@ -236,21 +236,6 @@ button[disabled],
   }
 }
 
-/* Ambient brand glow: animates box-shadow only, so it never touches transform */
-.btn-glow {
-  animation: btn-glow-breathe 3.4s ease-in-out infinite;
-}
-
-@keyframes btn-glow-breathe {
-  0%,
-  100% {
-    box-shadow: 0 8px 20px -10px rgba(212,20,90, 0.55);
-  }
-  50% {
-    box-shadow: 0 12px 26px -8px rgba(255,118,40, 0.6);
-  }
-}
-
 /* Small lift on hover, sinks back on press */
 .btn-lift:hover {
   translate: 0 -2px;
@@ -286,11 +271,6 @@ button[disabled],
 
   .btn-sheen::after {
     display: none;
-  }
-
-  .btn-glow {
-    animation: none;
-    box-shadow: 0 8px 20px -10px rgba(212,20,90, 0.55);
   }
 
   .btn-lift:hover,

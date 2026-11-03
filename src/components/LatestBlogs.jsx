@@ -126,7 +126,7 @@ function LatestBlogs() {
           </div>
           <Link
             to="/blogs"
-            className="inline-flex h-9 w-fit shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-4 !text-[12px] !font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            className="inline-flex h-9 w-fit shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-4 !text-[12px] !font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105"
           >
             Explore All Articles <ArrowRight size={14} />
           </Link>

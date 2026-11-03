@@ -382,7 +382,7 @@ function Signup({ vendorMode: initialVendorMode = false }) {
               {/* Submit */}
               <button
                 type="submit"
-                className="flex h-10 w-full items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-xs font-semibold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg sm:col-span-2"
+                className="flex h-10 w-full items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105 sm:col-span-2"
               >
                 {vendorMode ? "Create Vendor Account" : "Create Account"}
               </button>

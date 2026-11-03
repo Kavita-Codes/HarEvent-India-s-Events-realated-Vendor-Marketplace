@@ -87,7 +87,7 @@ function FAQ() {
                   <span className="flex items-center gap-4">
                     <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors duration-300 ${
                       isOpen
-                        ? "bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white shadow-[0_6px_14px_rgba(212,20,90,0.28)]"
+                        ? "bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white"
                         : "bg-[#FFF0F5] text-[#D4145A]"
                     }`}>
                       {String(index + 1).padStart(2, "0")}

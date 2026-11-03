@@ -83,7 +83,7 @@ function VendorCard({ vendor, index }) {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.55, delay: index * 0.08, ease: EASE_OUT }}
       whileHover={{ y: -8, transition: { duration: 0.3, ease: EASE_OUT } }}
-      className="group relative flex min-h-[396px] flex-col overflow-hidden rounded-[15px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)] transition-[border-color,box-shadow] duration-300 hover:border-[#E9A0BA] hover:shadow-[0_18px_38px_rgba(71,34,52,0.16)] sm:min-h-[408px] lg:min-h-[420px]"
+      className="group relative flex flex-col overflow-hidden rounded-[15px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)] transition-[border-color,box-shadow] duration-300 hover:border-[#E9A0BA] hover:shadow-[0_18px_38px_rgba(71,34,52,0.16)] sm:min-h-[408px]"
     >
       {/* Gradient hairline that runs across the top on hover */}
       <span className="pointer-events-none absolute left-0 top-0 z-30 h-[3px] w-0 bg-gradient-to-r from-[#D4145A] to-[#FF7628] transition-[width] duration-[700ms] ease-out group-hover:w-full" />
@@ -102,9 +102,9 @@ function VendorCard({ vendor, index }) {
         </span>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col px-4 pb-4 pt-3.5 sm:px-5">
+      <div className="flex min-h-0 flex-1 flex-col px-4 pb-4 sm:px-5">
         {/* Price left, location right — plain text row under the photo */}
-        <div className="flex items-center justify-between gap-3">
+        <div className="mb-3.5 mt-3.5 flex items-center justify-between gap-3">
           <p className="flex items-baseline gap-1 text-[15px] font-bold leading-none text-[#382832]">
             {vendor.priceFrom}
             <span className="text-[11px] font-medium text-[#8A7580]">
@@ -126,14 +126,15 @@ function VendorCard({ vendor, index }) {
           {vendor.businessName}
         </h3>
 
-        <p className="mt-1.5 line-clamp-2 text-[13px] leading-[1.5] text-[#7C6A74]">
+        {/* Two reserved lines keep every card's content block the same height */}
+        <p className="mt-1.5 line-clamp-2 min-h-[39px] text-[13px] leading-[1.5] text-[#7C6A74]">
           {vendor.description}
         </p>
 
-        <div className="mt-auto flex gap-2 pt-3.5">
+        <div className="mt-auto flex gap-2">
           <Link
             to={vendor.inquiryUrl}
-            className="inline-flex h-10 min-w-0 flex-[1.3] items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white shadow-[0_6px_14px_rgba(212,20,90,0.22)] transition hover:-translate-y-0.5 hover:brightness-105 hover:shadow-md active:scale-[0.97]"
+            className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105 active:scale-[0.97]"
           >
             Send Inquiry
           </Link>
@@ -152,7 +153,7 @@ function VendorCard({ vendor, index }) {
 
 function EmptyVendorCard({ category }) {
   return (
-    <article className="flex min-h-[396px] flex-col overflow-hidden rounded-[15px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)]">
+    <article className="flex flex-col overflow-hidden rounded-[15px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)] sm:min-h-[408px]">
       <div className="flex h-[186px] shrink-0 items-center justify-center bg-gradient-to-br from-[#FFF0F5] via-[#FFF8F2] to-[#FCE4EC] text-[#D4145A]/50 sm:h-[196px] lg:h-[206px]">
         {category === "All" ? (
           <BriefcaseBusiness size={28} strokeWidth={1.5} />
@@ -161,8 +162,9 @@ function EmptyVendorCard({ category }) {
         )}
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col p-4">
-        <p className="truncate text-[11px] font-bold uppercase tracking-[0.8px] text-[#D4145A]">
+      <div className="flex min-h-0 flex-1 flex-col px-4 pb-4">
+        {/* Same rhythm as a filled card: 14px above and below the top row */}
+        <p className="mb-3.5 mt-3.5 truncate text-[11px] font-bold uppercase tracking-[0.8px] text-[#D4145A]">
           {category === "All" ? "Vendor Portfolio" : category}
         </p>
 
@@ -170,24 +172,22 @@ function EmptyVendorCard({ category }) {
           Vendor listing coming soon
         </h3>
 
-        <p className="mt-1.5 line-clamp-2 text-[13px] leading-[1.5] text-[#8A7580]">
+        <p className="mt-1.5 line-clamp-2 min-h-[39px] text-[13px] leading-[1.5] text-[#8A7580]">
           Business details and portfolio will appear when available.
         </p>
 
-        <div className="mt-auto pt-3.5">
-          <div className="mb-3 border-t border-[#F7E8EE]" />
-
+        <div className="mt-auto">
           <div className="flex gap-2">
             <Link
               to="/enquiry"
-              className="inline-flex h-10 min-w-0 flex-[1.3] items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white shadow-[0_6px_14px_rgba(212,20,90,0.22)] transition hover:-translate-y-0.5 hover:brightness-105 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
+              className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A] active:scale-[0.97]"
             >
               Send Inquiry
             </Link>
 
             <Link
               to="/vendor-categories"
-              className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full border border-[#F3DFC8] bg-[#FFF4E4] px-3 text-[13px] font-semibold text-[#3A2B33] transition hover:border-[#E6C48F] hover:bg-[#FFEEDA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
+              className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full border border-[#F3DFC8] bg-[#FFF4E4] px-3 text-[13px] font-semibold text-[#3A2B33] transition hover:border-[#E6C48F] hover:bg-[#FFEEDA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A] active:scale-[0.97]"
             >
               View Profile
             </Link>
@@ -264,7 +264,7 @@ export default function PopularVendors() {
                     onClick={() => setActiveFilter(filter)}
                     className={`shrink-0 rounded-full border px-4 py-2 text-[12px] font-semibold transition ${
                       activeFilter === filter
-                        ? "border-transparent bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white shadow-[0_8px_18px_rgba(212,20,90,0.25)]"
+                        ? "border-transparent bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white"
                         : "border-[#F1DDE5] bg-white text-[#78646E] hover:border-[#D4145A] hover:text-[#D4145A]"
                     }`}
                   >
@@ -275,7 +275,7 @@ export default function PopularVendors() {
 
               <Link
                 to="/vendor-categories"
-                className="inline-flex h-10 shrink-0 items-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 text-[12px] font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                className="inline-flex h-10 shrink-0 items-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 text-[12px] font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105"
               >
                 View All Vendors <ArrowRight size={13} />
               </Link>

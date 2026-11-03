@@ -326,7 +326,7 @@ function Hero() {
 
               <button
                 type="submit"
-                className="flex h-[44px] items-center justify-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 font-poppins text-[13px] font-semibold text-white shadow-md transition duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+                className="flex h-[44px] items-center justify-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 font-poppins text-[13px] font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:brightness-105"
               >
                 <Search size={16} strokeWidth={2.2} />
                 Search Vendors
