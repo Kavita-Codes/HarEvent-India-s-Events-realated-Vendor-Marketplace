@@ -90,7 +90,7 @@ export default function Footer() {
     <footer className="w-full font-poppins motion-reduce:[&_*]:transition-none">
       <div className="border-t-[3px] border-[#f6a95f] bg-[#fef0e1]">
         <Reveal
-          className="mx-auto grid w-full max-w-[1600px] grid-cols-[1.5fr_1fr_1fr_1fr] items-start gap-x-[52px] px-[5.3%] pb-[44px] pt-[26px] max-[1100px]:grid-cols-[1.4fr_1fr_1fr] max-[1100px]:gap-x-[30px] max-[1100px]:px-[5%] max-[860px]:grid-cols-[1fr_1fr] max-[860px]:gap-x-[26px] max-[860px]:gap-y-[34px] max-[860px]:px-[6%] max-[860px]:pb-[36px] max-[860px]:pt-[34px] max-[540px]:grid-cols-1 max-[540px]:gap-y-[30px]"
+          className="mx-auto grid w-full max-w-[1600px] grid-cols-[1.5fr_1fr_1fr_1fr] items-start gap-x-[52px] px-[5.3%] pb-[44px] pt-[12px] max-[1100px]:grid-cols-[1.4fr_1fr_1fr] max-[1100px]:gap-x-[30px] max-[1100px]:px-[5%] max-[860px]:grid-cols-[1fr_1fr] max-[860px]:gap-x-[26px] max-[860px]:gap-y-[34px] max-[860px]:px-[6%] max-[860px]:pb-[36px] max-[860px]:pt-[34px] max-[540px]:grid-cols-1 max-[540px]:gap-y-[30px]"
           y={24}
           duration={0.7}
         >
@@ -99,7 +99,7 @@ export default function Footer() {
             <Link
               to="/"
               aria-label="HarEvent Home"
-              className="mb-[18px] flex items-start max-w-full -ml-[15px] max-[540px]:-ml-[9px]"
+              className="mb-[4px] flex items-start max-w-full -ml-[15px] translate-y-[8px] max-[540px]:-ml-[9px]"
             >
               <img
                 src="/logo.png"
