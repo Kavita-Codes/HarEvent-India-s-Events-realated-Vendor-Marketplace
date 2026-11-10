@@ -8,6 +8,12 @@ import {
   PartyPopper,
   Sparkles,
   Utensils,
+  Shirt,
+  Sparkle,
+  Car,
+  Wine,
+  Sparkles as MagicIcon,
+  Cake,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
@@ -72,11 +78,52 @@ const categories = [
     icon: Gift,
     featured: false,
   },
+  /* Naye 6 Categories (Featured) */
+  {
+    name: "Bridal Wear & Couture",
+    description:
+      "Explore exquisite lehengas, designer gowns, and traditional bridal attire.",
+    image: "/Luxurious Ivory Floral Wedding Stage.png",
+    icon: Shirt,
+  },
+  {
+    name: "Jewelry & Accessories",
+    description:
+      "Find stunning bridal sets, fine jewelry, and royal accessories for your big day.",
+    image: "/Elegant Banquet Table Inspection.png",
+    icon: Sparkle,
+  },
+  {
+    name: "Luxury Transportation",
+    description:
+      "Book vintage cars, luxury sedans, and bridal entry transport services.",
+    image: "/Golden Meadow Wedding Photoshoot.png",
+    icon: Car,
+  },
+  {
+    name: "Bartenders & Mixology",
+    description:
+      "Elevate your bar experience with custom cocktails, flair bartenders, and spirits.",
+    image: "/Lavish Nighttime Wedding Canopy.png",
+    icon: Wine,
+  },
+  {
+    name: "Special Effects & Pyro",
+    description:
+      "Add magic with cold pyros, fog effects, flower showers, and fireworks displays.",
+    image: "/Golden Wedding Buffet Under Crystal Lights.png",
+    icon: MagicIcon,
+  },
+  {
+    name: "Cakes & Desserts",
+    description:
+      "Order custom wedding cakes, dessert counters, and artisanal sweet treats.",
+    image: "/Circle of Henna Hands.png",
+    icon: Cake,
+  },
 ];
 
-/* Photographers and Invitations & Gifts stay in the data but are held back
-   from the home grid for now — drop their `featured: false` to bring a
-   card back. */
+/* Photographers aur Invitations & Gifts ke alawa baki 12 featured items yahan select hongi */
 const featuredCategories = categories.filter(
   ({ featured }) => featured !== false,
 );
@@ -84,9 +131,7 @@ const featuredCategories = categories.filter(
 const EASE_OUT = [0.22, 1, 0.36, 1];
 const EASE_OUT_CSS = "cubic-bezier(0.22, 1, 0.36, 1)";
 
-/* Shared image stack: slow Ken Burns drift at rest, zoom + warm bloom on
-   hover. The zoom lives on the wrapper and the drift on the img, so a CSS
-   animation never fights the hover transform. */
+/* Shared image stack: slow Ken Burns drift at rest, zoom + warm bloom on hover. */
 function VendorVisual({ category, index }) {
   const { name, image } = category;
 
@@ -101,14 +146,12 @@ function VendorVisual({ category, index }) {
           alt={`${name} portfolio`}
           loading="lazy"
           className="vendor-card-image h-full w-full object-cover object-center"
-          /* A negative delay starts every card mid-cycle instead of in lockstep */
           style={{ animationDelay: `${index * -3.4}s` }}
         />
       </div>
 
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(24,11,17,0.94),rgba(24,11,17,0.55)_26%,rgba(24,11,17,0.1)_60%,transparent)]" />
 
-      {/* Opacity only: a gradient itself cannot be cross-faded */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_95%_at_50%_112%,rgba(212,20,90,0.55),rgba(255,118,40,0.18)_44%,transparent_70%)] opacity-0 transition-opacity duration-[550ms] group-hover:opacity-100" />
 
       <span className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 transition-[left,opacity] duration-[900ms] ease-out group-hover:left-full group-hover:opacity-100" />
@@ -118,7 +161,7 @@ function VendorVisual({ category, index }) {
   );
 }
 
-/* Desktop: six tall pillars. One opens, the rest step back. */
+/* Desktop: tall pillars */
 function VendorPillar({ category, index, reduced }) {
   const { name, description, icon: Icon } = category;
 
@@ -127,7 +170,7 @@ function VendorPillar({ category, index, reduced }) {
       initial={reduced ? false : { opacity: 0, y: 26 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: index * 0.06, ease: EASE_OUT }}
+      transition={{ duration: 0.5, delay: (index % 6) * 0.06, ease: EASE_OUT }}
       className="flex-1 basis-0 transition-[flex-grow] duration-[650ms] ease-out hover:flex-grow-[3]"
     >
       <Link
@@ -137,14 +180,12 @@ function VendorPillar({ category, index, reduced }) {
       >
         <VendorVisual category={category} index={index} />
 
-        {/* Resting label: the name runs up the pillar */}
         <div className="pointer-events-none absolute inset-x-0 top-6 bottom-[104px] z-10 flex items-center justify-center transition-[opacity,transform] duration-300 ease-out group-hover:translate-y-2 group-hover:opacity-0">
           <span className="rotate-180 text-[12.5px] font-semibold uppercase tracking-[3px] text-white/90 [writing-mode:vertical-rl] drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
             {name}
           </span>
         </div>
 
-        {/* The chip stays put; everything it reveals grows upward from it */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 p-4 lg:p-5">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white shadow-[0_8px_20px_rgba(212,20,90,0.45)] ring-1 ring-white/35 transition-transform duration-[450ms] ease-out group-hover:scale-105">
             <Icon size={17} strokeWidth={2.1} />
@@ -176,7 +217,7 @@ function VendorPillar({ category, index, reduced }) {
   );
 }
 
-/* Touch and narrow screens get no hover, so the tiles show their label up front */
+/* Touch and narrow screens */
 function VendorTile({ category, index, reduced }) {
   const { name, icon: Icon } = category;
 
@@ -185,7 +226,7 @@ function VendorTile({ category, index, reduced }) {
       initial={reduced ? false : { opacity: 0, y: 26 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: index * 0.06, ease: EASE_OUT }}
+      transition={{ duration: 0.5, delay: (index % 6) * 0.06, ease: EASE_OUT }}
     >
       <Link
         to="/vendor-categories"
@@ -211,9 +252,13 @@ function VendorTile({ category, index, reduced }) {
 function FindRightVendor() {
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
 
+  /* First row (0 to 6) and Second row (6 to 12) */
+  const firstRow = featuredCategories.slice(0, 6);
+  const secondRow = featuredCategories.slice(6, 12);
+
   return (
     <section className="relative isolate overflow-hidden bg-[#fef0e1] px-5 pb-14 pt-12 sm:px-8 sm:pb-16 lg:px-12 lg:pb-20 lg:pt-16">
-      {/* Ambient brand washes, counter-drifting so the section never sits still */}
+      {/* Ambient background washes */}
       <motion.span
         aria-hidden="true"
         initial={{ opacity: 0 }}
@@ -281,19 +326,34 @@ function FindRightVendor() {
           </Link>
         </div>
 
-        {/* Desktop: expanding pillars */}
-        <div className="vendor-accordion hidden h-[440px] gap-2.5 lg:flex">
-          {featuredCategories.map((category, index) => (
-            <VendorPillar
-              key={category.name}
-              category={category}
-              index={index}
-              reduced={reduced}
-            />
-          ))}
+        {/* Desktop: Two rows of expanding pillars */}
+        <div className="hidden flex-col gap-5 lg:flex">
+          {/* First Row of 6 pillars */}
+          <div className="vendor-accordion flex h-[440px] gap-2.5">
+            {firstRow.map((category, index) => (
+              <VendorPillar
+                key={category.name}
+                category={category}
+                index={index}
+                reduced={reduced}
+              />
+            ))}
+          </div>
+
+          {/* Second Row of 6 pillars */}
+          <div className="vendor-accordion flex h-[440px] gap-2.5">
+            {secondRow.map((category, index) => (
+              <VendorPillar
+                key={category.name}
+                category={category}
+                index={index + 6}
+                reduced={reduced}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Narrow screens: equal tiles */}
+        {/* Narrow screens: Grid displaying all 12 items */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:hidden">
           {featuredCategories.map((category, index) => (
             <VendorTile
@@ -312,12 +372,10 @@ function FindRightVendor() {
           isolation: isolate;
         }
 
-        /* Slow breathing crop: keeps the section alive before any interaction */
         .vendor-card-image {
           animation: vendor-kenburns 18s ease-in-out infinite alternate;
         }
 
-        /* Hand the motion budget to the hover zoom */
         .vendor-card:hover .vendor-card-image,
         .vendor-card:focus-visible .vendor-card-image {
           animation-play-state: paused;
@@ -332,8 +390,6 @@ function FindRightVendor() {
           }
         }
 
-        /* The pillar you are not looking at steps back. :has() keeps this
-           entirely declarative — no state, no re-renders on every hover. */
         @media (hover: hover) {
           .vendor-accordion:has(.vendor-pillar:hover) .vendor-pillar:not(:hover) {
             opacity: 0.68;
