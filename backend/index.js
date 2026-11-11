@@ -6,9 +6,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = new Set([
-  "https://harevent-eta.vercel.app",
   "http://localhost:5173",
-  "http://127.0.0.1:5173",
 ]);
 
 app.use(
