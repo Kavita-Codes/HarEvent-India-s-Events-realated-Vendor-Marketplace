@@ -1,29 +1,24 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
   Baby,
-  BriefcaseBusiness,
-  Cake,
+  BadgeCheck,
   CalendarDays,
-  Church,
-  Clapperboard,
+  CalendarHeart,
+  Check,
+  CircleEllipsis,
   Flower2,
   Gift,
-  GraduationCap,
+  Headset,
   Heart,
-  House,
-  Landmark,
-  Music2,
+  HeartHandshake,
+  LayoutGrid,
+  MapPin,
   PartyPopper,
-  Plane,
-  Presentation,
+  ShieldCheck,
   Sparkles,
-  Trophy,
-  UsersRound,
-  Shirt,
-  Gem,
-  Utensils,
-  Mic2,
+  Wallet,
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
@@ -33,179 +28,334 @@ import Footer from "../components/Footer";
 const categories = [
   {
     title: "Wedding",
+    description: "A complete solution for your big day",
     image: "/Opulent Indian Garden Wedding Mandap.png",
     icon: Heart,
-  },
-  {
-    title: "Reception",
-    image: "/Joyful Newlywed Entrance at Reception.png",
-    icon: Flower2,
+    filter: "wedding",
   },
   {
     title: "Engagement",
+    description: "Make your special moment unforgettable",
     image: "/Rohan and Eisha’s Floral Engagement.png",
-    icon: Gem,
-  },
-  {
-    title: "Anniversary",
-    image: "/Romantic Anniversary Cake Cutting Celebration.png",
-    icon: CalendarDays,
-  },
-  {
-    title: "Sangeet Ceremony",
-    image: "/Glittering Indian Wedding Dance Stage.png",
-    icon: Music2,
-  },
-  {
-    title: "Naming Ceremony & Baby Shower",
-    image: "/Elegant Pastel Baby Shower Celebration.png",
-    icon: Baby,
+    icon: HeartHandshake,
+    filter: "engagement",
   },
   {
     title: "Birthday",
+    description: "Celebrate with style and joy",
     image: "/Joyful Birthday Cake Celebration.png",
-    icon: Cake,
+    icon: Gift,
+    filter: "birthday",
+  },
+  {
+    title: "Anniversary",
+    description: "Relive your special bond",
+    image: "/Romantic Anniversary Cake Cutting Celebration.png",
+    icon: CalendarHeart,
+    filter: "anniversary",
+  },
+  {
+    title: "Baby Shower",
+    description: "A joyful welcome for the little one",
+    image: "/Elegant Pastel Baby Shower Celebration.png",
+    icon: Baby,
+    filter: "baby-shower",
+  },
+  {
+    title: "Naming Ceremony",
+    description: "A precious beginning",
+    image: "/Elegant Indian Naming Ceremony Celebration.png",
+    icon: Baby,
+    filter: "naming",
+  },
+  {
+    title: "Reception",
+    description: "A grand celebration with loved ones",
+    image: "/Joyful Newlywed Entrance at Reception.png",
+    icon: Flower2,
+    filter: "reception",
+  },
+  {
+    title: "Prewedding",
+    description: "Capture love's beautiful journey",
+    image: "/Golden Hour Pre-Wedding Celebration.png",
+    icon: Sparkles,
+    filter: "prewedding",
+  },
+  {
+    title: "Family & Social Gatherings",
+    description: "Togetherness makes it special",
+    image: "/Joyful Indian Family Celebration.png",
+    icon: PartyPopper,
+    filter: "more",
+  },
+  {
+    title: "Farewell & Retirement",
+    description: "Honour the journey together",
+    image: "/Farewell and Retirement Celebrations.png",
+    icon: HeartHandshake,
+    filter: "more",
+  },
+  {
+    title: "Sangeet Ceremony",
+    description: "Celebrate with music, dance and family",
+    image: "/Glittering Indian Wedding Dance Stage.png",
+    icon: PartyPopper,
+    filter: "more",
+  },
+  {
+    title: "Naming Ceremony & Baby Shower",
+    description: "Celebrate a beautiful new beginning",
+    image: "/Elegant Pastel Baby Shower Celebration.png",
+    icon: Baby,
+    filter: "more",
   },
   {
     title: "Housewarming / Griha Pravesh",
+    description: "Make your new beginning memorable",
     image: "/Elegant Indian Naming Ceremony Celebration.png",
-    icon: House,
+    icon: Gift,
+    filter: "more",
   },
   {
     title: "Corporate Events",
+    description: "Bring your team together in style",
     image: "/Corporate Summit Networking Reception.png",
-    icon: BriefcaseBusiness,
+    icon: CalendarDays,
+    filter: "more",
   },
   {
     title: "Conferences & Seminars",
+    description: "Plan a seamless professional gathering",
     image: "/Corporate Summit Networking Reception.png",
-    icon: Presentation,
+    icon: CalendarDays,
+    filter: "more",
   },
   {
     title: "Award Ceremonies",
+    description: "Celebrate achievements and excellence",
     image: "/Corporate Summit Networking Reception.png",
-    icon: Trophy,
+    icon: Gift,
+    filter: "more",
   },
   {
     title: "College Festivals",
+    description: "Make campus celebrations unforgettable",
     image: "/Glittering Indian Wedding Dance Stage.png",
-    icon: GraduationCap,
+    icon: PartyPopper,
+    filter: "more",
   },
   {
     title: "School Events",
+    description: "Create special memories for every student",
     image: "/Joyful Birthday Cake Celebration.png",
-    icon: UsersRound,
+    icon: Sparkles,
+    filter: "more",
   },
   {
     title: "Farewell Party",
+    description: "Send them off with a celebration to remember",
     image: "/Glittering Indian Wedding Dance Stage.png",
-    icon: PartyPopper,
+    icon: HeartHandshake,
+    filter: "more",
   },
   {
     title: "Graduation Ceremony",
+    description: "Celebrate every milestone and achievement",
     image: "/Corporate Summit Networking Reception.png",
-    icon: GraduationCap,
+    icon: Gift,
+    filter: "more",
   },
   {
     title: "Bachelor Party",
+    description: "Celebrate the last days before the big day",
     image: "/Glittering Indian Wedding Dance Stage.png",
     icon: PartyPopper,
+    filter: "more",
   },
   {
     title: "Reunion Party",
-    image: "/Joyful Birthday Cake Celebration.png",
-    icon: UsersRound,
+    description: "Reconnect and make new memories together",
+    image: "/Joyful Indian Family Celebration.png",
+    icon: HeartHandshake,
+    filter: "more",
   },
   {
     title: "Cocktail Party",
+    description: "An elegant evening for your favourite people",
     image: "/Romantic Anniversary Cake Cutting Celebration.png",
-    icon: Utensils,
+    icon: Gift,
+    filter: "more",
   },
   {
     title: "Private Parties",
+    description: "Make any gathering feel like an occasion",
     image: "/Joyful Birthday Cake Celebration.png",
     icon: Sparkles,
+    filter: "more",
   },
   {
     title: "Family Get-Together",
-    image: "/Elegant Indian Naming Ceremony Celebration.png",
-    icon: UsersRound,
+    description: "Bring everyone closer with a special gathering",
+    image: "/Joyful Indian Family Celebration.png",
+    icon: HeartHandshake,
+    filter: "more",
   },
   {
     title: "Festival Celebrations",
+    description: "Celebrate traditions with your community",
     image: "/Glittering Indian Wedding Dance Stage.png",
     icon: Sparkles,
+    filter: "more",
   },
   {
     title: "Religious Events",
+    description: "Gather together for meaningful occasions",
     image: "/Elegant Indian Naming Ceremony Celebration.png",
-    icon: Church,
+    icon: Heart,
+    filter: "more",
   },
   {
     title: "Cultural Events",
+    description: "Share and celebrate culture together",
     image: "/Glittering Indian Wedding Dance Stage.png",
-    icon: Landmark,
+    icon: PartyPopper,
+    filter: "more",
   },
   {
     title: "Concerts & Live Shows",
+    description: "Bring the crowd together for a great show",
     image: "/Glittering Indian Wedding Dance Stage.png",
-    icon: Mic2,
+    icon: Sparkles,
+    filter: "more",
   },
   {
     title: "Fashion Shows",
+    description: "Set the stage for a stylish event",
     image: "/Corporate Summit Networking Reception.png",
-    icon: Shirt,
+    icon: Sparkles,
+    filter: "more",
   },
   {
     title: "Charity & Fundraising Events",
+    description: "Bring people together for a good cause",
     image: "/Corporate Summit Networking Reception.png",
-    icon: Heart,
+    icon: HeartHandshake,
+    filter: "more",
   },
   {
     title: "Sports Events",
+    description: "Make every match and milestone a celebration",
     image: "/Corporate Summit Networking Reception.png",
-    icon: Trophy,
+    icon: PartyPopper,
+    filter: "more",
   },
   {
     title: "Political Events",
+    description: "Plan an organised and engaging gathering",
     image: "/Corporate Summit Networking Reception.png",
-    icon: UsersRound,
+    icon: CalendarDays,
+    filter: "more",
   },
   {
     title: "Community Events",
-    image: "/Elegant Indian Naming Ceremony Celebration.png",
-    icon: UsersRound,
+    description: "Celebrate the people who bring us together",
+    image: "/Joyful Indian Family Celebration.png",
+    icon: HeartHandshake,
+    filter: "more",
   },
   {
     title: "Groom Wear",
+    description: "Find the perfect look for your big day",
     image: "/Joyful Newlywed Entrance at Reception.png",
-    icon: Shirt,
+    icon: Gift,
+    filter: "more",
   },
   {
     title: "Bridal Wear",
+    description: "Discover a look that feels uniquely yours",
     image: "/Rohan and Eisha’s Floral Engagement.png",
-    icon: Gem,
+    icon: Sparkles,
+    filter: "more",
   },
   {
     title: "Honeymoon",
-    image: "/Opulent Indian Garden Wedding Mandap.png",
-    icon: Plane,
+    description: "Plan a beautiful beginning together",
+    image: "/Golden Hour Pre-Wedding Celebration.png",
+    icon: Heart,
+    filter: "more",
   },
   {
     title: "Gifts",
+    description: "Find thoughtful gifts for every occasion",
     image: "/Elegant Botanical Wedding Invitation Suite.png",
     icon: Gift,
+    filter: "more",
   },
   {
     title: "Entertainment",
+    description: "Add memorable moments to your celebration",
     image: "/Glittering Indian Wedding Dance Stage.png",
-    icon: Clapperboard,
+    icon: Sparkles,
+    filter: "more",
   },
   {
     title: "Pandits",
+    description: "Find experienced professionals for your ceremony",
     image: "/Elegant Indian Naming Ceremony Celebration.png",
-    icon: Church,
+    icon: Heart,
+    filter: "more",
   },
+];
+
+const filters = [
+  { label: "All Events", value: "all", icon: Sparkles },
+  { label: "Wedding", value: "wedding", icon: Heart },
+  { label: "Engagement", value: "engagement", icon: HeartHandshake },
+  { label: "Birthday", value: "birthday", icon: Gift },
+  { label: "Anniversary", value: "anniversary", icon: CalendarHeart },
+  { label: "Baby Shower", value: "baby-shower", icon: Baby },
+  { label: "Naming Ceremony", value: "naming", icon: Baby },
+  { label: "Reception", value: "reception", icon: Flower2 },
+  { label: "Prewedding", value: "prewedding", icon: Sparkles },
+  { label: "More", value: "more", icon: CircleEllipsis },
+];
+
+const packages = [
+  {
+    title: "Wedding Package",
+    price: "₹75,000",
+    image: "/Lavish Red and Gold Wedding Stage.png",
+    badge: "Best Seller",
+  },
+  {
+    title: "Birthday Bash",
+    price: "₹15,000",
+    image: "/Joyful Birthday Cake Celebration.png",
+  },
+  {
+    title: "Corporate Event",
+    price: "₹50,000",
+    image: "/Corporate Summit Networking Reception.png",
+  },
+  {
+    title: "Baby Shower",
+    price: "₹12,000",
+    image: "/Elegant Pastel Baby Shower Celebration.png",
+  },
+  {
+    title: "Engagement",
+    price: "₹35,000",
+    image: "/Rohan and Eisha’s Floral Engagement.png",
+  },
+];
+
+const benefits = [
+  { title: "Verified Vendors", detail: "100% trusted professionals", icon: ShieldCheck },
+  { title: "Wide Category Coverage", detail: "All events, all in one place", icon: LayoutGrid },
+  { title: "Easy Booking", detail: "Compare and book in a few clicks", icon: CalendarDays },
+  { title: "Budget Friendly", detail: "Compare and choose the best deals", icon: Wallet },
+  { title: "Hassle-Free Planning", detail: "Enjoy your event, we manage the rest", icon: Headset },
 ];
 
 const easeOut = [0.22, 1, 0.36, 1];
@@ -215,43 +365,42 @@ function EventCard({ category, index, reducedMotion }) {
 
   return (
     <motion.article
-      initial={reducedMotion ? false : { opacity: 0, y: 22 }}
+      initial={reducedMotion ? false : { opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
-      transition={{
-        duration: 0.48,
-        delay: (index % 4) * 0.05,
-        ease: easeOut,
-      }}
-      className="h-full min-w-0"
+      transition={{ duration: 0.45, delay: (index % 5) * 0.045, ease: easeOut }}
+      className="min-w-0"
     >
       <Link
         to={`/search?query=${encodeURIComponent(category.title)}`}
-        aria-label={`Explore ${category.title}`}
-        className="group relative flex aspect-[1.1/1] h-auto w-full flex-col justify-end overflow-hidden rounded-[6px] bg-[#24151b] shadow-[0_5px_18px_rgba(43,24,32,0.12)] outline-none transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(43,24,32,0.24)] focus-visible:ring-2 focus-visible:ring-[#db530f] focus-visible:ring-offset-4"
+        aria-label={`Explore vendors for ${category.title}`}
+        className="group relative flex h-full flex-col overflow-hidden rounded-[14px] border border-[#F2E8EB] bg-white shadow-[0_3px_14px_rgba(74,34,49,0.07)] outline-none transition duration-300 hover:-translate-y-1 hover:border-[#F2B9CB] hover:shadow-[0_12px_28px_rgba(74,34,49,0.13)] focus-visible:ring-2 focus-visible:ring-[#D4145A] focus-visible:ring-offset-2"
       >
-        <img
-          src={category.image}
-          alt={`${category.title} event`}
-          loading={index < 4 ? "eager" : "lazy"}
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-        />
-
-        <div className="pointer-events-none absolute inset-0 bg-black/50 transition-colors duration-500 group-hover:bg-black/45" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent transition-colors duration-500 group-hover:from-black/60 group-hover:via-black/20" />
-
-        <div className="relative z-10 flex w-full items-center gap-3 px-4 pb-4 pt-8 sm:px-5">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white shadow-md">
-            <Icon size={22} strokeWidth={2} />
+        <div className="relative h-[176px] shrink-0 overflow-visible bg-[#fff1f4]">
+          <img
+            src={category.image}
+            alt={`${category.title} celebration`}
+            loading={index < 5 ? "eager" : "lazy"}
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+          />
+          <span className="absolute right-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/20 text-white backdrop-blur-sm">
+            <Heart size={15} strokeWidth={2} />
           </span>
+          <span className="absolute -bottom-4 left-1/2 z-10 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border-[3px] border-white bg-[#fff0f4] text-[#D4145A] shadow-sm">
+            <Icon size={19} strokeWidth={2.2} />
+          </span>
+        </div>
 
-          <h2 className="min-w-0 flex-1 font-poppins text-[14px] font-semibold leading-snug text-white drop-shadow-md sm:text-[15px]">
+        <div className="flex flex-1 flex-col items-center px-2.5 pb-3 pt-5 text-center">
+          <h2 className="font-poppins text-[16px] font-bold leading-tight text-[#3A2630] group-hover:text-[#D4145A]">
             {category.title}
           </h2>
-
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white opacity-0 shadow-md transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">
-            <ArrowRight size={16} />
+          <p className="mt-1.5 min-h-[42px] max-w-[220px] text-[14px] leading-[1.45] text-[#756871]">
+            {category.description}
+          </p>
+          <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-[#FFF0F4] px-3 py-1 text-[14px] font-semibold text-[#D4145A] transition-colors group-hover:bg-gradient-to-r group-hover:from-[#D4145A] group-hover:to-[#FF7628] group-hover:text-white">
+            Explore Vendors <ArrowRight size={16} />
           </span>
         </div>
       </Link>
@@ -259,73 +408,249 @@ function EventCard({ category, index, reducedMotion }) {
   );
 }
 
+function SectionHeading({ children }) {
+  return (
+    <div className="mb-5 flex items-center justify-center gap-2.5">
+      <span className="h-px w-9 bg-gradient-to-r from-transparent to-[#FF7628]" />
+      <Heart size={13} className="fill-[#D4145A] text-[#D4145A]" />
+      <h2 className="font-poppins text-[22px] font-bold text-[#30232B] sm:text-[24px]">
+        {children}
+      </h2>
+      <span className="h-px w-9 bg-gradient-to-l from-transparent to-[#FF7628]" />
+    </div>
+  );
+}
+
 export default function EventCategories() {
   const reducedMotion = useReducedMotion();
+  const [activeFilter, setActiveFilter] = useState("all");
+  const visibleCategories =
+    activeFilter === "all"
+      ? categories
+      : categories.filter((category) => category.filter === activeFilter);
 
   return (
     <>
       <Navbar />
 
-      <main className="bg-[#fffaf7] font-poppins">
-        <section className="relative isolate flex min-h-[280px] items-center justify-center overflow-hidden bg-[#24151b] sm:min-h-[310px] lg:min-h-[340px]">
+      <main className="bg-white font-poppins">
+        <section className="relative flex min-h-[210px] w-full items-center overflow-hidden bg-[#FFF7F1] px-5 py-6 sm:min-h-[250px] sm:px-10 lg:min-h-[280px] lg:px-14">
           <img
             src="/hero.png"
-            alt="A beautifully decorated celebration venue"
+            alt="A beautifully decorated wedding celebration venue"
             fetchPriority="high"
-            className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+            className="absolute inset-0 h-full w-full object-cover object-[72%_48%]"
           />
-
-          <div className="absolute inset-0 -z-10 bg-black/70" />
-
-          <motion.div
-            initial={reducedMotion ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: easeOut }}
-            className="mx-auto w-full max-w-[1440px] px-5 py-10 text-center sm:px-8 sm:py-12 lg:px-12 lg:py-14"
-          >
-            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[2.5px] text-[#ffc18e] sm:text-xs">
-              Every occasion, beautifully planned
-            </p>
-
-            <h1 className="mx-auto max-w-[900px] font-playfair text-[34px] font-semibold leading-tight text-white drop-shadow-lg sm:text-[48px] lg:text-[54px]">
-              Make Every Moment
-              <span className="block text-[#ffc18e]">
-                Unforgettable
-              </span>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FFF8F2] via-[#FFF8F2]/95 to-[#FFF8F2]/5" />
+          <div className="relative z-10 max-w-[520px] py-3">
+            <h1 className="font-poppins text-[28px] font-bold leading-tight text-[#B70D45] sm:text-[34px]">
+              Explore All Event Categories
             </h1>
-
-            <p className="mx-auto mt-3 max-w-[680px] text-[12px] leading-6 text-white/90 sm:text-[14px] sm:leading-7">
-              From timeless weddings and joyful family celebrations to
-              corporate gatherings, discover the perfect occasion and bring
-              your celebration to life with HarEvent.
+            <p className="mt-2 text-[16px] leading-snug text-[#30232B]">
+              Plan, Book &amp; Celebrate
+              <span className="block">Every Special Moment</span>
             </p>
-          </motion.div>
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-[14px] font-medium text-[#30232B]">
+              {["Trusted Vendors", "Verified Profiles", "Real Reviews"].map(
+                (item) => (
+                  <span key={item} className="inline-flex items-center gap-1.5">
+                    <ShieldCheck size={16} className="text-[#D4145A]" />
+                    {item}
+                  </span>
+                ),
+              )}
+            </div>
+          </div>
         </section>
 
         <section
           id="event-categories"
-          className="scroll-mt-6 px-4 py-10 sm:px-6 sm:py-14 lg:px-10 lg:py-16"
+          className="mx-auto w-full max-w-[1440px] px-4 pb-8 pt-4 sm:px-6 sm:pb-10 sm:pt-5 lg:px-8"
         >
-          <div className="mx-auto max-w-[1500px]">
-            <header className="mb-7">
-              <h2 className="font-playfair text-[30px] font-bold leading-tight tracking-tight text-[#30232B] sm:text-[36px]">
+          <div
+            aria-label="Filter event categories"
+            className="mb-4 flex flex-wrap justify-center gap-2 px-0.5 pb-2"
+          >
+            {filters.map((filter) => {
+              const Icon = filter.icon;
+              const selected = activeFilter === filter.value;
+
+              return (
+                <button
+                  key={filter.value}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => setActiveFilter(filter.value)}
+                  className={`inline-flex shrink-0 flex-col items-center justify-center gap-1 rounded-[11px] border px-3 py-2 text-[14px] font-semibold transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A] ${
+                    selected
+                      ? "border-[#FAD9E3] bg-[#FDE8EE] text-[#D4145A]"
+                      : "border-[#F4EEF0] bg-white text-[#392B32] hover:border-[#F4C5D3] hover:bg-[#FFF7F9]"
+                  }`}
+                >
+                  <Icon size={16} strokeWidth={2} />
+                  <span className="whitespace-nowrap">{filter.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <header className="mb-5 text-center">
+            <div className="mb-2 flex items-center justify-center gap-2.5">
+              <span className="hidden h-px w-9 bg-gradient-to-r from-transparent to-[#FF7628] sm:block" />
+              <Heart size={16} className="hidden shrink-0 fill-[#D4145A] text-[#D4145A] sm:block" />
+              <h2 className="max-w-full break-words font-playfair text-[36px] font-bold leading-tight text-[#30232B]">
                 Event Categories
               </h2>
-              <p className="mt-2 text-[13px] leading-6 text-[#8A7580] sm:text-[16px]">
-                Find the perfect people and inspiration for every celebration.
-              </p>
-            </header>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-              {categories.map((category, index) => (
-                <EventCard
-                  key={category.title}
-                  category={category}
-                  index={index}
-                  reducedMotion={reducedMotion}
-                />
+              <Heart size={16} className="hidden shrink-0 fill-[#D4145A] text-[#D4145A] sm:block" />
+              <span className="hidden h-px w-9 bg-gradient-to-l from-transparent to-[#FF7628] sm:block" />
+            </div>
+            <p className="text-[16px] leading-6 text-[#554A50]">
+              Choose From Our Wide Range of Celebration Events
+            </p>
+          </header>
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-4">
+            {visibleCategories.map((category, index) => (
+              <EventCard
+                key={category.title}
+                category={category}
+                index={index}
+                reducedMotion={reducedMotion}
+              />
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto mb-8 grid w-[calc(100%-2rem)] max-w-[1392px] gap-3 rounded-[18px] border border-[#FCE5EC] bg-[#fef0e1] px-4 py-5 sm:mb-10 sm:grid-cols-[1.15fr_4fr] sm:items-center sm:px-6 lg:px-8">
+          <h2 className="text-center font-poppins text-[18px] font-bold leading-tight text-[#B70D45] sm:border-r sm:border-[#F3C6D3] sm:py-3 sm:text-left sm:text-[20px]">
+            Why Choose HarEvent
+            <span className="block text-[#30232B]">for Events?</span>
+          </h2>
+          <div className="grid grid-cols-2 gap-y-4 sm:grid-cols-5 sm:gap-2">
+            {benefits.map((benefit) => {
+              const Icon = benefit.icon;
+              return (
+                <div
+                  key={benefit.title}
+                  className="flex flex-col items-center px-1 text-center"
+                >
+                  <Icon size={23} strokeWidth={1.8} className="mb-1.5 text-[#D4145A]" />
+                  <h3 className="text-[16px] font-bold leading-tight text-[#30232B]">
+                    {benefit.title}
+                  </h3>
+                  <p className="mt-1 max-w-[180px] text-[14px] leading-[1.4] text-[#71656B]">
+                    {benefit.detail}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="mx-auto mb-9 w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
+          <SectionHeading>Popular Event Packages</SectionHeading>
+          <div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
+              {packages.map((eventPackage) => (
+                <article
+                  key={eventPackage.title}
+                  className="relative overflow-hidden rounded-[12px] border border-[#F0E7EA] bg-white p-2 shadow-[0_3px_12px_rgba(74,34,49,0.06)]"
+                >
+                  {eventPackage.badge && (
+                    <span className="absolute left-2.5 top-2.5 z-10 rounded-full bg-[#D4145A] px-2 py-1 text-[14px] font-semibold text-white">
+                      {eventPackage.badge}
+                    </span>
+                  )}
+                  <img
+                    src={eventPackage.image}
+                    alt={eventPackage.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-[1.45/1] w-full rounded-[8px] object-cover"
+                  />
+                  <div className="px-1 pb-1 pt-2 text-center">
+                    <h3 className="break-words text-[14px] font-semibold text-[#30232B]">
+                      {eventPackage.title}
+                    </h3>
+                    <p className="mt-1 text-[14px] font-bold text-[#D4145A]">
+                      {eventPackage.price} <span className="font-normal">Onwards</span>
+                    </p>
+                    <Link
+                      to={`/search?query=${encodeURIComponent(eventPackage.title)}`}
+                      className="mt-1.5 inline-flex rounded-full border border-[#D4145A] px-3 py-1 text-[14px] font-medium text-[#D4145A] transition hover:bg-[#D4145A] hover:text-white"
+                    >
+                      View Package
+                    </Link>
+                  </div>
+                </article>
               ))}
             </div>
           </div>
+        </section>
+
+        <section className="relative mx-auto mb-2 flex min-h-[170px] w-[calc(100%-2rem)] max-w-[1370px] items-center overflow-hidden rounded-[16px] bg-gradient-to-r from-[#B90045] via-[#D4145A] to-[#A5003C] px-5 py-6 text-white sm:px-8 lg:px-10">
+          <img
+            src="/Golden Mandap Wedding Ceremony.png"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="absolute inset-y-0 right-[20%] hidden h-full w-[34%] object-cover object-center opacity-90 [mask-image:linear-gradient(to_right,transparent,black_25%)] sm:block"
+          />
+          <div className="relative z-10 max-w-[55%]">
+            <h2 className="font-poppins text-[21px] font-semibold leading-tight sm:text-[27px]">
+              Ready to Plan Your Dream Event?
+            </h2>
+            <p className="mt-1 max-w-[420px] text-[14px] leading-relaxed text-white/90 sm:text-[16px]">
+              Join HarEvent today and make your celebration unforgettable.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Link
+                to="#event-categories"
+                className="rounded-md bg-gradient-to-r from-[#FF7628] to-[#F4A51C] px-4 py-2 text-[14px] font-semibold text-white shadow-sm transition hover:brightness-105"
+              >
+                Explore Events
+              </Link>
+              <Link
+                to="/signup"
+                className="rounded-md border border-white/80 px-4 py-2 text-[14px] font-semibold text-white transition hover:bg-white/10"
+              >
+                Join as Customer
+              </Link>
+            </div>
+          </div>
+          <div className="relative z-10 ml-auto hidden max-w-[240px] text-[14px] font-semibold text-[#FFE36E] sm:block">
+            {["Your Perfect Event Partner", "Trusted Vendors", "Verified Profiles", "Real Reviews"].map(
+              (item) => (
+                <p key={item} className="mb-1 flex items-center gap-2">
+                  <Check size={15} strokeWidth={3} /> {item}
+                </p>
+              ),
+            )}
+          </div>
+          <div className="absolute -right-12 -top-16 h-40 w-40 rounded-full border border-white/10 sm:right-[42%] sm:top-1/2 sm:h-28 sm:w-28 sm:-translate-y-1/2 sm:bg-gradient-to-br sm:from-[#F5AA2C] sm:to-[#D76B1E]">
+            <span className="hidden h-full items-center justify-center text-center font-poppins text-[14px] font-semibold text-white sm:flex">
+              It&apos;s FREE
+              <br />
+              to Get Started!
+            </span>
+          </div>
+        </section>
+
+        <section className="mx-auto mb-8 mt-2 grid w-[calc(100%-2rem)] max-w-[1370px] grid-cols-2 gap-3 rounded-[12px] bg-[#FFF0F4] px-3 py-3 text-[14px] font-medium text-[#30232B] sm:grid-cols-4 sm:px-5">
+          {[
+            { text: "500+ Trusted Vendors", icon: BadgeCheck },
+            { text: "300+ Cities Covered", icon: MapPin },
+            { text: "Secure & Easy Booking", icon: CalendarDays },
+            { text: "100% Satisfaction", icon: Heart },
+          ].map((item) => {
+            const Icon = item.icon;
+            return (
+              <div key={item.text} className="flex items-center justify-center gap-1.5">
+                <Icon size={14} className="text-[#D4145A]" />
+                {item.text}
+              </div>
+            );
+          })}
         </section>
       </main>
 
