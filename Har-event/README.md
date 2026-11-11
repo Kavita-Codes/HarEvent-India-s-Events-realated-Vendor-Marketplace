@@ -51,9 +51,10 @@ npm install
 node server.js
 ```
 
-The backend listens on `http://localhost:5000`. For deployment, set
-`VITE_CHATBOT_API_URL` to the deployed chatbot API URL before building the
-frontend (for example, `https://api.example.com/api/chat`).
+The local backend listens on `http://localhost:5000`. For deployment, set
+`VITE_CHATBOT_API_URL` to the deployed chatbot API endpoint before building the
+frontend (for example, `https://your-backend.example.com/api/chat`). Do not use
+the frontend website URL here; the chatbot API must be deployed separately.
 
 ## Available scripts
 
