@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainAnimation, { PageTransition } from "./components/MainAnimation";
-import NiDiChatbot from "../../HarEvent-chatbot/frontend/src/App";
+import NiDiChatbot from "./services/NiDiChatbot";
 
 import About from "./pages/About";
 import Blogs from "./pages/Blogs";

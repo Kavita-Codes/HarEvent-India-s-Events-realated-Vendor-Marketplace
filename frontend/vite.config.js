@@ -9,8 +9,7 @@ export default defineConfig({
     dedupe: ["react", "react-dom"],
   },
   server: {
-    fs: {
-      allow: [".."],
-    },
+    port: 5173,
+    strictPort: true,
   },
 })

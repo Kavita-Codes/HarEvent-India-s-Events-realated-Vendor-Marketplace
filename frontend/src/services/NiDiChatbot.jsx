@@ -1,9 +1,7 @@
 
 import { useState, useRef, useEffect } from "react";
-import "./App.css";
-
-const API_URL =
-  import.meta.env.VITE_CHATBOT_API_URL || "http://localhost:5000/api/chat";
+import { sendChatbotChoice } from "./chatbotApi";
+import "./NiDiChatbot.css";
 
 const initialMessage = {
   sender: "bot",
@@ -63,21 +61,7 @@ function App({ onClose }) {
     setLoading(true);
 
     try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ choice: option.value }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || !data.success) {
-        throw new Error(
-          data.message || "Something went wrong. Please try again."
-        );
-      }
+      const data = await sendChatbotChoice(option.value);
 
       setMessages((previous) => [
         ...previous,
