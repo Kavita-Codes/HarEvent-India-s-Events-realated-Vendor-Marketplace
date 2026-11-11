@@ -1,0 +1,6 @@
+{
+  "framework": "vite",
+  "installCommand": "npm ci --prefix Har-event",
+  "buildCommand": "npm --prefix Har-event run build",
+  "outputDirectory": "Har-event/dist"
+}
