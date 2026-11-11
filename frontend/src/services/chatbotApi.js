@@ -1,6 +1,6 @@
 const API_URL =
   import.meta.env.VITE_CHATBOT_API_URL ||
-  "https://backend-phi-jade-19.vercel.app/api/chat";
+  "http://localhost:5000/api/chat";
 
 export async function sendChatbotChoice(choice) {
   const response = await fetch(API_URL, {
