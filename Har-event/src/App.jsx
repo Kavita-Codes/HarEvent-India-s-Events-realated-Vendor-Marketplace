@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { FaWhatsapp } from "react-icons/fa";
 import MainAnimation, { PageTransition } from "./components/MainAnimation";
+import NiDiChatbot from "../../HarEvent-chatbot/frontend/src/App";
 
 import About from "./pages/About";
 import Blogs from "./pages/Blogs";
@@ -18,6 +19,8 @@ import Search from "./pages/Search";
 import VendorCategories from "./pages/VendorCategories";
 
 function App() {
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+
   return (
     <BrowserRouter>
       <>
@@ -47,18 +50,27 @@ function App() {
           </Routes>
         </PageTransition>
 
-        <a
-          href="https://wa.me/917448181396"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Chat with us on WhatsApp"
-          title="Chat with us on WhatsApp"
-          className="fixed bottom-7 right-7 z-[60] flex h-16 w-16 items-center justify-center rounded-full bg-[#12B886] text-white shadow-lg shadow-emerald-900/20 transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#12B886] max-sm:bottom-4 max-sm:right-4 motion-reduce:transition-none"
+        <button
+          type="button"
+          onClick={() => setIsChatbotOpen((isOpen) => !isOpen)}
+          aria-label={isChatbotOpen ? "Close HarEvent chatbot" : "Open HarEvent chatbot"}
+          aria-expanded={isChatbotOpen}
+          aria-controls="harevent-chatbot"
+          title="Chat with NiDi"
+          className="fixed bottom-0 right-7 z-[60] flex h-30 w-50 items-center justify-center bg-transparent transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#12B886] max-sm:bottom-4 max-sm:right-4 motion-reduce:transition-none"
         >
-          <span className="absolute inset-0 -z-10 rounded-full bg-[#12B886]/40 motion-safe:animate-ping motion-reduce:animate-none" aria-hidden="true" />
-          <FaWhatsapp size={32} aria-hidden="true" />
-          <span className="absolute right-0 top-0 h-4 w-4 rounded-full border-2 border-white bg-[#12B886]" aria-hidden="true" />
-        </a>
+          <img
+            src="/nidiBot.gif"
+            alt=""
+            aria-hidden="true"
+            className="h-50 w-50 object-contain"
+          />
+        </button>
+        {isChatbotOpen && (
+          <div id="harevent-chatbot">
+            <NiDiChatbot onClose={() => setIsChatbotOpen(false)} />
+          </div>
+        )}
       </>
     </BrowserRouter>
   );

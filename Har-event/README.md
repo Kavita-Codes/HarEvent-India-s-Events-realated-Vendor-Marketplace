@@ -11,7 +11,7 @@ HarEvent is an event and vendor discovery web app built with React and Vite. The
 - Home page with event, vendor category, and location search fields
 - Responsive navigation with links to the available sections
 - Footer with company, vendor, and contact links
-- Fixed WhatsApp chat button available across the app
+- Fixed WhatsApp-style button that opens the NiDi HarEvent chatbot
 - Route scaffolds for the main visitor and vendor pages
 
 ## Tech stack
@@ -41,6 +41,19 @@ Vite prints the local URL in the terminal. To use port `5173` explicitly:
 ```bash
 npm run dev -- --port 5173
 ```
+
+The NiDi chatbot also needs its API running. In a second terminal, start the
+backend from the sibling chatbot project:
+
+```bash
+cd ../HarEvent-chatbot/backend
+npm install
+node server.js
+```
+
+The backend listens on `http://localhost:5000`. For deployment, set
+`VITE_CHATBOT_API_URL` to the deployed chatbot API URL before building the
+frontend (for example, `https://api.example.com/api/chat`).
 
 ## Available scripts
 
