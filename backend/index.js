@@ -4,9 +4,20 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
+const allowedOrigins = new Set([
+  "https://harevent-eta.vercel.app",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+]);
 
-app.use(cors());
+app.use(
+  cors({
+    origin(origin, callback) {
+      callback(null, !origin || allowedOrigins.has(origin));
+    },
+  })
+);
 app.use(express.json());
 
 // MAIN WELCOME MENU
@@ -1308,6 +1319,10 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).json({ success: true, status: "ok" });
+});
+
 // CHAT API
 app.post("/api/chat", (req, res) => {
   const { choice } = req.body || {};
@@ -1326,6 +1341,6 @@ app.post("/api/chat", (req, res) => {
 });
 
 // START SERVER
-app.listen(PORT, () => {
-  console.log(`HarEvent chatbot backend running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`HarEvent chatbot backend listening on 0.0.0.0:${PORT}`);
 });
