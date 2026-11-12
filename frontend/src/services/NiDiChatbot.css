@@ -7,7 +7,7 @@
 
 .chatbot-container {
   position: fixed;
-  right: 16px;
+  right: 13px;
   bottom: 20px;
   z-index: 1000;
   font-family: Arial, Helvetica, sans-serif;

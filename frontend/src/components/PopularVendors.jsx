@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
+import { vendorListings as vendors } from "../data/vendorListings";
 
 const filters = [
   "All",
@@ -16,62 +17,6 @@ const filters = [
   "Catering",
   "Entertainment",
 ];
-
-const vendors = [
-  {
-    id: "royal-moments",
-    category: "Wedding Photography",
-    businessName: "Royal Moments...",
-    description:
-      "Specializing in cinematic wedding stories, candid moments and timeless portraits.",
-    location: "Pune",
-    priceFrom: "₹85,000",
-    priceNote: "onwards",
-    portfolioImage: "/Joyful Indian Wedding Petal Shower.png",
-    imageAlt: "Wedding couple celebrating with flower petals",
-  },
-  {
-    id: "mayur-mandap-floral",
-    category: "Wedding Decor",
-    businessName: "Mayur Mandap & Floral...",
-    description:
-      "Elegant mandap designs, floral installations and contemporary decor.",
-    location: "Pune & Mumbai",
-    priceFrom: "₹1.2 Lakh",
-    priceNote: "onwards",
-    portfolioImage: "/Waterfront Romance Under a Floral Canopy.png",
-    imageAlt: "Wedding decor with a floral canopy",
-  },
-  {
-    id: "imperial-palace-banquets",
-    category: "Luxury Venue",
-    filterCategory: "Venues",
-    businessName: "Imperial Palace & Banquets",
-    description:
-      "Spacious luxury banquet spaces for weddings, receptions and celebrations.",
-    location: "Kharadi, Pune",
-    priceFrom: "₹3.5 Lakh",
-    priceNote: "per event",
-    portfolioImage: "/Opulent Indian Garden Wedding Mandap.png",
-    imageAlt: "Luxury garden wedding venue with a mandap",
-  },
-  {
-    id: "saffron-spice-gourmet",
-    category: "Catering",
-    businessName: "Saffron & Spice Gourmet...",
-    description:
-      "Multi-cuisine catering with regional specialties and live counters.",
-    location: "Pune",
-    priceFrom: "₹950",
-    priceNote: "per plate",
-    portfolioImage: "/Lavish Indian Fusion Wedding Buffet.png",
-    imageAlt: "Indian fusion wedding buffet with multiple dishes",
-  },
-].map((vendor) => ({
-  ...vendor,
-  inquiryUrl: `/enquiry?vendor=${encodeURIComponent(vendor.businessName)}&category=${encodeURIComponent(vendor.category)}`,
-  profileUrl: "/vendor-categories",
-}));
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
 

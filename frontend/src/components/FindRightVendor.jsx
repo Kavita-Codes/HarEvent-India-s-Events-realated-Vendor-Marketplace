@@ -123,10 +123,10 @@ const categories = [
   },
 ];
 
-/* Photographers aur Invitations & Gifts ke alawa baki 12 featured items yahan select hongi */
+/* Photographers aur Invitations & Gifts ke alawa pehli 6 categories dikhengi */
 const featuredCategories = categories.filter(
   ({ featured }) => featured !== false,
-);
+).slice(0, 6);
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
 const EASE_OUT_CSS = "cubic-bezier(0.22, 1, 0.36, 1)";
@@ -252,9 +252,8 @@ function VendorTile({ category, index, reduced }) {
 function FindRightVendor() {
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
 
-  /* First row (0 to 6) and Second row (6 to 12) */
+  /* First row of 6 categories */
   const firstRow = featuredCategories.slice(0, 6);
-  const secondRow = featuredCategories.slice(6, 12);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#fef0e1] px-5 pb-14 pt-12 sm:px-8 sm:pb-16 lg:px-12 lg:pb-20 lg:pt-16">
@@ -326,7 +325,7 @@ function FindRightVendor() {
           </Link>
         </div>
 
-        {/* Desktop: Two rows of expanding pillars */}
+        {/* Desktop: One row of expanding pillars */}
         <div className="hidden flex-col gap-5 lg:flex">
           {/* First Row of 6 pillars */}
           <div className="vendor-accordion flex h-[440px] gap-2.5">
@@ -339,21 +338,9 @@ function FindRightVendor() {
               />
             ))}
           </div>
-
-          {/* Second Row of 6 pillars */}
-          <div className="vendor-accordion flex h-[440px] gap-2.5">
-            {secondRow.map((category, index) => (
-              <VendorPillar
-                key={category.name}
-                category={category}
-                index={index + 6}
-                reduced={reduced}
-              />
-            ))}
-          </div>
         </div>
 
-        {/* Narrow screens: Grid displaying all 12 items */}
+        {/* Narrow screens: Grid displaying the same 6 categories */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:hidden">
           {featuredCategories.map((category, index) => (
             <VendorTile
