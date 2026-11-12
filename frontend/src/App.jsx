@@ -57,13 +57,13 @@ function App() {
           aria-expanded={isChatbotOpen}
           aria-controls="harevent-chatbot"
           title="Chat with NiDi"
-          className="fixed bottom-0 right-7 z-[60] flex h-30 w-50 items-center justify-center bg-transparent transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#12B886] max-sm:bottom-4 max-sm:right-4 motion-reduce:transition-none"
+          className="fixed bottom-0 right-0 z-[60] flex h-40 w-40 items-center justify-center bg-transparent transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#12B886] max-sm:bottom-4 max-sm:right-4 motion-reduce:transition-none"
         >
           <img
             src="/nidiBot.gif"
             alt=""
             aria-hidden="true"
-            className="h-50 w-50 object-contain"
+            className="h-30 w-40 object-contain"
           />
         </button>
         {isChatbotOpen && (
