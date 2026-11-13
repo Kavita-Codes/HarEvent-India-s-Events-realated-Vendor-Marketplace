@@ -1,253 +1,197 @@
-import { useState } from "react";
-import {
-  ArrowRight,
-  Image as ImageIcon,
-  MapPin,
-  BriefcaseBusiness,
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import { AnimatePresence, MotionConfig, motion } from "motion/react";
-import { vendorListings as vendors } from "../data/vendorListings";
 
-const filters = [
-  "All",
-  "Photography",
-  "Decor",
-  "Venues",
-  "Catering",
-  "Entertainment",
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
+const eventGroups = [
+  {
+    title: "Weddings & Milestones",
+    description: "Celebrate life's most meaningful moments.",
+    events: [
+      ["Wedding", "/Opulent Indian Garden Wedding Mandap.png"],
+      ["Reception", "/Joyful Newlywed Entrance at Reception.png"],
+      ["Engagement", "/Rohan and Eisha’s Floral Engagement.png"],
+      ["Anniversary", "/Romantic Anniversary Cake Cutting Celebration.png"],
+      ["Sangeet Ceremony", "/Glittering Indian Wedding Dance Stage.png"],
+      ["Naming Ceremony", "/Elegant Indian Naming Ceremony Celebration.png"],
+      ["Baby Shower", "/Elegant Pastel Baby Shower Celebration.png"],
+      ["Birthday", "/Joyful Birthday Cake Celebration.png"],
+      ["Housewarming / Griha Pravesh", "/Golden Mandap Wedding Ceremony.png"],
+      ["Bachelor Party", "/Lavish Nighttime Wedding Canopy.png"],
+      ["Cocktail Party", "/Lavish Indian Fusion Wedding Buffet.png"],
+      ["Private Parties", "/Joyful Indian Family Celebration.png"],
+      ["Family Get-Together", "/Joyful Indian Family Celebration.png"],
+      ["Reunion Party", "/Joyful Indian Family Celebration.png"],
+      ["Farewell Party", "/Farewell and Retirement Celebrations.png"],
+      ["Graduation Ceremony", "/Corporate Summit Networking Reception.png"],
+    ],
+  },
+  {
+    title: "Corporate & Education",
+    description: "Bring teams, ideas, and communities together.",
+    events: [
+      ["Corporate Events", "/Corporate Summit Networking Reception.png"],
+      ["Conferences & Seminars", "/Elegant Banquet Table Inspection.png"],
+      ["Award Ceremonies", "/Golden Wedding Buffet Under Crystal Lights.png"],
+      ["College Festivals", "/Glittering Indian Wedding Dance Stage.png"],
+      ["School Events", "/Joyful Birthday Cake Celebration.png"],
+    ],
+  },
+  {
+    title: "Culture & Community",
+    description: "Honor the traditions and people that connect us.",
+    events: [
+      ["Festival Celebrations", "/Joyful Indian Family Celebration.png"],
+      ["Religious Events", "/Golden Mandap Wedding Ceremony.png"],
+      ["Cultural Events", "/Joyful Indian Family Celebration.png"],
+      ["Community Events", "/Joyful Indian Family Celebration.png"],
+    ],
+  },
+  {
+    title: "Shows & Special Events",
+    description: "Make every gathering a moment to remember.",
+    events: [
+      ["Concerts & Live Shows", "/Glittering Indian Wedding Dance Stage.png"],
+      ["Fashion Shows", "/Corporate Summit Networking Reception.png"],
+      ["Sports Events", "/Corporate Summit Networking Reception.png"],
+      ["Political Events", "/Corporate Summit Networking Reception.png"],
+      ["Charity & Fundraising Events", "/Joyful Indian Family Celebration.png"],
+    ],
+  },
 ];
 
-const EASE_OUT = [0.22, 1, 0.36, 1];
-
-function VendorCard({ vendor, index }) {
+function EventCard({ name, image }) {
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 34, scale: 0.97 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55, delay: index * 0.08, ease: EASE_OUT }}
-      whileHover={{ y: -8, transition: { duration: 0.3, ease: EASE_OUT } }}
-      className="group relative flex flex-col overflow-hidden rounded-[15px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)] transition-[border-color,box-shadow] duration-300 hover:border-[#E9A0BA] hover:shadow-[0_18px_38px_rgba(71,34,52,0.16)] sm:min-h-[408px]"
+    <Link
+      to={`/enquiry?category=${encodeURIComponent(name)}&vendor=${encodeURIComponent(name)}`}
+      aria-label={`Enquire about ${name}`}
+      className="group relative isolate flex aspect-[1.35/1] overflow-hidden rounded-[18px] bg-[#30232B] shadow-[0_8px_24px_rgba(54,29,39,0.12)] outline-none transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(54,29,39,0.2)] focus-visible:ring-2 focus-visible:ring-[#D4145A] focus-visible:ring-offset-2"
     >
-      {/* Gradient hairline that runs across the top on hover */}
-      <span className="pointer-events-none absolute left-0 top-0 z-30 h-[3px] w-0 bg-gradient-to-r from-[#D4145A] to-[#FF7628] transition-[width] duration-[700ms] ease-out group-hover:w-full" />
+      <img
+        src={image}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+      />
 
-      <div className="relative h-[186px] shrink-0 overflow-hidden bg-gradient-to-br from-[#FFF0F5] via-[#FFF8F2] to-[#FCE4EC] sm:h-[196px] lg:h-[206px]">
-        <img
-          src={vendor.portfolioImage}
-          alt={vendor.imageAlt}
-          loading="lazy"
-          className="vendor-kb h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.07]"
-        />
+      {/* Light Card Overlay */}
+      <span className="absolute inset-0 -z-10 bg-black/0" />
 
-        {/* Light sweep across the photo */}
-        <span className="pointer-events-none absolute inset-0 overflow-hidden">
-          <span className="absolute -left-full top-[-25%] h-[150%] w-[55%] rotate-[18deg] bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 transition-[left,opacity] duration-[1100ms] ease-out group-hover:left-[150%] group-hover:opacity-100" />
+      {/* Soft Bottom Gradient for Text */}
+      <span className="absolute inset-0 -z-10 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+
+      <span className="mt-auto flex w-full items-end justify-between gap-3 p-4 sm:p-5">
+        <span className="text-[16px] font-semibold leading-snug text-white">
+          {name}
         </span>
-      </div>
 
-      <div className="flex min-h-0 flex-1 flex-col px-4 pb-4 sm:px-5">
-        {/* Price left, location right — plain text row under the photo */}
-        <div className="mb-0 mt-3.5 flex items-center justify-between gap-3">
-          <p className="flex items-baseline gap-1 text-[15px] font-bold leading-none text-[#382832]">
-            {vendor.priceFrom}
-            <span className="text-[11px] font-medium text-[#8A7580]">
-              {vendor.priceNote}
-            </span>
-          </p>
-
-          <p className="flex shrink-0 items-center gap-1 text-[12px] font-medium text-[#8A7580]">
-            <MapPin size={13} className="shrink-0 text-[#D4145A]" />
-            {vendor.location}
-          </p>
-        </div>
-
-        <p className="mt-2.5 truncate text-[11px] font-bold uppercase tracking-[0.8px] text-[#D4145A]">
-          {vendor.category}
-        </p>
-
-        <h3 className="mt-1 truncate text-[17px] font-bold leading-[1.3] text-[#2E2230] transition-colors duration-300 group-hover:text-[#B41049]">
-          {vendor.businessName}
-        </h3>
-
-        {/* Two reserved lines keep every card's content block the same height */}
-        <p className="mt-1.5 line-clamp-2 min-h-[39px] text-[13px] leading-[1.5] text-[#7C6A74]">
-          {vendor.description}
-        </p>
-
-        <div className="mt-auto flex gap-2 pt-2.5">
-          <Link
-            to={vendor.inquiryUrl}
-            className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105 active:scale-[0.97]"
-          >
-            Send Inquiry
-          </Link>
-
-          <Link
-            to={vendor.profileUrl}
-            className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full border border-[#F3DFC8] bg-[#FFF4E4] px-3 text-[13px] font-semibold text-[#3A2B33] transition hover:border-[#E6C48F] hover:bg-[#FFEEDA] active:scale-[0.97]"
-          >
-            View Profile
-          </Link>
-        </div>
-      </div>
-    </motion.article>
+        <span className="mb-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white transition-transform duration-300 group-hover:translate-x-1">
+          <ArrowRight size={17} />
+        </span>
+      </span>
+    </Link>
   );
 }
 
-function EmptyVendorCard({ category }) {
+export default function EventCategories() {
   return (
-    <article className="flex flex-col overflow-hidden rounded-[15px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)] sm:min-h-[408px]">
-      <div className="flex h-[186px] shrink-0 items-center justify-center bg-gradient-to-br from-[#FFF0F5] via-[#FFF8F2] to-[#FCE4EC] text-[#D4145A]/50 sm:h-[196px] lg:h-[206px]">
-        {category === "All" ? (
-          <BriefcaseBusiness size={28} strokeWidth={1.5} />
-        ) : (
-          <ImageIcon size={28} strokeWidth={1.5} />
-        )}
-      </div>
+    <>
+      <Navbar />
 
-      <div className="flex min-h-0 flex-1 flex-col px-4 pb-4">
-        {/* Same rhythm as a filled card: 14px above, 10px below the top row */}
-        <p className="mb-2.5 mt-3.5 truncate text-[11px] font-bold uppercase tracking-[0.8px] text-[#D4145A]">
-          {category === "All" ? "Vendor Portfolio" : category}
-        </p>
+      <main className="min-h-screen bg-white font-poppins text-[#30232B]">
 
-        <h3 className="mt-1 truncate text-[15px] font-bold leading-[1.3] text-[#382832]">
-          Vendor listing coming soon
-        </h3>
+        {/* Hero Section */}
+        <section
+          className="relative isolate flex min-h-[340px] items-center justify-center overflow-hidden bg-[#21151f] px-5 py-12 text-center text-white sm:min-h-[380px] sm:py-14"
+          style={{ minHeight: "clamp(340px, 25vw, 390px)" }}
+        >
+          <img
+            src="/Circle of Henna Hands.png"
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+          />
 
-        <p className="mt-1.5 line-clamp-2 min-h-[39px] text-[13px] leading-[1.5] text-[#8A7580]">
-          Business details and portfolio will appear when available.
-        </p>
+          {/* Strong Black Overlay - 75% */}
+          <div className="absolute inset-0 -z-10 bg-black/75" />
 
-        <div className="mt-auto">
-          <div className="flex gap-2">
-            <Link
-              to="/enquiry"
-              className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A] active:scale-[0.97]"
-            >
-              Send Inquiry
-            </Link>
+          <div className="max-w-[850px] pt-8 sm:pt-10">
+            <p className="text-[14px] font-semibold uppercase tracking-[0.18em] text-[#ffd4b8] sm:text-[16px]">
+              HarEvent · Celebrations, made memorable
+            </p>
 
-            <Link
-              to="/vendor-categories"
-              className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full border border-[#F3DFC8] bg-[#FFF4E4] px-3 text-[13px] font-semibold text-[#3A2B33] transition hover:border-[#E6C48F] hover:bg-[#FFEEDA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A] active:scale-[0.97]"
-            >
-              View Profile
-            </Link>
+            <h1 className="mt-7 font-playfair text-[42px] font-bold leading-[1.14] sm:mt-8 sm:text-[58px] lg:text-[64px]">
+              Make Every Celebration
+              <span className="block bg-gradient-to-r from-[#ffcf9f] via-[#ff9d86] to-[#f071a1] bg-clip-text text-transparent">
+                Unforgettable
+              </span>
+            </h1>
+
+            <p className="mx-auto mt-5 max-w-[680px] text-[14px] leading-7 text-white/95 sm:mt-6 sm:text-[16px]">
+              From weddings and family milestones to corporate gatherings, find
+              the occasion and inspiration to bring your celebration to life.
+            </p>
           </div>
-        </div>
-      </div>
-    </article>
-  );
-}
+        </section>
 
-export default function PopularVendors() {
-  const [activeFilter, setActiveFilter] = useState("All");
+        {/* Event Categories Section */}
+        <section className="mx-auto max-w-[1440px] px-5 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-20 lg:px-12">
 
-  const visibleVendors = vendors.filter(
-    (vendor) =>
-      activeFilter === "All" ||
-      (vendor.filterCategory || vendor.category)
-        .toLowerCase()
-        .includes(activeFilter.toLowerCase()),
-  );
+          <header className="mb-10 pt-2 text-center sm:mb-12">
+            <p className="text-[14px] font-bold uppercase tracking-[0.16em] text-[#D4145A]">
+              Explore our collection
+            </p>
 
-  return (
-    /* reducedMotion="user" lets every motion prop below fall back to a
-       transform-free state for visitors who ask for less animation */
-    <MotionConfig reducedMotion="user">
-      <section className="bg-white px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
-        <style>{`
-          /* Idle Ken Burns breathing: animates transform only, so the hover
-             scale utility multiplies on top of it instead of fighting it */
-          .vendor-kb {
-            animation: vendor-kenburns 18s ease-in-out infinite alternate;
-          }
+            <h2 className="mt-3 font-playfair text-[30px] font-bold leading-tight text-[#30232B] sm:text-[38px]">
+              Event Categories for Every Occasion
+            </h2>
 
-          @keyframes vendor-kenburns {
-            from {
-              transform: scale(1) translate3d(0, 0, 0);
-            }
-            to {
-              transform: scale(1.06) translate3d(-1.5%, -1.5%, 0);
-            }
-          }
+            <p className="mx-auto mt-4 max-w-[720px] text-[14px] leading-6 text-[#756871] sm:text-[16px]">
+              From weddings and family milestones to corporate gatherings and
+              cultural celebrations, find the occasion you are planning.
+            </p>
+          </header>
 
-          @media (prefers-reduced-motion: reduce) {
-            .vendor-kb {
-              animation: none;
-            }
-          }
-        `}</style>
-
-        <div className="mx-auto max-w-[1440px]">
-          <div className="mb-7 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-2xl">
-              <p className="mb-2 flex items-center gap-2 text-[13px] font-bold uppercase tracking-[1.5px] text-[#D4145A]">
-                <span className="h-[2px] w-6 bg-[#D4145A]" />
-                Featured Professionals
-              </p>
-
-              <h2 className="font-playfair text-[36px] font-bold leading-tight tracking-tight text-[#30232B]">
-                Popular Vendors
-              </h2>
-
-              <p className="mt-2 text-[16px] leading-6 text-[#8A7580]">
-                Explore trusted event professionals near you.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {filters.map((filter) => (
-                  <button
-                    key={filter}
-                    type="button"
-                    aria-pressed={activeFilter === filter}
-                    onClick={() => setActiveFilter(filter)}
-                    className={`shrink-0 rounded-full border px-4 py-2 text-[12px] font-semibold transition ${
-                      activeFilter === filter
-                        ? "border-transparent bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white"
-                        : "border-[#F1DDE5] bg-white text-[#78646E] hover:border-[#D4145A] hover:text-[#D4145A]"
-                    }`}
-                  >
-                    {filter}
-                  </button>
-                ))}
-              </div>
-
-              <Link
-                to="/vendor-categories"
-                className="inline-flex h-10 shrink-0 items-center gap-2 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 text-[12px] font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105"
+          <div className="space-y-12 sm:space-y-14">
+            {eventGroups.map((group) => (
+              <section
+                key={group.title}
+                aria-labelledby={`group-${group.title}`}
               >
-                View All Vendors <ArrowRight size={13} />
-              </Link>
-            </div>
+                <div className="mb-5">
+                  <h3
+                    id={`group-${group.title}`}
+                    className="font-poppins text-[20px] font-bold text-[#30232B] sm:text-[24px]"
+                  >
+                    {group.title}
+                  </h3>
+
+                  <p className="mt-1 text-[14px] text-[#756871]">
+                    {group.description}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+                  {group.events.map(([name, image]) => (
+                    <EventCard
+                      key={name}
+                      name={name}
+                      image={image}
+                    />
+                  ))}
+                </div>
+              </section>
+            ))}
           </div>
 
-          {/* Filtering cross-fades the grid instead of snapping to a new list */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeFilter}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.28, ease: EASE_OUT }}
-              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
-            >
-              {visibleVendors.length > 0
-                ? visibleVendors.map((vendor, index) => (
-                    <VendorCard key={vendor.id} vendor={vendor} index={index} />
-                  ))
-                : [1, 2, 3, 4].map((slot) => (
-                    <EmptyVendorCard key={slot} category={activeFilter} />
-                  ))}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </section>
-    </MotionConfig>
+        </section>
+      </main>
+
+      <Footer />
+    </>
   );
 }

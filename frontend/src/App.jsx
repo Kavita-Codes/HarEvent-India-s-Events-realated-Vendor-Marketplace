@@ -2,14 +2,11 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainAnimation, { PageTransition } from "./components/MainAnimation";
 import NiDiChatbot from "./services/NiDiChatbot";
-
 import About from "./pages/About";
 import Blogs from "./pages/Blogs";
 import Contact from "./pages/Contact";
 import Enquiry from "./pages/Enquiry";
 import EventCategories from "./pages/EventCategories";
-import EventCategoryDetail from "./pages/EventCategoryDetail";
-import EventPlanners from "./pages/EventPlanners";
 import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
 import JoinAsVendor from "./pages/JoinAsVendor";
@@ -18,8 +15,7 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import Search from "./pages/Search";
 import VendorCategories from "./pages/VendorCategories";
-import VendorCategoryDetail from "./pages/VendorCategoryDetail";
-import VendorProfile from "./pages/VendorProfile";
+
 
 function App() {
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
@@ -33,22 +29,8 @@ function App() {
         <PageTransition>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/event-planners" element={<EventPlanners />} />
             <Route path="/event-categories" element={<EventCategories />} />
-            <Route
-              path="/event-categories/:slug"
-              element={<EventCategoryDetail />}
-            />
             <Route path="/vendor-categories" element={<VendorCategories />} />
-            <Route path="/vendors/:slug" element={<VendorProfile />} />
-            <Route
-              path="/vendor-categories/specialties/:slug"
-              element={<VendorCategoryDetail specialty />}
-            />
-            <Route
-              path="/vendor-categories/:slug"
-              element={<VendorCategoryDetail />}
-            />
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />

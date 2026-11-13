@@ -1,17 +1,9 @@
-import CategoryDirectory from "../components/CategoryDirectory";
-import {
-  allVendorItems,
-  vendorSpecialtyGroups,
-  vendorTypes,
-} from "../data/categoryCatalog";
 
-export default function VendorCategories() {
+
+const VendorCategories = () => {
   return (
-    <CategoryDirectory
-      mode="vendors"
-      items={vendorTypes}
-      allItems={allVendorItems}
-      specialtyGroups={vendorSpecialtyGroups}
-    />
-  );
+    <div>VendorCategories</div>
+  )
 }
+
+export default VendorCategories
