@@ -5,7 +5,7 @@ import BrandsAndPartners from "../components/BrandsAndPartners";
 import Events from "../components/Events";
 import FindRightVendor from "../components/FindRightVendor";
 import HowItWorks from "../components/HowItWorks";
-import PopularVendors from "../components/PopularVendors";
+// import PopularVendors from "../components/PopularVendors";
 import WhyChooseHarEvent from "../components/WhyChooseHarEvent";
 import VendorRegistrationBanner from "../components/VendorRegistrationBanner";
 import CustomerAssistance from "../components/CustomerAssistance";
@@ -44,7 +44,7 @@ function Home() {
       <HowItWorks />
       <Events />
       <FindRightVendor />
-      <PopularVendors />
+      {/* <PopularVendors /> */}
       <WhyChooseHarEvent />
       <VendorRegistrationBanner
         onVendorLoginClick={() => openLogin("vendor")}
