@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const eventGroups = [
+export const eventGroups = [
   {
     title: "Weddings and Wedding Functions",
     events: [
@@ -189,47 +189,56 @@ const pageTitle =
 const pageDescription =
   "Explore every event on HarEvent, from weddings and birthdays to corporate events and festivals, and find venues, decorators, caterers, photographers and more.";
 
+export function eventSlugify(value) {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 // Event Card
+
 function EventCard({ event }) {
   return (
-    <Link
-      to={`/enquiry?category=${encodeURIComponent(event.name)}&vendor=${encodeURIComponent(event.name)}`}
-      aria-label={`Explore ${event.name}`}
-      className="group relative flex aspect-square overflow-hidden rounded-[18px] bg-[#30232B] shadow-[0_8px_24px_rgba(54,29,39,0.12)] outline-none transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(54,29,39,0.2)] focus-visible:ring-2 focus-visible:ring-[#D4145A] focus-visible:ring-offset-2"
+    <div
+      className="group relative flex aspect-square cursor-default overflow-hidden rounded-[18px] bg-[#30232B] shadow-[0_8px_24px_rgba(54,29,39,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(54,29,39,0.2)]"
       style={{ aspectRatio: "1.5 / 1" }}
     >
       {/* Background Image */}
       <img
         src={event.image}
-        alt=""
-        aria-hidden="true"
+        alt={event.name}
         loading="lazy"
         decoding="async"
         className="absolute inset-0 z-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
       />
 
-      {/* Strong Bottom Black Overlay */}
+      {/* Bottom Black Overlay */}
       <div
-        className="absolute inset-0 z-10 pointer-events-none"
+        className="pointer-events-none absolute inset-0 z-10"
         style={{
           background:
             "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.72) 25%, rgba(0,0,0,0.30) 55%, rgba(0,0,0,0.02) 100%)",
         }}
       />
 
-      {/* Card Text */}
+      {/* Card Content */}
       <div className="relative z-20 mt-auto w-full p-4 sm:p-5">
-        <h3 className="text-[18px] font-semibold leading-snug text-white drop-shadow-md">
+        <h3 className="text-[18px] font-semibold leading-snug text-white">
           {event.name}
         </h3>
 
-        <p className="mt-1.5 line-clamp-2 text-[14px] leading-5 text-white drop-shadow-md">
+        <p className="mt-1.5 line-clamp-2 text-[14px] leading-5 text-white">
           {event.description}
         </p>
       </div>
-    </Link>
+    </div>
   );
 }
+
 
 export default function EventCategories() {
   const [query, setQuery] = useState("");
@@ -403,29 +412,6 @@ export default function EventCategories() {
         </section>
 
         {/* Bottom CTA */}
-        {/* <section className="mx-auto max-w-[1440px] px-5 pb-14 sm:px-8 sm:pb-16 lg:px-12">
-          <div className="flex flex-col gap-5 rounded-[22px] bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-6 py-8 text-white sm:px-9 sm:py-9 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <h2 className="font-playfair text-[26px] font-bold sm:text-[32px]">
-                Planning something different?
-              </h2>
-
-              <p className="mt-2 text-[14px] leading-6 text-white/90 sm:text-[16px]">
-                Share your requirements and connect with the right vendors.
-              </p>
-            </div>
-
-            <Link
-              to="/enquiry?category=Event%20Planning&vendor=Event%20Planner"
-              className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 self-start rounded-full bg-white px-5 text-[14px] font-semibold text-[#B70D45] transition hover:-translate-y-0.5 hover:bg-[#fff7f2] sm:text-[16px] lg:self-auto"
-            >
-              Send an Inquiry
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-        </section> */}
-
-
 <section className="mx-auto max-w-[1440px] px-5 pb-16 sm:px-8 sm:pb-20 lg:px-12">
   <div
     className="relative flex min-h-[260px] flex-col justify-center gap-8 overflow-hidden rounded-[24px] px-7 py-11 text-white shadow-[0_15px_35px_rgba(212,20,90,0.18)] sm:px-10 sm:py-14 lg:min-h-[280px] lg:flex-row lg:items-center lg:justify-between lg:px-14"

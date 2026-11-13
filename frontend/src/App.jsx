@@ -7,6 +7,7 @@ import Blogs from "./pages/Blogs";
 import Contact from "./pages/Contact";
 import Enquiry from "./pages/Enquiry";
 import EventCategories from "./pages/EventCategories";
+import EventCategoryDetail from "./pages/EventCategoryDetail";
 import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
 import JoinAsVendor from "./pages/JoinAsVendor";
@@ -30,6 +31,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/event-categories" element={<EventCategories />} />
+            <Route
+              path="/event-categories/:slug"
+              element={<EventCategoryDetail />}
+            />
             <Route path="/vendor-categories" element={<VendorCategories />} />
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/about" element={<About />} />
