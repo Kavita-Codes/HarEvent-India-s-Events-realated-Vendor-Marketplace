@@ -26,6 +26,7 @@ import {
   Landmark,
   HandHeart,
   Cake,
+  ArrowRight,
 } from "lucide-react";
 
 import Navbar from "../components/Navbar";
@@ -199,7 +200,7 @@ function EventCard({ event }) {
 
   return (
     <div
-      className="group relative isolate flex aspect-[1.5/1] cursor-default overflow-hidden rounded-[5px] bg-[#30232B] shadow-[0_5px_18px_rgba(0,0,0,0.10)]"
+      className="group relative isolate flex aspect-[1.5/1] cursor-default overflow-hidden rounded-[22px] bg-[#30232B] shadow-[0_5px_18px_rgba(0,0,0,0.10)]"
     >
       {/* Background Image */}
       <img
@@ -215,25 +216,29 @@ function EventCard({ event }) {
         className="absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.30) 55%, rgba(0,0,0,0.12) 100%)",
+            "linear-gradient(to top, rgba(83,38,34,0.88) 0%, rgba(83,38,34,0.58) 30%, rgba(0,0,0,0.18) 72%, rgba(0,0,0,0.08) 100%)",
         }}
       />
 
       {/* Bottom Content */}
-      <div className="mt-auto flex w-full items-center gap-4 px-6 py-5 sm:px-7">
-
+      <div className="mt-auto flex w-full items-center gap-3 px-4 py-4 sm:gap-4 sm:px-5 sm:py-5 lg:gap-5 lg:px-6">
         {/* Icon */}
-        <Icon
-          size={16}
-          strokeWidth={2}
-          className="shrink-0 text-white sm:h-6 sm:w-8"
-        />
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#FFF2E8] text-[#A64F3D] shadow-[0_4px_18px_rgba(0,0,0,0.16)]">
+          <Icon className="h-5 w-5" strokeWidth={1.8} />
+        </span>
 
         {/* Event Name */}
-        <h3 className="text-[16px] font-semibold leading-snug text-white sm:text-[19px]">
+        <h3 className="min-w-0 flex-1 font-playfair text-[17px] font-bold leading-tight text-white sm:text-[20px] lg:text-[25px]">
           {event.name}
         </h3>
 
+        {/* Decorative arrow */}
+        <span
+          aria-hidden="true"
+          className="flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-full border border-white/75 text-white transition-[background-color,border-color,transform] duration-300 group-hover:translate-x-1 group-hover:border-white group-hover:bg-white/10"
+        >
+          <ArrowRight className="h-5 w-5" strokeWidth={1.8} />
+        </span>
       </div>
     </div>
   );
