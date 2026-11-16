@@ -212,18 +212,25 @@ function EventCard({ event }) {
       />
 
       {/* Dark Overlay */}
-      <div
+      {/* <div
         className="absolute inset-0 -z-10"
         style={{
           background:
             "linear-gradient(to top, rgba(83,38,34,0.88) 0%, rgba(83,38,34,0.58) 30%, rgba(0,0,0,0.18) 72%, rgba(0,0,0,0.08) 100%)",
         }}
-      />
+      /> */}
+      <div
+  className="absolute inset-0 -z-10"
+  style={{
+    background:
+      "linear-gradient(to top, rgba(20,18,18,0.92) 0%, rgba(25,23,22,0.72) 30%, rgba(0,0,0,0.28) 72%, rgba(0,0,0,0.10) 100%)",
+  }}
+/>
 
       {/* Bottom Content */}
       <div className="mt-auto flex w-full items-center gap-2 px-3 py-3">
         {/* Icon */}
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FFF2E8] text-[#A64F3D] shadow-[0_3px_12px_rgba(0,0,0,0.18)] ring-1 ring-white/60">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FFF2E8] text-[#D4145A] shadow-[0_3px_12px_rgba(0,0,0,0.18)] ring-1 ring-white/60">
           <Icon className="h-4 w-4" strokeWidth={1.9} />
         </span>
 
@@ -238,7 +245,7 @@ function EventCard({ event }) {
         {/* Decorative arrow */}
         <span
           aria-hidden="true"
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/70 text-white/95 transition-[background-color,border-color,transform] duration-300 group-hover:translate-x-1 group-hover:border-white group-hover:bg-white/15"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/70 text-white/95 transition-[background-color,border-color,transform] duration-300 group-hover:translate-x-1 group-hover:bg-gradient-to-r from-[#D4145A] to-[#FF7628] "
         >
           <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
         </span>
