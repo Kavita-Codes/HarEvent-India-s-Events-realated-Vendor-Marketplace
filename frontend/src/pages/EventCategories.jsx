@@ -37,158 +37,158 @@ const events = [
   // Weddings and Wedding Functions
   {
     name: "Wedding",
-    image: "/Opulent Indian Garden Wedding Mandap.png",
+    image: "/wedding.jpg",
     icon: Heart,
   },
   {
     name: "Reception",
-    image: "/Joyful Newlywed Entrance at Reception.png",
+    image: "/reception.jpg",
     icon: PartyPopper,
   },
   {
     name: "Engagement",
-    image: "/Rohan and Eisha’s Floral Engagement.png",
+    image: "/engagement.jpg",
     icon: Heart,
   },
   {
     name: "Anniversary",
-    image: "/Romantic Anniversary Cake Cutting Celebration.png",
+    image: "/anniversary.jpg",
     icon: Gift,
   },
   {
     name: "Sangeet Ceremony",
-    image: "/Glittering Indian Wedding Dance Stage.png",
+    image: "/sangeet.jpg",
     icon: Music,
   },
   {
     name: "Naming Ceremony",
-    image: "/Elegant Indian Naming Ceremony Celebration.png",
+    image: "/naming.jpg",
     icon: Baby,
   },
   {
     name: "Baby Shower",
-    image: "/Elegant Pastel Baby Shower Celebration.png",
+    image: "/babyshower.jpg",
     icon: Baby,
   },
   {
     name: "Birthday",
-    image: "/Joyful Birthday Cake Celebration.png",
+    image: "/birthday.jpg",
     icon: Cake,
   },
   {
     name: "Housewarming / Griha Pravesh",
-    image: "/Golden Mandap Wedding Ceremony.png",
+    image: "/grihpravesh.jpg",
     icon: House,
   },
   {
     name: "Bachelor Party",
-    image: "/Lavish Nighttime Wedding Canopy.png",
+    image: "/bachelor.jpg",
     icon: PartyPopper,
   },
   {
     name: "Cocktail Party",
-    image: "/Lavish Indian Fusion Wedding Buffet.png",
+    image: "/cocktail.jpg",
     icon: Wine,
   },
   {
     name: "Private Parties",
-    image: "/Joyful Indian Family Celebration.png",
+    image: "/privateparties.jpg",
     icon: Users,
   },
   {
     name: "Family Get-Together",
-    image: "/Joyful Indian Family Celebration.png",
+    image: "/family get gether.jpg",
     icon: Users,
   },
   {
     name: "Reunion Party",
-    image: "/Joyful Indian Family Celebration.png",
+    image: "/reunion.jpg",
     icon: Handshake,
   },
   {
     name: "Farewell Party",
-    image: "/Farewell and Retirement Celebrations.png",
+    image: "/farewell.jpg",
     icon: Gift,
   },
   {
     name: "Graduation Ceremony",
-    image: "/Corporate Summit Networking Reception.png",
+    image: "/graduation.jpg",
     icon: GraduationCap,
   },
 
   // Corporate and Education
   {
     name: "Corporate Events",
-    image: "/Corporate Summit Networking Reception.png",
+    image: "/coporate.jpg",
     icon: Building2,
   },
   {
     name: "Conferences & Seminars",
-    image: "/Elegant Banquet Table Inspection.png",
+    image: "/conference.jpg",
     icon: Presentation,
   },
   {
     name: "Award Ceremonies",
-    image: "/Golden Wedding Buffet Under Crystal Lights.png",
+    image: "/award.jpg",
     icon: Trophy,
   },
   {
     name: "College Festivals",
-    image: "/Glittering Indian Wedding Dance Stage.png",
+    image: "/college.jpg",
     icon: GraduationCap,
   },
   {
     name: "School Events",
-    image: "/Joyful Birthday Cake Celebration.png",
+    image: "/school events.jpg",
     icon: School,
   },
 
   // Culture and Community
   {
     name: "Festival Celebrations",
-    image: "/Joyful Indian Family Celebration.png",
+    image: "/festival.jpg",
     icon: Sparkles,
   },
   {
     name: "Religious Events",
-    image: "/Golden Mandap Wedding Ceremony.png",
+    image: "/religious.jpg",
     icon: Church,
   },
   {
     name: "Cultural Events",
-    image: "/Joyful Indian Family Celebration.png",
+    image: "/cultural.avif",
     icon: Palette,
   },
   {
     name: "Community Events",
-    image: "/Elegant Banquet Table Inspection.png",
+    image: "/community.jpg",
     icon: Handshake,
   },
 
   // Shows and Special Events
   {
     name: "Concerts & Live Shows",
-    image: "/Glittering Indian Wedding Dance Stage.png",
+    image: "/concert.jpg",
     icon: Mic2,
   },
   {
     name: "Fashion Shows",
-    image: "/Corporate Summit Networking Reception.png",
+    image: "/fashion.jpg",
     icon: Shirt,
   },
   {
     name: "Sports Events",
-    image: "/Corporate Summit Networking Reception.png",
+    image: "/sports.jpg",
     icon: Trophy,
   },
   {
     name: "Political Events",
-    image: "/Corporate Summit Networking Reception.png",
+    image: "/political.png",
     icon: Landmark,
   },
   {
     name: "Charity & Fundraising Events",
-    image: "/Joyful Indian Family Celebration.png",
+    image: "/charity.jpg",
     icon: HandHeart,
   },
 ];
@@ -200,7 +200,7 @@ function EventCard({ event }) {
 
   return (
     <div
-      className="group relative isolate flex aspect-[1.5/1] cursor-default overflow-hidden rounded-[22px] bg-[#30232B] shadow-[0_5px_18px_rgba(0,0,0,0.10)]"
+      className="group relative isolate flex aspect-[1.5/1] cursor-default overflow-hidden rounded-[22px] bg-[#30232B] shadow-[0_5px_18px_rgba(0,0,0,0.10)] ring-1 ring-black/5 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(48,35,43,0.22)]"
     >
       {/* Background Image */}
       <img
@@ -221,23 +221,26 @@ function EventCard({ event }) {
       />
 
       {/* Bottom Content */}
-      <div className="mt-auto flex w-full items-center gap-3 px-4 py-4 sm:gap-4 sm:px-5 sm:py-5 lg:gap-5 lg:px-6">
+      <div className="mt-auto flex w-full items-center gap-2 px-3 py-3">
         {/* Icon */}
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#FFF2E8] text-[#A64F3D] shadow-[0_4px_18px_rgba(0,0,0,0.16)]">
-          <Icon className="h-5 w-5" strokeWidth={1.8} />
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FFF2E8] text-[#A64F3D] shadow-[0_3px_12px_rgba(0,0,0,0.18)] ring-1 ring-white/60">
+          <Icon className="h-4 w-4" strokeWidth={1.9} />
         </span>
 
         {/* Event Name */}
-        <h3 className="min-w-0 flex-1 font-playfair text-[17px] font-bold leading-tight text-white sm:text-[20px] lg:text-[25px]">
+        <h3
+          title={event.name}
+          className="min-w-0 flex-1 truncate font-playfair text-[15px] font-bold leading-tight text-white drop-shadow-sm sm:text-base"
+        >
           {event.name}
         </h3>
 
         {/* Decorative arrow */}
         <span
           aria-hidden="true"
-          className="flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-full border border-white/75 text-white transition-[background-color,border-color,transform] duration-300 group-hover:translate-x-1 group-hover:border-white group-hover:bg-white/10"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/70 text-white/95 transition-[background-color,border-color,transform] duration-300 group-hover:translate-x-1 group-hover:border-white group-hover:bg-white/15"
         >
-          <ArrowRight className="h-5 w-5" strokeWidth={1.8} />
+          <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
         </span>
       </div>
     </div>
