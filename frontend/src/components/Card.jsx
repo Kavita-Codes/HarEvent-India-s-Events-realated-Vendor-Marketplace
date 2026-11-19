@@ -1,6 +1,6 @@
 
 import { Image as ImageIcon, MapPin, BriefcaseBusiness } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 
 export const EASE_OUT = [0.22, 1, 0.36, 1];
@@ -11,6 +11,9 @@ export function VendorCard({
   showPricing = true,
   disableActionNavigation = false,
 }) {
+  const location = useLocation();
+  const returnTo = `${location.pathname}${location.search}${location.hash}`;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 34, scale: 0.97 }}
@@ -82,6 +85,7 @@ export function VendorCard({
           ) : (
             <Link
               to={vendor.inquiryUrl}
+              state={{ returnTo }}
               className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105 active:scale-[0.97]"
             >
               Send Inquiry
@@ -110,6 +114,8 @@ export function VendorCard({
 }
 
 export function EmptyVendorCard({ category }) {
+  const location = useLocation();
+  const returnTo = `${location.pathname}${location.search}${location.hash}`;
   const isAll = category === "All";
 
   return (
@@ -138,6 +144,7 @@ export function EmptyVendorCard({ category }) {
         <div className="mt-auto flex gap-2">
           <Link
             to="/enquiry"
+            state={{ returnTo }}
             className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-3 text-[13px] font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A] active:scale-[0.97]"
           >
             Send Inquiry

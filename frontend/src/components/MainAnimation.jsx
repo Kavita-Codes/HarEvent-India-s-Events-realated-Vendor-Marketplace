@@ -321,7 +321,11 @@ export function PageTransition({ children }) {
   const isVendorDirectory =
     location.pathname === "/vendor-categories" ||
     location.pathname.startsWith("/vendor-categories/");
-  const transitionKey = isVendorDirectory
+  const enquiryReturnsToVendorDirectory =
+    location.pathname === "/enquiry" &&
+    typeof location.state?.returnTo === "string" &&
+    location.state.returnTo.startsWith("/vendor-categories");
+  const transitionKey = isVendorDirectory || enquiryReturnsToVendorDirectory
     ? "/vendor-categories"
     : location.pathname;
 

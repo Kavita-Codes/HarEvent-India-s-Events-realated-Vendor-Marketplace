@@ -52,7 +52,9 @@ function VendorDirectory({
   selectedCategories,
   onChecklistVisibilityChange,
 }) {
+  const location = useLocation();
   const navigate = useNavigate();
+  const returnTo = `${location.pathname}${location.search}${location.hash}`;
   const cityMenuRef = useRef(null);
   const activeCategory =
     selectedCategories.length === 1 ? selectedCategories[0] : "All";
@@ -636,6 +638,7 @@ function VendorDirectory({
                     </button>
                     <Link
                       to={`/enquiry?${enquiryParams.toString()}`}
+                      state={{ returnTo }}
                       className="inline-flex h-10 items-center justify-center rounded-lg bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-4 text-sm font-semibold text-white transition hover:brightness-95"
                     >
                       Send an enquiry

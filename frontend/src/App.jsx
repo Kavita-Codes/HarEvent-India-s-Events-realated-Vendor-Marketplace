@@ -34,7 +34,10 @@ function ScrollToTop() {
       currentSegments[1] === "vendor-categories" &&
       previousSegments[2] === currentSegments[2] &&
       Boolean(currentSegments[2]);
-    if (changingVendorSelection) return;
+    const returningToVendorDirectory =
+      previousSegments[1] === "enquiry" &&
+      currentSegments[1] === "vendor-categories";
+    if (changingVendorSelection || returningToVendorDirectory) return;
 
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 

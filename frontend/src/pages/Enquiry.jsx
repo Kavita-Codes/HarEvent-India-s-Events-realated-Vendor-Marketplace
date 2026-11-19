@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { ArrowLeft, CalendarDays, CheckCircle2, MessageCircle, Send, ShieldCheck, UserRound } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 function Enquiry() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const returnTo = location.state?.returnTo;
   const vendor = searchParams.get("vendor") || "Event Professional";
   const category = searchParams.get("category") || "Vendor";
   const eventName = searchParams.get("event");
@@ -14,12 +17,25 @@ function Enquiry() {
     setSubmitted(true);
   }
 
+  function closeInquiry() {
+    if (
+      typeof returnTo === "string" &&
+      returnTo.startsWith("/") &&
+      !returnTo.startsWith("//")
+    ) {
+      navigate(-1);
+      return;
+    }
+
+    navigate("/vendor-categories", { replace: true });
+  }
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#FFF8FA] px-4 py-4 sm:px-6 sm:py-6">
       <div className="w-full max-w-lg">
-        <Link to="/" className="mb-3 inline-flex items-center gap-2 text-[14px] font-medium text-[#78646E] hover:text-[#D4145A]">
+        <button type="button" onClick={closeInquiry} className="mb-3 inline-flex items-center gap-2 text-[14px] font-medium text-[#78646E] hover:text-[#D4145A]">
           <ArrowLeft size={16} /> Back to HarEvent
-        </Link>
+        </button>
 
         <div className="overflow-hidden rounded-2xl border border-[#F1DDE5] bg-white shadow-[0_12px_32px_rgba(89,32,55,0.08)]">
           <header className="flex items-start justify-between gap-4 px-5 pb-3 pt-5 sm:px-6 sm:pt-6">
@@ -37,9 +53,9 @@ function Enquiry() {
                   : "Share a few details so the professional can understand your event."}
               </p>
             </div>
-            <Link to="/" aria-label="Close inquiry" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F8F1F4] text-[#8A7580] transition hover:bg-[#FCE8F0] hover:text-[#D4145A]">
+            <button type="button" onClick={closeInquiry} aria-label="Close inquiry" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F8F1F4] text-[#8A7580] transition hover:bg-[#FCE8F0] hover:text-[#D4145A]">
               <span aria-hidden="true" className="text-xl leading-none">×</span>
-            </Link>
+            </button>
           </header>
 
           <form onSubmit={handleSubmit} className="space-y-3 px-5 pb-5 sm:px-6 sm:pb-6">
