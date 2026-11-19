@@ -1,206 +1,23 @@
 
-import {
-  MapPin,
-  Utensils,
-  Camera,
-  Heart,
-  Music,
-  Baby,
-  Gift,
-  House,
-  PartyPopper,
-  Wine,
-  Users,
-  GraduationCap,
-  Building2,
-  Presentation,
-  Trophy,
-  School,
-  Sparkles,
-  Church,
-  Palette,
-  Handshake,
-  Mic2,
-  Shirt,
-  Dumbbell,
-  Landmark,
-  HandHeart,
-  Cake,
-  ArrowRight,
-} from "lucide-react";
-
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
-// All 30 Event Categories
-const events = [
-  // Weddings and Wedding Functions
-  {
-    name: "Wedding",
-    image: "/wedding.jpg",
-    icon: Heart,
-  },
-  {
-    name: "Reception",
-    image: "/reception.jpg",
-    icon: PartyPopper,
-  },
-  {
-    name: "Engagement",
-    image: "/engagement.jpg",
-    icon: Heart,
-  },
-  {
-    name: "Anniversary",
-    image: "/anniversary.jpg",
-    icon: Gift,
-  },
-  {
-    name: "Sangeet Ceremony",
-    image: "/sangeet.jpg",
-    icon: Music,
-  },
-  {
-    name: "Naming Ceremony",
-    image: "/naming.jpg",
-    icon: Baby,
-  },
-  {
-    name: "Baby Shower",
-    image: "/babyshower.jpg",
-    icon: Baby,
-  },
-  {
-    name: "Birthday",
-    image: "/birthday.jpg",
-    icon: Cake,
-  },
-  {
-    name: "Housewarming / Griha Pravesh",
-    image: "/grihpravesh.jpg",
-    icon: House,
-  },
-  {
-    name: "Bachelor Party",
-    image: "/bachelor.jpg",
-    icon: PartyPopper,
-  },
-  {
-    name: "Cocktail Party",
-    image: "/cocktail.jpg",
-    icon: Wine,
-  },
-  {
-    name: "Private Parties",
-    image: "/privateparties.jpg",
-    icon: Users,
-  },
-  {
-    name: "Family Get-Together",
-    image: "/family get gether.jpg",
-    icon: Users,
-  },
-  {
-    name: "Reunion Party",
-    image: "/reunion.jpg",
-    icon: Handshake,
-  },
-  {
-    name: "Farewell Party",
-    image: "/farewell.jpg",
-    icon: Gift,
-  },
-  {
-    name: "Graduation Ceremony",
-    image: "/graduation.jpg",
-    icon: GraduationCap,
-  },
-
-  // Corporate and Education
-  {
-    name: "Corporate Events",
-    image: "/coporate.jpg",
-    icon: Building2,
-  },
-  {
-    name: "Conferences & Seminars",
-    image: "/conference.jpg",
-    icon: Presentation,
-  },
-  {
-    name: "Award Ceremonies",
-    image: "/award.jpg",
-    icon: Trophy,
-  },
-  {
-    name: "College Festivals",
-    image: "/college.jpg",
-    icon: GraduationCap,
-  },
-  {
-    name: "School Events",
-    image: "/school events.jpg",
-    icon: School,
-  },
-
-  // Culture and Community
-  {
-    name: "Festival Celebrations",
-    image: "/festival.jpg",
-    icon: Sparkles,
-  },
-  {
-    name: "Religious Events",
-    image: "/religious.jpg",
-    icon: Church,
-  },
-  {
-    name: "Cultural Events",
-    image: "/cultural.avif",
-    icon: Palette,
-  },
-  {
-    name: "Community Events",
-    image: "/community.jpg",
-    icon: Handshake,
-  },
-
-  // Shows and Special Events
-  {
-    name: "Concerts & Live Shows",
-    image: "/concert.jpg",
-    icon: Mic2,
-  },
-  {
-    name: "Fashion Shows",
-    image: "/fashion.jpg",
-    icon: Shirt,
-  },
-  {
-    name: "Sports Events",
-    image: "/sports.jpg",
-    icon: Trophy,
-  },
-  {
-    name: "Political Events",
-    image: "/political.png",
-    icon: Landmark,
-  },
-  {
-    name: "Charity & Fundraising Events",
-    image: "/charity.jpg",
-    icon: HandHeart,
-  },
-];
-
+import Banner from "../components/Banner";
+import {
+  eventCategories,
+  getEventCategorySlug,
+} from "../data/eventCategories";
 
 // Event Card Component
 function EventCard({ event }) {
   const Icon = event.icon;
 
   return (
-    <div
-      className="group relative isolate flex aspect-[1.5/1] cursor-default overflow-hidden rounded-[22px] bg-[#30232B] shadow-[0_5px_18px_rgba(0,0,0,0.10)] ring-1 ring-black/5 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(48,35,43,0.22)]"
+    <Link
+      to={`/event-categories/${getEventCategorySlug(event.name)}`}
+      aria-label={`View ${event.name} event details`}
+      className="group relative isolate flex aspect-[1.5/1] cursor-pointer overflow-hidden rounded-[22px] bg-[#30232B] shadow-[0_5px_18px_rgba(0,0,0,0.10)] ring-1 ring-black/5 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(48,35,43,0.22)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
     >
       {/* Background Image */}
       <img
@@ -212,21 +29,13 @@ function EventCard({ event }) {
       />
 
       {/* Dark Overlay */}
-      {/* <div
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(83,38,34,0.88) 0%, rgba(83,38,34,0.58) 30%, rgba(0,0,0,0.18) 72%, rgba(0,0,0,0.08) 100%)",
-        }}
-      /> */}
-      <div
+<div
   className="absolute inset-0 -z-10"
   style={{
     background:
-      "linear-gradient(to top, rgba(20,18,18,0.92) 0%, rgba(25,23,22,0.72) 30%, rgba(0,0,0,0.28) 72%, rgba(0,0,0,0.10) 100%)",
+      "linear-gradient(to top, rgba(20,18,18,0.75) 0%, rgba(25,23,22,0.55) 30%, rgba(0,0,0,0.20) 72%, rgba(0,0,0,0.05) 100%)",
   }}
 />
-
       {/* Bottom Content */}
       <div className="mt-auto flex w-full items-center gap-2 px-3 py-3">
         {/* Icon */}
@@ -250,7 +59,7 @@ function EventCard({ event }) {
           <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
         </span>
       </div>
-    </div>
+      </Link>
   );
 }
 
@@ -263,28 +72,7 @@ export default function EventCategories() {
 
       <main className="min-h-screen bg-[#fafafa] font-poppins text-[#30232B]">
 
-        {/* Hero Banner */}
-        <section className="relative flex h-[200px] items-center justify-center overflow-hidden bg-[#21151f] sm:h-[200px] lg:h-[255px]">
-
-          <img
-            src="/Circle of Henna Hands.png"
-            alt=""
-            aria-hidden="true"
-            fetchPriority="high"
-            className="absolute inset-0 h-full w-full object-cover object-center"
-          />
-
-          {/* Black Overlay */}
-          <div className="absolute inset-0 bg-black/65" />
-
-          {/* Hero Heading */}
-          <div className="relative z-10 px-5 text-center">
-            <h1 className="text-[24px] font-bold leading-tight text-white sm:text-[30px] lg:text-[32px]">
-              India's Most Trusted Online Event Marketplace
-            </h1>
-          </div>
-
-        </section>
+        <Banner/>
 
 
         {/* Event Categories */}
@@ -298,7 +86,7 @@ export default function EventCategories() {
           {/* All 30 Event Cards */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
-            {events.map((event) => (
+            {eventCategories.map((event) => (
               <EventCard
                 key={event.name}
                 event={event}

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import MainAnimation, { PageTransition } from "./components/MainAnimation";
 import NiDiChatbot from "./services/NiDiChatbot";
 import About from "./pages/About";
@@ -16,6 +16,26 @@ import NotFound from "./pages/NotFound";
 import Search from "./pages/Search";
 import VendorCategories from "./pages/VendorCategories";
 
+const eventPageModules = import.meta.glob("./pages/events/*.jsx", {
+  eager: true,
+});
+
+function ScrollToTop() {
+  const { pathname, search, hash } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+    if (document.scrollingElement) {
+      document.scrollingElement.scrollTop = 0;
+    }
+
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [pathname, search, hash]);
+
+  return null;
+}
 
 function App() {
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
@@ -23,6 +43,7 @@ function App() {
   return (
     <BrowserRouter>
       <>
+        <ScrollToTop />
         {/* Brand intro: first thing rendered on every load / reload */}
         <MainAnimation />
 
@@ -30,6 +51,19 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/event-categories" element={<EventCategories />} />
+            {Object.entries(eventPageModules).map(([filePath, pageModule]) => {
+              const fileName = filePath.slice(filePath.lastIndexOf("/") + 1);
+              const slug = fileName.replace(/\.jsx$/, "");
+              const EventPage = pageModule.default;
+
+              return (
+                <Route
+                  key={slug}
+                  path={`/event-categories/${slug}`}
+                  element={<EventPage />}
+                />
+              );
+            })}
             <Route path="/vendor-categories" element={<VendorCategories />} />
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/about" element={<About />} />
