@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import MainAnimation, { PageTransition } from "./components/MainAnimation";
 import NiDiChatbot from "./services/NiDiChatbot";
@@ -22,8 +22,20 @@ const eventPageModules = import.meta.glob("./pages/events/*.jsx", {
 
 function ScrollToTop() {
   const { pathname, search, hash } = useLocation();
+  const previousPathname = useRef(pathname);
 
   useEffect(() => {
+    const previousSegments = previousPathname.current.split("/");
+    const currentSegments = pathname.split("/");
+    previousPathname.current = pathname;
+
+    const changingVendorSelection =
+      previousSegments[1] === "vendor-categories" &&
+      currentSegments[1] === "vendor-categories" &&
+      previousSegments[2] === currentSegments[2] &&
+      Boolean(currentSegments[2]);
+    if (changingVendorSelection) return;
+
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 
     if (document.scrollingElement) {
@@ -39,6 +51,11 @@ function ScrollToTop() {
 
 function App() {
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+  const [isChecklistOpen, setIsChecklistOpen] = useState(false);
+
+  useEffect(() => {
+    if (isChecklistOpen) setIsChatbotOpen(false);
+  }, [isChecklistOpen]);
 
   return (
     <BrowserRouter>
@@ -50,7 +67,14 @@ function App() {
         <PageTransition>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/event-categories" element={<EventCategories />} />
+            <Route
+              path="/event-categories"
+              element={
+                <EventCategories
+                  onChecklistVisibilityChange={setIsChecklistOpen}
+                />
+              }
+            />
             {Object.entries(eventPageModules).map(([filePath, pageModule]) => {
               const fileName = filePath.slice(filePath.lastIndexOf("/") + 1);
               const slug = fileName.replace(/\.jsx$/, "");
@@ -64,7 +88,22 @@ function App() {
                 />
               );
             })}
-            <Route path="/vendor-categories" element={<VendorCategories />} />
+            <Route
+              path="/vendor-categories"
+              element={
+                <VendorCategories
+                  onChecklistVisibilityChange={setIsChecklistOpen}
+                />
+              }
+            />
+            <Route
+              path="/vendor-categories/:eventSlug/:categorySlug"
+              element={
+                <VendorCategories
+                  onChecklistVisibilityChange={setIsChecklistOpen}
+                />
+              }
+            />
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
@@ -82,23 +121,27 @@ function App() {
           </Routes>
         </PageTransition>
 
-        <button
-          type="button"
-          onClick={() => setIsChatbotOpen((isOpen) => !isOpen)}
-          aria-label={isChatbotOpen ? "Close HarEvent chatbot" : "Open HarEvent chatbot"}
-          aria-expanded={isChatbotOpen}
-          aria-controls="harevent-chatbot"
-          title="Chat with NiDi"
-          className="fixed bottom-0 right-0 z-[60] flex h-40 w-40 items-center justify-center bg-transparent transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#12B886] max-sm:bottom-4 max-sm:right-4 motion-reduce:transition-none"
-        >
-          <img
-            src="/nidiBot.gif"
-            alt=""
-            aria-hidden="true"
-            className="h-30 w-40 object-contain"
-          />
-        </button>
-        {isChatbotOpen && (
+        {!isChecklistOpen && (
+          <button
+            type="button"
+            onClick={() => setIsChatbotOpen((isOpen) => !isOpen)}
+            aria-label={
+              isChatbotOpen ? "Close HarEvent chatbot" : "Open HarEvent chatbot"
+            }
+            aria-expanded={isChatbotOpen}
+            aria-controls="harevent-chatbot"
+            title="Chat with NiDi"
+            className="fixed bottom-0 right-0 z-[60] flex h-40 w-40 items-center justify-center bg-transparent transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#12B886] max-sm:bottom-4 max-sm:right-4 motion-reduce:transition-none"
+          >
+            <img
+              src="/nidiBot.gif"
+              alt=""
+              aria-hidden="true"
+              className="h-30 w-40 object-contain"
+            />
+          </button>
+        )}
+        {isChatbotOpen && !isChecklistOpen && (
           <div id="harevent-chatbot">
             <NiDiChatbot onClose={() => setIsChatbotOpen(false)} />
           </div>

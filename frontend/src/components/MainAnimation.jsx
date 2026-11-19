@@ -308,7 +308,8 @@ export function Reveal({
 }
 
 /**
- * PageTransition — soft cross-fade whenever the route changes.
+ * PageTransition — soft cross-fade when navigating between pages.
+ * Vendor-directory filter paths share a key so filtering keeps the page mounted.
  *
  * Deliberately opacity-only: a `transform` here would create a containing
  * block for the `position: fixed` elements living inside pages (modals,
@@ -317,10 +318,16 @@ export function Reveal({
 export function PageTransition({ children }) {
   const location = useLocation();
   const prefersReducedMotion = useReducedMotion();
+  const isVendorDirectory =
+    location.pathname === "/vendor-categories" ||
+    location.pathname.startsWith("/vendor-categories/");
+  const transitionKey = isVendorDirectory
+    ? "/vendor-categories"
+    : location.pathname;
 
   return (
     <motion.div
-      key={location.pathname}
+      key={transitionKey}
       initial={prefersReducedMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}

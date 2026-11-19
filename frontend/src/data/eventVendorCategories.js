@@ -1,0 +1,338 @@
+const weddingServices = [
+  "Venues",
+  "Decorators",
+  "Caterers",
+  "Makeup Artists",
+  "Photographers",
+  "Mehndi Artists",
+  "DJ'S",
+  "Jewellery on Rent",
+  "Invitation Cards / Designers",
+  "Choreographers",
+  "Groom Wear",
+  "Bridal Wear",
+  "Honeymoon",
+  "Gifts",
+  "Pandits",
+  "Rangoli Artists",
+  "Entertainment",
+];
+
+const celebrationServices = [
+  "Venues",
+  "Decorators",
+  "Caterers",
+  "Photographers",
+  "DJs & Music",
+  "Invitation Cards / Designers",
+  "Event Planners",
+  "Entertainment",
+];
+
+const corporateServices = [
+  "Corporate Event Planners",
+  "Corporate Venues",
+  "Conference & Meeting Halls",
+  "Hotels & Resorts",
+  "Decorators",
+  "Corporate Caterers",
+  "Photographers",
+  "Videographers",
+  "DJs & Music",
+  "Live Bands & Singers",
+  "Anchors & Emcees",
+  "Entertainment Artists",
+  "Stage Setup",
+  "Sound & Lighting",
+  "LED Wall & Screen Rentals",
+];
+
+const eventVendorCategories = {
+  wedding: weddingServices,
+  reception: weddingServices.filter((service) => service !== "Honeymoon"),
+  engagement: [
+    ...weddingServices.filter(
+      (service) =>
+        service !== "Groom Wear" &&
+        service !== "Bridal Wear" &&
+        service !== "Honeymoon",
+    ),
+  ],
+  anniversary: [
+    "Venues",
+    "Decorators",
+    "Caterers",
+    "Makeup Artists",
+    "Photographers",
+    "Mehndi Artists",
+    "DJ'S",
+    "Gifts",
+    "Invitation Cards / Designers",
+    "Choreographers",
+    "Rangoli Artists",
+    "Entertainment",
+  ],
+  "sangeet-ceremony": [
+    ...weddingServices.filter(
+      (service) =>
+        service !== "Honeymoon" &&
+        service !== "Pandits" &&
+        service !== "Gifts" &&
+        service !== "Rangoli Artists",
+    ),
+  ],
+  "naming-ceremony": [
+    "Venues",
+    "Decorators",
+    "Caterers",
+    "Makeup Artists",
+    "Photographers",
+    "Mehndi Artists",
+    "Rangoli Artists",
+    "Jewellery on Rent",
+    "Invitation Cards / Designers",
+    "Entertainment",
+  ],
+  "baby-shower": [
+    "Venues",
+    "Decorators",
+    "Caterers",
+    "Makeup Artists",
+    "Photographers",
+    "Mehndi Artists",
+    "Rangoli Artists",
+    "Jewellery on Rent",
+    "Invitation Cards / Designers",
+    "Entertainment",
+  ],
+  birthday: [
+    "Venues",
+    "Decorators",
+    "Caterers",
+    "DJ'S",
+    "Photographers",
+    "Invitation Cards / Designers",
+    "Choreographers",
+    "Gifts",
+    "Entertainment",
+  ],
+  "housewarming-griha-pravesh": [
+    "Decorators",
+    "Caterers",
+    "Makeup Artists",
+    "Photographers",
+    "Mehndi Artists",
+    "Invitation Cards / Designers",
+    "Gifts",
+    "Pandits",
+    "Rangoli Artists",
+    "Entertainment",
+  ],
+  "bachelor-party": celebrationServices,
+  "cocktail-party": celebrationServices,
+  "private-parties": celebrationServices,
+  "family-get-together": celebrationServices,
+  "reunion-party": celebrationServices,
+  "farewell-party": celebrationServices,
+  "graduation-ceremony": [
+    "Event Planners",
+    "Venues",
+    "Decorators",
+    "Caterers",
+    "Photographers",
+    "Videographers",
+    "Anchors & Emcees",
+    "Stage Setup",
+    "Sound & Lighting",
+    "DJs & Music",
+  ],
+  "corporate-events": corporateServices,
+  "conferences-seminars": [
+    "Conference Event Planners",
+    "Conference & Meeting Halls",
+    "Hotels & Resorts",
+    "Decorators",
+    "Corporate Caterers",
+    "Photographers",
+    "Videographers",
+    "Anchors & Emcees",
+    "DJs & Music",
+    "Live Bands & Singers",
+  ],
+  "award-ceremonies": [
+    "Corporate Event Planners",
+    "Corporate Venues",
+    "Hotels & Resorts",
+    "Decorators",
+    "Corporate Caterers",
+    "Photographers",
+    "Videographers",
+    "Anchors & Emcees",
+    "Stage Setup",
+    "Sound & Lighting",
+    "LED Wall & Screen Rentals",
+  ],
+  "college-festivals": [
+    "Event Planners",
+    "Auditoriums & Event Venues",
+    "Decorators",
+    "Caterers",
+    "Photographers",
+    "DJs & Music",
+    "Live Bands & Singers",
+    "Stage Setup",
+    "Sound & Lighting",
+    "Security Services",
+  ],
+  "school-events": [
+    "Event Planners",
+    "Auditoriums & Event Venues",
+    "Decorators",
+    "Caterers",
+    "Photographers",
+    "Videographers",
+    "Anchors & Emcees",
+    "Stage Setup",
+    "Sound & Lighting",
+  ],
+  "festival-celebrations": [
+    "Event Planners",
+    "Venues",
+    "Decorators",
+    "Caterers",
+    "Photographers",
+    "Pandits",
+    "Rangoli Artists",
+    "Live Bands & Singers",
+    "Sound & Lighting",
+    "Entertainment",
+  ],
+  "religious-events": [
+    "Event Planners",
+    "Venues",
+    "Decorators",
+    "Caterers",
+    "Photographers",
+    "Pandits",
+    "Rangoli Artists",
+    "Sound & Lighting",
+  ],
+  "cultural-events": [
+    "Event Planners",
+    "Venues",
+    "Decorators",
+    "Caterers",
+    "Photographers",
+    "DJs & Music",
+    "Live Bands & Singers",
+    "Stage Setup",
+    "Sound & Lighting",
+    "Entertainment",
+  ],
+  "community-events": [
+    "Event Planners",
+    "Venues",
+    "Decorators",
+    "Caterers",
+    "Photographers",
+    "Anchors & Emcees",
+    "Live Bands & Singers",
+    "Sound & Lighting",
+    "Security Services",
+  ],
+  "concerts-live-shows": [
+    "Concert & Show Organisers",
+    "Concert Venues",
+    "Stage Setup",
+    "Sound & Lighting",
+    "LED Wall & Screen Rentals",
+    "Live Bands & Singers",
+    "DJs & Music",
+    "Photographers",
+    "Caterers",
+    "Security Services",
+  ],
+  "fashion-shows": [
+    "Fashion Show Producers",
+    "Event Venues",
+    "Stage Setup",
+    "Sound & Lighting",
+    "Makeup Artists",
+    "Fashion Designers",
+    "Models & Talent",
+    "Photographers",
+    "Videographers",
+    "LED Wall & Screen Rentals",
+  ],
+  "sports-events": [
+    "Sports Event Planners",
+    "Sports Venues",
+    "Stage Setup",
+    "Sound & Lighting",
+    "Caterers",
+    "Photographers",
+    "Videographers",
+    "Anchors & Emcees",
+    "Security Services",
+    "Medical Support",
+  ],
+  "political-events": [
+    "Event Planners",
+    "Event Venues",
+    "Stage Setup",
+    "Sound & Lighting",
+    "LED Wall & Screen Rentals",
+    "Caterers",
+    "Photographers",
+    "Videographers",
+    "Security Services",
+    "Transport Services",
+  ],
+  "charity-fundraising-events": [
+    "Event Planners",
+    "Venues",
+    "Decorators",
+    "Caterers",
+    "Photographers",
+    "Live Bands & Singers",
+    "Anchors & Emcees",
+    "Sound & Lighting",
+    "Invitation Cards / Designers",
+  ],
+};
+
+export function getVendorCategoriesForEvent(eventSlug) {
+  return eventVendorCategories[eventSlug] || celebrationServices;
+}
+
+const slugifyVendorCategory = (category) =>
+  category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+export function buildVendorDirectoryPath(
+  eventSlug,
+  selectedCategories,
+  allCategories,
+) {
+  const selected = new Set(selectedCategories);
+  const selectedInDisplayOrder = allCategories.filter((category) =>
+    selected.has(category),
+  );
+  const categorySlug =
+    selectedInDisplayOrder.length === 0
+      ? "none"
+      : selectedInDisplayOrder.length === allCategories.length
+        ? "all"
+        : selectedInDisplayOrder.map(slugifyVendorCategory).join("+");
+
+  return `/vendor-categories/${eventSlug || "all"}/${categorySlug}`;
+}
+
+export function parseVendorDirectoryCategories(categorySlug, allCategories) {
+  if (!categorySlug || categorySlug === "all") return [...allCategories];
+  if (categorySlug === "none") return [];
+
+  const selectedSlugs = new Set(categorySlug.split("+"));
+  return allCategories.filter((category) =>
+    selectedSlugs.has(slugifyVendorCategory(category)),
+  );
+}

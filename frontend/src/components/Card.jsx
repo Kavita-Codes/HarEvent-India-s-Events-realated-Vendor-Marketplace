@@ -33,6 +33,11 @@ export function VendorCard({
         <span className="pointer-events-none absolute inset-0 overflow-hidden">
           <span className="absolute -left-full top-[-25%] h-[150%] w-[55%] rotate-[18deg] bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 transition-[left,opacity] duration-[1100ms] ease-out group-hover:left-[150%] group-hover:opacity-100" />
         </span>
+        {vendor.isDemo && (
+          <span className="absolute left-3 top-3 z-10 rounded-full border border-white/80 bg-white/90 px-2.5 py-1 text-[10px] font-semibold text-[#A92D58] shadow-sm backdrop-blur-sm">
+            Sample listing
+          </span>
+        )}
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col px-4 pb-4 sm:px-5">

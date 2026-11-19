@@ -20,8 +20,8 @@ body {
 
 /* Custom Thin HarEvent Gradient Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -40,6 +40,14 @@ body {
 * {
   scrollbar-width: thin;
   scrollbar-color: #D4145A #fff5f8;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 .signup-mode-toggle__fill {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
-import { vendorListings as vendors } from "../data/vendorListings";
+import { vendorListings } from "../data/vendorListings";
 import {
   EASE_OUT,
   VendorCard,
@@ -17,6 +17,9 @@ const filters = [
   "Catering",
   "Entertainment",
 ];
+const vendors = vendorListings.filter(
+  (vendor) => vendor.eventSlugs?.includes("wedding") && !vendor.isDemo,
+);
 
 export default function PopularVendors() {
   const [activeFilter, setActiveFilter] = useState("All");
