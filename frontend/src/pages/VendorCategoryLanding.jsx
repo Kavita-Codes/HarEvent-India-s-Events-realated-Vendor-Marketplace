@@ -49,7 +49,7 @@ const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
 const categoryCards = [
   {
     name: "All Vendors",
-    image: "/Joyful Indian Family Celebration.png",
+    image: "/party.png",
     icon: BriefcaseBusiness,
     isAll: true,
   },

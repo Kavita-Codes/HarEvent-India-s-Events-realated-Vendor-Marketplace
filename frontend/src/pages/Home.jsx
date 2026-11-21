@@ -13,7 +13,7 @@ import LatestBlogs from "../components/LatestBlogs";
 import Footer from "../components/Footer";
 import LoginModal from "../components/LoginModal";
 
-function Home() {
+function Home({ onChecklistVisibilityChange }) {
   const location = useLocation();
   const navigate = useNavigate();
   const requestedForm = new URLSearchParams(location.search).get("form");
@@ -42,7 +42,7 @@ function Home() {
       <Hero />
       <BrandsAndPartners />
       <HowItWorks />
-      <Events />
+      <Events onChecklistVisibilityChange={onChecklistVisibilityChange} />
       <FindRightVendor />
       <PopularVendors />
       <WhyChooseHarEvent />

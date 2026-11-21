@@ -1,9 +1,9 @@
-import { vendorListings } from "./vendorListings";
 import { vendorSubcategories } from "./vendorSubcategories";
 
-export const vendorCategoryNames = [
-  ...new Set([
-    ...Object.keys(vendorSubcategories),
-    ...vendorListings.map((vendor) => vendor.serviceType),
-  ]),
-];
+const allVendorCategories = Object.keys(vendorSubcategories);
+const panditsIndex = allVendorCategories.indexOf("Pandits");
+
+export const vendorCategoryNames = allVendorCategories.slice(
+  0,
+  panditsIndex + 1,
+);

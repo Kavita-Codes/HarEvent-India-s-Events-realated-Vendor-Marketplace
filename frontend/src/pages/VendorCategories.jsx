@@ -37,11 +37,61 @@ const availableCities = [
 ].sort();
 const vendorsPerPage = 12;
 
+function getTokens(value) {
+  return value.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+}
+
+function stemToken(value) {
+  let token = normalize(value);
+
+  if (token.endsWith("ies") && token.length > 4) {
+    token = `${token.slice(0, -3)}y`;
+  } else if (token.endsWith("s") && token.length > 3) {
+    token = token.slice(0, -1);
+  }
+
+  if (token.endsWith("ers") && token.length > 5) {
+    return token.slice(0, -3);
+  }
+  if (token.endsWith("er") && token.length > 4) {
+    return token.slice(0, -2);
+  }
+  if (token.endsWith("ing") && token.length > 5) {
+    return token.slice(0, -3);
+  }
+  if (token.endsWith("y") && token.length > 3) {
+    return token.slice(0, -1);
+  }
+  return token;
+}
+
 function vendorMatchesCategory(vendor, category) {
-  const normalizedCategory = normalize(category);
+  const categoryTokens = getTokens(category).map(stemToken);
   return [vendor.serviceType, vendor.filterCategory, vendor.category]
     .filter(Boolean)
-    .some((value) => normalize(value) === normalizedCategory);
+    .some((value) => {
+      const vendorTokens = getTokens(value).map(stemToken);
+      return categoryTokens.every((token) => vendorTokens.includes(token));
+    });
+}
+
+function vendorMatchesSubcategory(vendor, subcategory) {
+  const requestedTokens = getTokens(subcategory).map(stemToken);
+  const vendorTokens = [
+    vendor.serviceType,
+    vendor.category,
+    vendor.description,
+    ...(vendor.subcategories || []),
+    ...(vendor.services || []),
+    ...(vendor.eventSlugs || []).map((eventSlug) =>
+      eventSlug.replace(/-/g, " "),
+    ),
+  ]
+    .filter(Boolean)
+    .flatMap(getTokens)
+    .map(stemToken);
+
+  return requestedTokens.every((token) => vendorTokens.includes(token));
 }
 
 function VendorDirectory({
@@ -62,8 +112,17 @@ function VendorDirectory({
   const [activeSubcategories, setActiveSubcategories] = useState(
     () => new URLSearchParams(location.search).getAll("subcategory"),
   );
-  const [city, setCity] = useState("");
-  const [search, setSearch] = useState("");
+  const [city, setCity] = useState(() => {
+    const requestedCity = new URLSearchParams(location.search).get("city") || "";
+    return (
+      availableCities.find(
+        (availableCity) => normalize(availableCity) === normalize(requestedCity),
+      ) || requestedCity
+    );
+  });
+  const [search, setSearch] = useState(
+    () => new URLSearchParams(location.search).get("search") || "",
+  );
   const [minimumPrice, setMinimumPrice] = useState("");
   const [maximumPrice, setMaximumPrice] = useState("");
   const [sortOrder, setSortOrder] = useState("recommended");
@@ -126,16 +185,27 @@ function VendorDirectory({
 
   const minPrice = minimumPrice === "" ? null : Number(minimumPrice);
   const maxPrice = maximumPrice === "" ? null : Number(maximumPrice);
+  const searchTerms = search
+    .trim()
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter(Boolean);
   const eventVendors = event
     ? vendorListings.filter((vendor) => vendor.eventSlugs?.includes(eventSlug))
     : vendorListings;
   const hasEventVendors = eventVendors.length > 0;
+  const includeUnlistedCategoriesInSearch =
+    !event &&
+    eventSlug === "all" &&
+    selectedCategories.length === categoryOptions.length &&
+    searchTerms.length > 0;
   const activeSubcategorySet = new Set(activeSubcategories.map(normalize));
   const filteredVendors = eventVendors.filter((vendor) => {
     if (
       !selectedCategories.some((category) =>
         vendorMatchesCategory(vendor, category),
-      )
+      ) &&
+      !includeUnlistedCategoriesInSearch
     ) {
       return false;
     }
@@ -147,27 +217,45 @@ function VendorDirectory({
     }
     if (
       activeSubcategorySet.size > 0 &&
-      !(vendor.subcategories || []).some((subcategory) =>
-        activeSubcategorySet.has(normalize(subcategory)),
+      !activeSubcategories.some((subcategory) =>
+        vendorMatchesSubcategory(vendor, subcategory),
       )
     ) {
       return false;
     }
-    if (city && !(vendor.cities || []).includes(city)) return false;
+    if (
+      city &&
+      !(vendor.cities || []).some(
+        (vendorCity) => normalize(vendorCity) === normalize(city),
+      )
+    ) {
+      return false;
+    }
     if (minPrice !== null && vendor.priceValue < minPrice) return false;
     if (maxPrice !== null && vendor.priceValue > maxPrice) return false;
 
-    const searchableText = [
+    const searchableTokens = [
       vendor.businessName,
       vendor.category,
       vendor.serviceType,
       vendor.description,
       ...(vendor.services || []),
       ...(vendor.subcategories || []),
+      ...(vendor.eventSlugs || []).map((eventSlug) =>
+        eventSlug.replace(/-/g, " "),
+      ),
     ]
       .join(" ")
-      .toLowerCase();
-    return searchableText.includes(search.trim().toLowerCase());
+      .toLowerCase()
+      .split(/[^a-z0-9]+/)
+      .filter(Boolean);
+    return searchTerms.every((term) => {
+      const singular = term.replace(/s$/, "");
+      return searchableTokens.some(
+        (token) =>
+          token === term || token === singular || token === `${singular}s`,
+      );
+    });
   });
   const visibleVendors =
     sortOrder === "price-low"
@@ -195,23 +283,28 @@ function VendorDirectory({
   const enquiryParams = new URLSearchParams({ category: enquiryCategory });
   if (event?.name) enquiryParams.set("event", event.name);
 
+  function navigateToCategories(categories) {
+    const path = buildVendorDirectoryPath(eventSlug, categories, categoryOptions);
+    const searchParams = new URLSearchParams();
+    if (city.trim()) searchParams.set("city", city.trim());
+    if (search.trim()) searchParams.set("search", search.trim());
+
+    const query = searchParams.toString();
+    navigate(query ? `${path}?${query}` : path, { replace: true });
+  }
+
   function toggleCategory(category) {
     const next = new Set(selectedCategories);
     if (next.has(category)) next.delete(category);
     else next.add(category);
     setActiveSubcategories([]);
-    navigate(
-      buildVendorDirectoryPath(eventSlug, [...next], categoryOptions),
-      { replace: true },
-    );
+    navigateToCategories([...next]);
   }
 
   function chooseCategory(category) {
     setActiveSubcategories([]);
     const next = category === "All" ? categoryOptions : [category];
-    navigate(buildVendorDirectoryPath(eventSlug, next, categoryOptions), {
-      replace: true,
-    });
+    navigateToCategories(next);
   }
 
   function clearFilters() {

@@ -394,9 +394,51 @@ const weddingVendorListings = [
   eventSlugs: ["wedding"],
 }));
 
+const sportsEventVendors = [
+  {
+    id: "sample-sports-event-planners",
+    slug: "sample-sports-event-planners",
+    eventSlugs: ["sports-events"],
+    serviceType: "Sports Event Planners",
+    category: "Sports Event Planning",
+    cities: ["Pune", "Mumbai"],
+    businessName: "Sample Playbook Sports Events",
+    description:
+      "Demo sports event team for tournament planning, match-day operations, and fan experiences.",
+    location: "Pune",
+    priceValue: 45000,
+    priceFrom: "₹45,000",
+    priceNote: "sample rate",
+    portfolioImage: "/sports.jpg",
+    imageAlt: "Sports event arena prepared for a tournament",
+    services: ["Tournament planning", "Match-day operations", "Fan experiences"],
+    isDemo: true,
+  },
+  {
+    id: "sample-sports-venues",
+    slug: "sample-sports-venues",
+    eventSlugs: ["sports-events"],
+    serviceType: "Sports Venues",
+    category: "Sports Venues",
+    cities: ["Pune", "Mumbai"],
+    businessName: "Sample Arena Sports Grounds",
+    description:
+      "Demo sports venue listing for tournaments, team events, and community games.",
+    location: "Mumbai",
+    priceValue: 65000,
+    priceFrom: "₹65,000",
+    priceNote: "sample rate",
+    portfolioImage: "/sports.jpg",
+    imageAlt: "Sports arena venue for tournaments and events",
+    services: ["Tournament grounds", "Team facilities", "Event-day venue support"],
+    isDemo: true,
+  },
+];
+
 export const vendorListings = [
   ...weddingVendorListings,
   ...eventVendorSamples,
+  ...sportsEventVendors,
 ].map((vendor) => ({
   ...vendor,
   inquiryUrl: `/enquiry?vendor=${encodeURIComponent(vendor.businessName)}&category=${encodeURIComponent(vendor.category)}`,

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   CalendarDays,
@@ -8,6 +9,12 @@ import {
   ChevronDown,
   Star,
 } from "lucide-react";
+import { eventCategories, getEventCategorySlug } from "../data/eventCategories";
+import {
+  buildVendorDirectoryPath,
+  getVendorCategoriesForEvent,
+} from "../data/eventVendorCategories";
+import { vendorCategoryNames } from "../data/vendorCategories";
 
 const eventOptions = [
   "Weddings",
@@ -19,8 +26,8 @@ const eventOptions = [
   "Receptions",
   "Pre-Wedding Events",
   "Naming Ceremonies",
-  "Family & Social Gatherings",
-  "Farewell & Retirement",
+  "Conferences & Seminars",
+  "Sports Events",
 ];
 
 const vendorOptions = [
@@ -32,6 +39,32 @@ const vendorOptions = [
   "Makeup Artist",
   "Entertainment",
 ];
+
+const eventCategoryAliases = {
+  Weddings: "Wedding",
+  Birthdays: "Birthday",
+  Engagements: "Engagement",
+  "Baby Showers": "Baby Shower",
+  Anniversaries: "Anniversary",
+  Receptions: "Reception",
+  "Pre-Wedding Events": "Wedding",
+  "Naming Ceremonies": "Naming Ceremony",
+};
+
+const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+function findVendorCategory(value, categories) {
+  const normalizedValue = normalize(value);
+  const singularValue = normalizedValue.replace(/s$/, "");
+
+  return (
+    categories.find((category) => normalize(category) === normalizedValue) ||
+    categories.find(
+      (category) => normalize(category).replace(/s$/, "") === singularValue,
+    ) ||
+    categories.find((category) => normalize(category).includes(singularValue))
+  );
+}
 
 const rotatingKeywords = [
   "Venues",
@@ -62,6 +95,7 @@ const fade = (delay) => ({
 });
 
 function Hero() {
+  const navigate = useNavigate();
   const [eventType, setEventType] = useState("");
   const [vendorCategory, setVendorCategory] = useState("");
   const [location, setLocation] = useState("");
@@ -100,6 +134,40 @@ function Hero() {
     }
 
     setOpenDropdown(null);
+  };
+
+  const handleSearch = (submitEvent) => {
+    submitEvent.preventDefault();
+
+    const eventName = eventCategoryAliases[eventType] || eventType;
+    const selectedEvent = eventCategories.find(
+      (event) => event.name === eventName,
+    );
+    const eventSlug = selectedEvent
+      ? getEventCategorySlug(selectedEvent.name)
+      : "all";
+    const categories = selectedEvent
+      ? getVendorCategoriesForEvent(eventSlug)
+      : vendorCategoryNames;
+    const matchedCategory = vendorCategory
+      ? findVendorCategory(vendorCategory, categories)
+      : null;
+    const selectedCategories = vendorCategory
+      ? matchedCategory
+        ? [matchedCategory]
+        : []
+      : categories;
+    const path = buildVendorDirectoryPath(
+      eventSlug,
+      selectedCategories,
+      categories,
+    );
+    const searchParams = new URLSearchParams();
+
+    if (location.trim()) searchParams.set("city", location.trim());
+
+    const query = searchParams.toString();
+    navigate(query ? `${path}?${query}` : path);
   };
 
   const renderDropdown = (type, value, placeholder, options, Icon) => (
@@ -288,7 +356,7 @@ function Hero() {
             className="mx-auto mt-8 w-full max-w-[940px] rounded-[12px] border border-white/30 bg-black/25 p-3 text-left shadow-xl backdrop-blur-md sm:p-4"
           >
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSearch}
               className="grid grid-cols-1 items-center gap-2.5 sm:grid-cols-2 lg:grid-cols-[1fr_1.1fr_0.85fr_auto]"
             >
               {renderDropdown(

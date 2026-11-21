@@ -1,60 +1,35 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Heart,
-  Cake,
-  Gem,
-  BriefcaseBusiness,
-  Baby,
-  GlassWater,
-  Flower2,
-  Camera,
-  UsersRound,
-  PartyPopper,
-  Sparkles,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
+import EventVendorChecklistModal from "./EventVendorChecklistModal";
+import { eventCategories, getEventCategorySlug } from "../data/eventCategories";
 import useMediaQuery from "../hooks/useMediaQuery";
 
-const events = [
-  { title: "Weddings", icon: Heart, path: "/events/weddings" },
-  { title: "Birthdays", icon: Cake, path: "/events/birthdays" },
-  { title: "Engagements", icon: Gem, path: "/events/engagements" },
-  {
-    title: "Corporate Events",
-    icon: BriefcaseBusiness,
-    path: "/events/corporate-events",
-  },
-  { title: "Baby Showers", icon: Baby, path: "/events/baby-showers" },
-  { title: "Anniversaries", icon: GlassWater, path: "/events/anniversaries" },
-  { title: "Receptions", icon: Flower2, path: "/events/receptions" },
-  { title: "Haldi & Mehendi", icon: Sparkles, path: "/events/haldi-mehendi" },
-  {
-    title: "Pre-Wedding Events",
-    icon: Camera,
-    path: "/events/pre-wedding-events",
-  },
-  {
-    title: "Naming Ceremonies",
-    icon: Baby,
-    path: "/events/naming-ceremonies",
-  },
-  {
-    title: "Family & Social Gatherings",
-    icon: UsersRound,
-    path: "/events/family-social-gatherings",
-  },
-  {
-    title: "Farewell & Retirement",
-    icon: PartyPopper,
-    path: "/events/farewell-retirement",
-  },
+const eventShortcuts = [
+  { title: "Weddings", categoryName: "Wedding" },
+  { title: "Birthdays", categoryName: "Birthday" },
+  { title: "Engagements", categoryName: "Engagement" },
+  { title: "Baby Showers", categoryName: "Baby Shower" },
+  { title: "Anniversaries", categoryName: "Anniversary" },
+  { title: "Receptions", categoryName: "Reception" },
+  { title: "Haldi & Mehendi", categoryName: "Wedding" },
+  { title: "Pre-Wedding Events", categoryName: "Wedding" },
+  { title: "Naming Ceremonies", categoryName: "Naming Ceremony" },
+  { title: "Corporate Events", categoryName: "Corporate Events" },
+  { title: "Conferences & Seminars", categoryName: "Conferences & Seminars" },
+  { title: "Sports Events", categoryName: "Sports Events" },
 ];
+
+const events = eventShortcuts.map(({ title, categoryName }) => ({
+  title,
+  category: eventCategories.find((event) => event.name === categoryName),
+}));
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
-function EventCapsule({ event, index, reduced }) {
-  const Icon = event.icon;
+function EventCapsule({ event, index, reduced, onSelect }) {
+  const Icon = event.category.icon;
   const delay = index * 0.055;
 
   return (
@@ -65,9 +40,14 @@ function EventCapsule({ event, index, reduced }) {
       transition={{ duration: 0.5, delay, ease: EASE_OUT }}
       className="h-full"
     >
-      <Link
-        to={event.path}
-        className="group relative flex h-full items-center gap-3 overflow-hidden rounded-full border border-[#F1DDE5] bg-white px-3.5 py-3 no-underline shadow-[0_2px_10px_rgba(71,34,52,0.04)] outline-none transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-[#E9A0BA] hover:shadow-[0_14px_30px_rgba(71,34,52,0.12)] focus-visible:ring-2 focus-visible:ring-[#D4145A] focus-visible:ring-offset-2 active:translate-y-0 sm:gap-3.5 sm:px-4"
+      <button
+        type="button"
+        onClick={(clickEvent) =>
+          onSelect(event.category, clickEvent.currentTarget)
+        }
+        aria-label={`Choose vendors for ${event.title}`}
+        aria-haspopup="dialog"
+        className="group relative flex h-full w-full items-center gap-3 overflow-hidden rounded-full border border-[#F1DDE5] bg-white px-3.5 py-3 text-left no-underline shadow-[0_2px_10px_rgba(71,34,52,0.04)] outline-none transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-[#E9A0BA] hover:shadow-[0_14px_30px_rgba(71,34,52,0.12)] focus-visible:ring-2 focus-visible:ring-[#D4145A] focus-visible:ring-offset-2 active:translate-y-0 sm:gap-3.5 sm:px-4"
       >
         {/* Soft gradient wash fades in behind the pill — no shapes, no circles */}
         <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#D4145A]/[0.08] via-[#FF7628]/[0.05] to-transparent opacity-0 transition-opacity duration-400 ease-out group-hover:opacity-100 group-focus-visible:opacity-100" />
@@ -84,15 +64,18 @@ function EventCapsule({ event, index, reduced }) {
           size={15}
           className="relative shrink-0 -translate-x-1.5 text-[#D4145A] opacity-0 transition-[opacity,transform] duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 max-sm:translate-x-0 max-sm:opacity-100"
         />
-      </Link>
+      </button>
     </motion.div>
   );
 }
 
-export default function Events() {
+export default function Events({ onChecklistVisibilityChange }) {
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const [activeEvent, setActiveEvent] = useState(null);
+  const [modalOpener, setModalOpener] = useState(null);
 
   return (
+    <>
     <section className="relative isolate w-full overflow-hidden bg-white px-4 py-12 font-poppins sm:px-6 sm:py-14 lg:px-8 lg:py-16 motion-reduce:[&_*]:transition-none">
       <div className="mx-auto w-full max-w-[1440px]">
         <header className="mb-10 text-center sm:mb-12">
@@ -130,7 +113,7 @@ export default function Events() {
           </motion.p>
         </header>
 
-        {/* Capsule grid: twelve aligned pills, no numbers, no drifting shapes */}
+        {/* Capsule grid: aligned event shortcuts, no numbers or drifting shapes */}
         <div className="mx-auto w-full max-w-[1180px]">
           <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {events.map((event, index) => (
@@ -139,6 +122,10 @@ export default function Events() {
                 event={event}
                 index={index}
                 reduced={reduced}
+                onSelect={(selectedEvent, opener) => {
+                  setActiveEvent(selectedEvent);
+                  setModalOpener(opener);
+                }}
               />
             ))}
           </div>
@@ -164,5 +151,15 @@ export default function Events() {
         </motion.div>
       </div>
     </section>
+      {activeEvent && (
+        <EventVendorChecklistModal
+          key={getEventCategorySlug(activeEvent.name)}
+          event={activeEvent}
+          opener={modalOpener}
+          onClose={() => setActiveEvent(null)}
+          onVisibilityChange={onChecklistVisibilityChange}
+        />
+      )}
+    </>
   );
 }

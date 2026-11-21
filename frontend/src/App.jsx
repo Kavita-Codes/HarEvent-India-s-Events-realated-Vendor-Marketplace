@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import MainAnimation, { PageTransition } from "./components/MainAnimation";
 import NiDiChatbot from "./services/NiDiChatbot";
@@ -57,9 +57,10 @@ function App() {
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [isChecklistOpen, setIsChecklistOpen] = useState(false);
 
-  useEffect(() => {
-    if (isChecklistOpen) setIsChatbotOpen(false);
-  }, [isChecklistOpen]);
+  const handleChecklistVisibilityChange = useCallback((isOpen) => {
+    setIsChecklistOpen(isOpen);
+    if (isOpen) setIsChatbotOpen(false);
+  }, []);
 
   return (
     <BrowserRouter>
@@ -70,12 +71,19 @@ function App() {
 
         <PageTransition>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route
+              path="/"
+              element={
+                <Home
+                  onChecklistVisibilityChange={handleChecklistVisibilityChange}
+                />
+              }
+            />
             <Route
               path="/event-categories"
               element={
                 <EventCategories
-                  onChecklistVisibilityChange={setIsChecklistOpen}
+                  onChecklistVisibilityChange={handleChecklistVisibilityChange}
                 />
               }
             />
@@ -96,7 +104,7 @@ function App() {
               path="/vendor-categories"
               element={
                 <VendorCategoryLanding
-                  onChecklistVisibilityChange={setIsChecklistOpen}
+                  onChecklistVisibilityChange={handleChecklistVisibilityChange}
                 />
               }
             />
@@ -104,7 +112,7 @@ function App() {
               path="/vendor-categories/:eventSlug/:categorySlug"
               element={
                 <VendorCategories
-                  onChecklistVisibilityChange={setIsChecklistOpen}
+                  onChecklistVisibilityChange={handleChecklistVisibilityChange}
                 />
               }
             />
@@ -135,7 +143,7 @@ function App() {
             aria-expanded={isChatbotOpen}
             aria-controls="harevent-chatbot"
             title="Chat with NiDi"
-            className="fixed bottom-0 right-0 z-[60] flex h-40 w-40 items-center justify-center bg-transparent transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#12B886] max-sm:bottom-4 max-sm:right-4 motion-reduce:transition-none"
+            className="fixed bottom-0 right-0 z-60 flex h-40 w-40 items-center justify-center bg-transparent transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#12B886] max-sm:bottom-4 max-sm:right-4 motion-reduce:transition-none"
           >
             <img
               src="/nidiBot.gif"
