@@ -26,17 +26,16 @@ import {
   getVendorCategoriesForEvent,
   parseVendorDirectoryCategories,
 } from "../data/eventVendorCategories";
+import { vendorCategoryNames } from "../data/vendorCategories";
 import { vendorListings } from "../data/vendorListings";
 import { vendorSubcategories } from "../data/vendorSubcategories";
 
 const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
-const availableCategories = [
-  ...new Set(vendorListings.map((vendor) => vendor.serviceType)),
-].sort();
+const availableCategories = vendorCategoryNames;
 const availableCities = [
   ...new Set(vendorListings.flatMap((vendor) => vendor.cities || [])),
 ].sort();
-const vendorsPerPage = 6;
+const vendorsPerPage = 12;
 
 function vendorMatchesCategory(vendor, category) {
   const normalizedCategory = normalize(category);
@@ -56,9 +55,13 @@ function VendorDirectory({
   const navigate = useNavigate();
   const returnTo = `${location.pathname}${location.search}${location.hash}`;
   const cityMenuRef = useRef(null);
+  const categoryMenuRef = useRef(null);
+  const serviceNavRef = useRef(null);
   const activeCategory =
     selectedCategories.length === 1 ? selectedCategories[0] : "All";
-  const [activeSubcategory, setActiveSubcategory] = useState("");
+  const [activeSubcategories, setActiveSubcategories] = useState(
+    () => new URLSearchParams(location.search).getAll("subcategory"),
+  );
   const [city, setCity] = useState("");
   const [search, setSearch] = useState("");
   const [minimumPrice, setMinimumPrice] = useState("");
@@ -67,25 +70,52 @@ function VendorDirectory({
   const [currentPage, setCurrentPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
   const [isChecklistOpen, setIsChecklistOpen] = useState(false);
+  const [canScrollServiceBackward, setCanScrollServiceBackward] =
+    useState(false);
+  const [canScrollServiceForward, setCanScrollServiceForward] = useState(false);
   const [modalOpener, setModalOpener] = useState(null);
   const selectedCategorySet = new Set(selectedCategories);
   const selectedCategoryKey = selectedCategories.join("\u001F");
 
   useEffect(() => {
-    const closeCityMenu = (event) => {
+    const closeMenus = (event) => {
       if (!cityMenuRef.current?.contains(event.target)) {
         if (cityMenuRef.current) cityMenuRef.current.open = false;
       }
+      if (!categoryMenuRef.current?.contains(event.target)) {
+        if (categoryMenuRef.current) categoryMenuRef.current.open = false;
+      }
     };
 
-    document.addEventListener("pointerdown", closeCityMenu);
-    return () => document.removeEventListener("pointerdown", closeCityMenu);
+    document.addEventListener("pointerdown", closeMenus);
+    return () => document.removeEventListener("pointerdown", closeMenus);
+  }, []);
+
+  useEffect(() => {
+    const nav = serviceNavRef.current;
+    if (!nav) return;
+
+    const updateScrollButtons = () => {
+      setCanScrollServiceBackward(nav.scrollLeft > 0);
+      setCanScrollServiceForward(
+        nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 1,
+      );
+    };
+
+    updateScrollButtons();
+    nav.addEventListener("scroll", updateScrollButtons, { passive: true });
+    window.addEventListener("resize", updateScrollButtons);
+
+    return () => {
+      nav.removeEventListener("scroll", updateScrollButtons);
+      window.removeEventListener("resize", updateScrollButtons);
+    };
   }, []);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [
-    activeSubcategory,
+    activeSubcategories,
     city,
     maximumPrice,
     minimumPrice,
@@ -100,6 +130,7 @@ function VendorDirectory({
     ? vendorListings.filter((vendor) => vendor.eventSlugs?.includes(eventSlug))
     : vendorListings;
   const hasEventVendors = eventVendors.length > 0;
+  const activeSubcategorySet = new Set(activeSubcategories.map(normalize));
   const filteredVendors = eventVendors.filter((vendor) => {
     if (
       !selectedCategories.some((category) =>
@@ -115,9 +146,9 @@ function VendorDirectory({
       return false;
     }
     if (
-      activeSubcategory &&
-      !(vendor.subcategories || []).some(
-        (subcategory) => normalize(subcategory) === normalize(activeSubcategory),
+      activeSubcategorySet.size > 0 &&
+      !(vendor.subcategories || []).some((subcategory) =>
+        activeSubcategorySet.has(normalize(subcategory)),
       )
     ) {
       return false;
@@ -163,61 +194,12 @@ function VendorDirectory({
   const enquiryCategory = selectedCategories.join(", ") || "Vendor";
   const enquiryParams = new URLSearchParams({ category: enquiryCategory });
   if (event?.name) enquiryParams.set("event", event.name);
-  const appliedFilters = [];
-
-  if (activeCategory !== "All") {
-    appliedFilters.push({
-      label: activeCategory,
-      remove: () => chooseCategory("All"),
-    });
-  }
-  if (activeSubcategory) {
-    appliedFilters.push({
-      label: activeSubcategory,
-      remove: () => setActiveSubcategory(""),
-    });
-  }
-  if (city) {
-    appliedFilters.push({ label: city, remove: () => setCity("") });
-  }
-  if (minimumPrice || maximumPrice) {
-    appliedFilters.push({
-      label: `₹${minimumPrice || "0"} – ₹${maximumPrice || "No max"}`,
-      remove: () => {
-        setMinimumPrice("");
-        setMaximumPrice("");
-      },
-    });
-  }
-  if (search.trim()) {
-    appliedFilters.push({
-      label: `Search: ${search.trim()}`,
-      remove: () => setSearch(""),
-    });
-  }
-  if (
-    selectedCategories.length !== categoryOptions.length &&
-    activeCategory === "All"
-  ) {
-    appliedFilters.push({
-      label: `${selectedCategories.length} of ${categoryOptions.length} services`,
-      remove: () =>
-        navigate(
-          buildVendorDirectoryPath(
-            eventSlug,
-            categoryOptions,
-            categoryOptions,
-          ),
-          { replace: true },
-        ),
-    });
-  }
 
   function toggleCategory(category) {
     const next = new Set(selectedCategories);
     if (next.has(category)) next.delete(category);
     else next.add(category);
-    setActiveSubcategory("");
+    setActiveSubcategories([]);
     navigate(
       buildVendorDirectoryPath(eventSlug, [...next], categoryOptions),
       { replace: true },
@@ -225,7 +207,7 @@ function VendorDirectory({
   }
 
   function chooseCategory(category) {
-    setActiveSubcategory("");
+    setActiveSubcategories([]);
     const next = category === "All" ? categoryOptions : [category];
     navigate(buildVendorDirectoryPath(eventSlug, next, categoryOptions), {
       replace: true,
@@ -237,7 +219,7 @@ function VendorDirectory({
       buildVendorDirectoryPath(eventSlug, categoryOptions, categoryOptions),
       { replace: true },
     );
-    setActiveSubcategory("");
+    setActiveSubcategories([]);
     setCity("");
     setSearch("");
     setMinimumPrice("");
@@ -254,13 +236,10 @@ function VendorDirectory({
     <>
       <Navbar />
       <main className="min-h-screen bg-white font-poppins text-[#30232B]">
-        <div className="mx-auto max-w-[1480px] px-4 pb-14 pt-7 sm:px-7 lg:px-10 lg:pt-9">
+        <div className="mx-auto max-w-[1480px] px-4 pb-14 pt-3 sm:px-7 sm:pt-4 lg:px-10 lg:pt-4">
           <header className="flex flex-col gap-5 border-b border-[#F1E7EB] pb-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[1.5px] text-[#D4145A]">
-                HarEvent vendor marketplace
-              </p>
-              <h1 className="mt-1 text-[28px] font-bold leading-tight text-[#30232B] sm:text-[34px]">
+              <h1 className="text-[28px] font-bold leading-tight text-[#30232B] sm:text-[34px]">
                 {event?.name || "Explore Vendors"}
               </h1>
               <p className="mt-1 text-sm text-[#81717A]">
@@ -348,30 +327,63 @@ function VendorDirectory({
             </div>
           </header>
 
-          <nav
-            aria-label="Vendor service categories"
-            className="hide-scrollbar mt-5 flex gap-2 overflow-x-auto pb-2"
-          >
-            {["All", ...categoryOptions].map((category) => {
-              const isActive = activeCategory === category;
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  aria-pressed={isActive}
-                  onClick={() => chooseCategory(category)}
-                  className={`inline-flex h-10 shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-semibold shadow-sm transition ${
-                    isActive
-                      ? "border-[#D4145A] bg-[#FFF0F5] text-[#B41049]"
-                      : "border-[#F0DDE4] bg-white text-[#61515A] hover:border-[#E59AB5] hover:text-[#B41049]"
-                  }`}
-                >
-                  {category === "All" && <SlidersHorizontal size={15} />}
-                  {category === "All" ? "All services" : category}
-                </button>
-              );
-            })}
-          </nav>
+          <div className="mt-5 flex min-w-0 items-center gap-2">
+            {canScrollServiceBackward && (
+              <button
+                type="button"
+                aria-label="Scroll service categories backward"
+                onClick={() =>
+                  serviceNavRef.current?.scrollBy({
+                    left: -240,
+                    behavior: "smooth",
+                  })
+                }
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#F0DDE4] bg-white text-[#61515A] shadow-sm transition hover:border-[#D4145A] hover:text-[#B41049] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
+              >
+                <ChevronLeft size={17} />
+              </button>
+            )}
+            <nav
+              ref={serviceNavRef}
+              aria-label="Vendor service categories"
+              className="hide-scrollbar flex min-w-0 flex-1 gap-2 overflow-x-auto pb-2"
+            >
+              {["All", ...categoryOptions].map((category) => {
+                const isActive = activeCategory === category;
+                return (
+                  <button
+                    key={category}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => chooseCategory(category)}
+                    className={`inline-flex h-10 shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-semibold shadow-sm transition ${
+                      isActive
+                        ? "border-[#D4145A] bg-[#FFF0F5] text-[#B41049]"
+                        : "border-[#F0DDE4] bg-white text-[#61515A] hover:border-[#E59AB5] hover:text-[#B41049]"
+                    }`}
+                  >
+                    {category === "All" && <SlidersHorizontal size={15} />}
+                    {category === "All" ? "All vendor" : category}
+                  </button>
+                );
+              })}
+            </nav>
+            {canScrollServiceForward && (
+              <button
+                type="button"
+                aria-label="Scroll service categories forward"
+                onClick={() =>
+                  serviceNavRef.current?.scrollBy({
+                    left: 240,
+                    behavior: "smooth",
+                  })
+                }
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#F0DDE4] bg-white text-[#61515A] shadow-sm transition hover:border-[#D4145A] hover:text-[#B41049] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
+              >
+                <ChevronRight size={17} />
+              </button>
+            )}
+          </div>
 
           <div className="mt-5 flex items-center justify-between lg:hidden">
             <p className="text-sm font-semibold text-[#30232B]">Refine results</p>
@@ -451,7 +463,7 @@ function VendorDirectory({
                 <legend className="text-sm font-semibold text-[#493740]">
                   Services
                 </legend>
-                <div className="mt-3 max-h-[260px] space-y-2 overflow-y-auto pr-1">
+                <div className="mt-3 max-h-[260px] space-y-2 overflow-y-auto pl-2 pr-1">
                   {categoryOptions.map((category) => (
                     <label
                       key={category}
@@ -481,70 +493,106 @@ function VendorDirectory({
                   </p>
                 </div>
 
-                <label className="flex h-10 items-center gap-2 self-start rounded-lg border border-[#E8DDE2] bg-white px-3 text-sm text-[#61515A] sm:self-auto">
-                  <ArrowDownWideNarrow size={16} className="text-[#81717A]" />
-                  <span className="sr-only">Sort vendor results</span>
-                  <select
-                    value={sortOrder}
-                    onChange={(event) => setSortOrder(event.target.value)}
-                    className="bg-transparent outline-none accent-[#D4145A]"
-                  >
-                    <option value="recommended">Recommended</option>
-                    <option value="price-low">Price: low to high</option>
-                    <option value="price-high">Price: high to low</option>
-                  </select>
-                </label>
-              </div>
-
-              {appliedFilters.length > 0 && (
-                <div className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-[#F1E7EB] bg-white px-3.5 py-3">
-                  <span className="mr-1 text-xs font-semibold uppercase tracking-[0.7px] text-[#81717A]">
-                    Applied filters
-                  </span>
-                  {appliedFilters.map((filter) => (
-                    <button
-                      key={filter.label}
-                      type="button"
-                      onClick={filter.remove}
-                      aria-label={`Remove ${filter.label} filter`}
-                      className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-[#F0C9D7] bg-[#FFF7FA] px-3 py-1.5 text-xs font-medium text-[#A92D58] transition hover:border-[#D4145A] hover:bg-[#FFF0F5]"
+                <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                  <label className="flex h-10 items-center gap-2 rounded-lg border border-[#E8DDE2] bg-white px-3 text-sm text-[#61515A]">
+                    <ArrowDownWideNarrow size={16} className="text-[#81717A]" />
+                    <span className="sr-only">Sort vendor results</span>
+                    <select
+                      value={sortOrder}
+                      onChange={(event) => setSortOrder(event.target.value)}
+                      className="bg-transparent outline-none accent-[#D4145A]"
                     >
-                      <span className="truncate">{filter.label}</span>
-                      <X size={13} className="shrink-0" />
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {subcategories.length > 0 && (
-                <div className="mb-5 rounded-xl border border-[#F1E7EB] bg-white p-3.5 sm:p-4">
-                  <p className="mb-3 text-xs font-semibold uppercase tracking-[0.8px] text-[#81717A]">
-                    Popular {activeCategory.toLowerCase()} categories
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {subcategories.map((subcategory) => {
-                      const isActive = activeSubcategory === subcategory;
-                      return (
+                      <option value="recommended">Recommended</option>
+                      <option value="price-low">Price: low to high</option>
+                      <option value="price-high">Price: high to low</option>
+                    </select>
+                  </label>
+                  {subcategories.length > 0 && (
+                    <details
+                      ref={categoryMenuRef}
+                      onKeyDown={(keyboardEvent) => {
+                        if (
+                          keyboardEvent.key === "Escape" &&
+                          categoryMenuRef.current?.open
+                        ) {
+                          categoryMenuRef.current.open = false;
+                          keyboardEvent.preventDefault();
+                          categoryMenuRef.current
+                            .querySelector("summary")
+                            ?.focus();
+                        }
+                      }}
+                      className="group relative"
+                    >
+                      <summary
+                        aria-label="View categories"
+                        className="flex h-10 cursor-pointer list-none items-center gap-2 rounded-lg border border-[#E8DDE2] bg-white px-3 text-sm font-medium text-[#61515A] shadow-sm transition hover:border-[#D4145A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A] [&::-webkit-details-marker]:hidden"
+                      >
+                        View Category
+                        <ChevronDown
+                          size={16}
+                          className="shrink-0 text-[#81717A] transition-transform group-open:rotate-180"
+                        />
+                      </summary>
+                      <div
+                        role="group"
+                        aria-label={`${activeCategory} categories`}
+                        className="absolute right-0 top-full z-40 mt-2 max-h-[min(60vh,360px)] w-[min(280px,calc(100vw-2rem))] overflow-y-auto rounded-xl border border-[#F1DDE5] bg-white p-1.5 shadow-[0_12px_30px_rgba(48,35,43,0.16)]"
+                      >
                         <button
-                          key={subcategory}
                           type="button"
-                          aria-pressed={isActive}
-                          onClick={() =>
-                            setActiveSubcategory(isActive ? "" : subcategory)
-                          }
-                          className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
-                            isActive
-                              ? "border-[#D4145A] bg-[#FFF0F5] text-[#B41049]"
-                              : "border-[#F0DDE4] bg-white text-[#61515A] hover:border-[#E59AB5] hover:text-[#B41049]"
+                          aria-pressed={activeSubcategories.length === 0}
+                          onClick={(clickEvent) => {
+                            setActiveSubcategories([]);
+                            clickEvent.currentTarget.closest("details").open =
+                              false;
+                          }}
+                          className={`w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
+                            activeSubcategories.length === 0
+                              ? "bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white"
+                              : "text-[#493740] hover:bg-gradient-to-r hover:from-[#D4145A] hover:to-[#FF7628] hover:text-white"
                           }`}
                         >
-                          {subcategory}
+                          All categories
                         </button>
-                      );
-                    })}
-                  </div>
+                        {subcategories.map((subcategory) => {
+                          const isActive = activeSubcategorySet.has(
+                            normalize(subcategory),
+                          );
+                          return (
+                            <button
+                              key={subcategory}
+                              type="button"
+                              aria-pressed={isActive}
+                              onClick={(clickEvent) => {
+                                setActiveSubcategories((current) =>
+                                  isActive
+                                    ? current.filter(
+                                        (currentSubcategory) =>
+                                          normalize(currentSubcategory) !==
+                                          normalize(subcategory),
+                                      )
+                                    : [...current, subcategory],
+                                );
+                                clickEvent.currentTarget.closest(
+                                  "details",
+                                ).open = false;
+                              }}
+                              className={`w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
+                                isActive
+                                  ? "bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white"
+                                  : "text-[#493740] hover:bg-gradient-to-r hover:from-[#D4145A] hover:to-[#FF7628] hover:text-white"
+                              }`}
+                            >
+                              {subcategory}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </details>
+                  )}
                 </div>
-              )}
+              </div>
 
               {visibleVendors.length > 0 ? (
                 <>
@@ -620,12 +668,16 @@ function VendorDirectory({
                   </span>
                   <h3 className="mt-4 text-lg font-bold text-[#30232B]">
                     {hasEventVendors
-                      ? "No vendors match these filters"
+                      ? activeSubcategories.length > 0
+                        ? "No vendors available for the selected category"
+                        : "No vendors match these filters"
                       : `No ${event?.name || "event"} vendors yet`}
                   </h3>
                   <p className="mt-1 max-w-md text-sm leading-6 text-[#81717A]">
                     {hasEventVendors
-                      ? "Try another city, widen your budget, or clear a service filter. Vendor availability can vary by location."
+                      ? activeSubcategories.length > 0
+                        ? `There are no vendors listed for ${activeSubcategories.join(", ")} yet.`
+                        : "Try another city, widen your budget, or clear a service filter. Vendor availability can vary by location."
                       : `There are no ${event?.name || "event"} listings yet. Wedding vendors are kept in the Wedding category and will not appear here.`}
                   </p>
                   <div className="mt-5 flex flex-wrap justify-center gap-3">

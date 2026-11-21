@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import Search from "./pages/Search";
+import VendorCategoryLanding from "./pages/VendorCategoryLanding";
 import VendorCategories from "./pages/VendorCategories";
 
 const eventPageModules = import.meta.glob("./pages/events/*.jsx", {
@@ -94,7 +95,7 @@ function App() {
             <Route
               path="/vendor-categories"
               element={
-                <VendorCategories
+                <VendorCategoryLanding
                   onChecklistVisibilityChange={setIsChecklistOpen}
                 />
               }

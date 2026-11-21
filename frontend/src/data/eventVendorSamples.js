@@ -1,5 +1,3 @@
-import { vendorSubcategories } from "./vendorSubcategories";
-
 const eventSampleServices = {
   "baby-shower": {
     name: "Baby Shower",
@@ -128,7 +126,6 @@ export const eventVendorSamples = Object.entries(eventSampleServices).flatMap(
         serviceType,
         category: serviceType,
         cities: [city],
-        subcategories: vendorSubcategories[serviceType] || [],
         businessName: `Sample ${event.name} ${serviceType}`,
         description: `Sample ${serviceType.toLowerCase()} profile for ${event.name} events.`,
         location: city,

@@ -1,5 +1,4 @@
 import { eventVendorSamples } from "./eventVendorSamples";
-import { vendorSubcategories } from "./vendorSubcategories";
 
 const weddingVendorListings = [
   {
@@ -393,8 +392,6 @@ const weddingVendorListings = [
 ].map((vendor) => ({
   ...vendor,
   eventSlugs: ["wedding"],
-  subcategories:
-    vendor.subcategories || vendorSubcategories[vendor.serviceType] || [],
 }));
 
 export const vendorListings = [

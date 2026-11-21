@@ -18,10 +18,10 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-/* Custom Thin HarEvent Gradient Scrollbar */
+/* Custom extra-thin HarEvent Gradient Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 2px;
+  height: 3px;
 }
 
 ::-webkit-scrollbar-track {

@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, Search, X } from "lucide-react";
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  Check,
+  Search,
+  X,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { getEventCategorySlug } from "../data/eventCategories";
 import {
@@ -9,13 +15,20 @@ import {
 
 export default function EventVendorChecklistModal({
   event,
+  vendorCategory,
+  filterSubcategories = true,
+  checklistCategories,
+  directoryCategories,
+  checklistIcon,
   initialCategories,
   opener,
   onClose,
   onVisibilityChange,
 }) {
-  const eventSlug = getEventCategorySlug(event.name);
-  const categories = getVendorCategoriesForEvent(eventSlug);
+  const eventSlug = event ? getEventCategorySlug(event.name) : "all";
+  const categories = event
+    ? getVendorCategoriesForEvent(eventSlug)
+    : checklistCategories;
   const [selectedCategories, setSelectedCategories] = useState(
     () =>
       new Set(
@@ -74,17 +87,43 @@ export default function EventVendorChecklistModal({
   }
 
   function findVendors() {
-    navigate(
-      buildVendorDirectoryPath(
-        eventSlug,
-        [...selectedCategories],
-        categories,
-      ),
-    );
+    if (event) {
+      navigate(
+        buildVendorDirectoryPath(
+          eventSlug,
+          [...selectedCategories],
+          categories,
+        ),
+      );
+    } else {
+      const selected = [...selectedCategories];
+      let path = buildVendorDirectoryPath(
+        "all",
+        vendorCategory ? [vendorCategory] : selected,
+        directoryCategories,
+      );
+
+      if (vendorCategory && filterSubcategories) {
+        const searchParams = new URLSearchParams();
+        if (selected.length > 0 && selected.length < categories.length) {
+          selected.forEach((subcategory) =>
+            searchParams.append("subcategory", subcategory),
+          );
+          path += `?${searchParams.toString()}`;
+        }
+      }
+
+      navigate(path);
+    }
     onClose();
   }
 
-  const EventIcon = event.icon;
+  const ChecklistIcon = event?.icon || checklistIcon || BriefcaseBusiness;
+  const title = event
+    ? `${event.name} vendors`
+    : vendorCategory
+      ? `${vendorCategory} checklist`
+      : "All vendor categories";
   const allSelected = selectedCategories.size === categories.length;
 
   return (
@@ -106,23 +145,24 @@ export default function EventVendorChecklistModal({
         <header className="flex shrink-0 items-start justify-between gap-4 border-b border-[#F1E7EB] px-5 py-5 sm:px-8 sm:py-6">
           <div className="flex min-w-0 items-start gap-3">
             <span className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white shadow-[0_7px_18px_rgba(212,20,90,0.2)]">
-              <EventIcon size={20} />
+              <ChecklistIcon size={20} />
             </span>
             <div className="min-w-0">
-              <p className="mb-1 text-[11px] font-bold uppercase tracking-[1.4px] text-[#D4145A]">
-                Build your event checklist
-              </p>
               <h2
                 id="event-vendor-dialog-title"
                 className="font-playfair text-[25px] font-bold leading-tight text-[#30232B] sm:text-[30px]"
               >
-                {event.name} vendors
+                {title}
               </h2>
               <p
                 id="event-vendor-dialog-description"
                 className="mt-1 text-sm leading-6 text-[#81717A] sm:text-[15px]"
               >
-                Select the services you need. We’ll show matching vendors next.
+                {event
+                  ? "Select the services you need. We’ll show matching vendors next."
+                  : vendorCategory
+                    ? `Choose the ${vendorCategory} services you need.`
+                    : "Choose the vendor categories you want to explore."}
               </p>
             </div>
           </div>
@@ -140,7 +180,9 @@ export default function EventVendorChecklistModal({
         <div className="flex min-h-0 flex-1 flex-col">
           <div className="flex shrink-0 items-center justify-between gap-3 px-5 pb-3 pt-4 sm:px-8 sm:pt-5">
             <p className="flex items-center gap-2 text-sm font-semibold text-[#493640]">
-              Choose vendor categories
+              {vendorCategory
+                ? `Choose ${vendorCategory} services`
+                : "Choose vendor categories"}
             </p>
             <span
               aria-live="polite"
