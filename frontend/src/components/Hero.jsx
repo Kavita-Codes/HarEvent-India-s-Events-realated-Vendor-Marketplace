@@ -15,6 +15,7 @@ import {
   getVendorCategoriesForEvent,
 } from "../data/eventVendorCategories";
 import { vendorCategoryNames } from "../data/vendorCategories";
+import { indianCities } from "../data/cities";
 
 const eventOptions = [
   "Weddings",
@@ -384,12 +385,18 @@ function Hero() {
 
                 <input
                   type="text"
+                  list="india-city-suggestions"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Enter city"
                   aria-label="Location"
                   className="w-full min-w-0 bg-transparent font-poppins text-[12px] font-medium text-white outline-none placeholder:font-normal placeholder:text-white/90 sm:text-[13px]"
                 />
+                <datalist id="india-city-suggestions">
+                  {indianCities.map((city) => (
+                    <option key={city} value={city} />
+                  ))}
+                </datalist>
               </div>
 
               <button

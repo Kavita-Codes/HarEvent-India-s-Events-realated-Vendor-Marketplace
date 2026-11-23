@@ -29,6 +29,7 @@ import {
 import { vendorCategoryNames } from "../data/vendorCategories";
 import { vendorListings } from "../data/vendorListings";
 import { vendorSubcategories } from "../data/vendorSubcategories";
+import { indianCities } from "../data/cities";
 
 const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
 const availableCategories = vendorCategoryNames;
@@ -120,6 +121,7 @@ function VendorDirectory({
       ) || requestedCity
     );
   });
+  const [citySearch, setCitySearch] = useState("");
   const [search, setSearch] = useState(
     () => new URLSearchParams(location.search).get("search") || "",
   );
@@ -277,6 +279,9 @@ function VendorDirectory({
     { length: Math.min(totalPages, 5) },
     (_, index) => paginationStart + index,
   );
+  const matchingCities = indianCities.filter((cityOption) =>
+    cityOption.toLowerCase().includes(citySearch.trim().toLowerCase()),
+  );
 
   const subcategories = vendorSubcategories[activeCategory] || [];
   const enquiryCategory = selectedCategories.join(", ") || "Vendor";
@@ -394,27 +399,49 @@ function VendorDirectory({
                 <div
                   role="group"
                   aria-label="City options"
-                  className="absolute right-0 top-full z-40 mt-2 w-full min-w-[200px] overflow-hidden rounded-xl border border-[#F1DDE5] bg-white p-1.5 shadow-[0_12px_30px_rgba(48,35,43,0.16)]"
+                  className="absolute right-0 top-full z-40 mt-2 w-full min-w-[200px] rounded-xl border border-[#F1DDE5] bg-white p-1.5 shadow-[0_12px_30px_rgba(48,35,43,0.16)]"
                 >
-                  {["", ...availableCities].map((cityOption) => (
-                    <button
-                      key={cityOption || "all-cities"}
-                      type="button"
-                      aria-pressed={city === cityOption}
-                      onClick={(clickEvent) => {
-                        setCity(cityOption);
-                        const menu = clickEvent.currentTarget.closest("details");
-                        if (menu) menu.open = false;
-                      }}
-                      className={`w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
-                        city === cityOption
-                          ? "bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white"
-                          : "text-[#493740] hover:bg-gradient-to-r hover:from-[#D4145A] hover:to-[#FF7628] hover:text-white"
-                      }`}
-                    >
-                      {cityOption || "All cities"}
-                    </button>
-                  ))}
+                  <label className="flex h-10 items-center gap-2 rounded-lg border border-[#F1E7EB] px-3 text-sm text-[#81717A] focus-within:border-[#D4145A]">
+                    <Search size={15} className="shrink-0" />
+                    <input
+                      type="search"
+                      value={citySearch}
+                      onChange={(inputEvent) =>
+                        setCitySearch(inputEvent.target.value)
+                      }
+                      placeholder="Search city..."
+                      aria-label="Search cities"
+                      className="min-w-0 flex-1 bg-transparent text-[#493740] outline-none placeholder:text-[#A4979D]"
+                    />
+                  </label>
+                  <div className="mt-1 max-h-[min(50vh,280px)] overflow-y-auto">
+                    {["", ...matchingCities].map((cityOption) => (
+                      <button
+                        key={cityOption || "all-cities"}
+                        type="button"
+                        aria-pressed={city === cityOption}
+                        onClick={(clickEvent) => {
+                          setCity(cityOption);
+                          setCitySearch("");
+                          const menu =
+                            clickEvent.currentTarget.closest("details");
+                          if (menu) menu.open = false;
+                        }}
+                        className={`w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
+                          city === cityOption
+                            ? "bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white"
+                            : "text-[#493740] hover:bg-gradient-to-r hover:from-[#D4145A] hover:to-[#FF7628] hover:text-white"
+                        }`}
+                      >
+                        {cityOption || "All cities"}
+                      </button>
+                    ))}
+                    {matchingCities.length === 0 && (
+                      <p className="px-3 py-2.5 text-sm text-[#81717A]">
+                        No cities found
+                      </p>
+                    )}
+                  </div>
                 </div>
               </details>
             </div>
@@ -632,53 +659,42 @@ function VendorDirectory({
                         aria-label={`${activeCategory} categories`}
                         className="absolute right-0 top-full z-40 mt-2 max-h-[min(60vh,360px)] w-[min(280px,calc(100vw-2rem))] overflow-y-auto rounded-xl border border-[#F1DDE5] bg-white p-1.5 shadow-[0_12px_30px_rgba(48,35,43,0.16)]"
                       >
-                        <button
-                          type="button"
-                          aria-pressed={activeSubcategories.length === 0}
-                          onClick={(clickEvent) => {
-                            setActiveSubcategories([]);
-                            clickEvent.currentTarget.closest("details").open =
-                              false;
-                          }}
-                          className={`w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
-                            activeSubcategories.length === 0
-                              ? "bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white"
-                              : "text-[#493740] hover:bg-gradient-to-r hover:from-[#D4145A] hover:to-[#FF7628] hover:text-white"
-                          }`}
-                        >
-                          All categories
-                        </button>
+                        <label className="flex cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-[#493740] transition hover:bg-[#FFF4F7]">
+                          <input
+                            type="checkbox"
+                            checked={activeSubcategories.length === 0}
+                            onChange={() => setActiveSubcategories([])}
+                            className="h-4 w-4 accent-[#D4145A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
+                          />
+                          <span>All categories</span>
+                        </label>
                         {subcategories.map((subcategory) => {
                           const isActive = activeSubcategorySet.has(
                             normalize(subcategory),
                           );
                           return (
-                            <button
+                            <label
                               key={subcategory}
-                              type="button"
-                              aria-pressed={isActive}
-                              onClick={(clickEvent) => {
-                                setActiveSubcategories((current) =>
-                                  isActive
-                                    ? current.filter(
-                                        (currentSubcategory) =>
-                                          normalize(currentSubcategory) !==
-                                          normalize(subcategory),
-                                      )
-                                    : [...current, subcategory],
-                                );
-                                clickEvent.currentTarget.closest(
-                                  "details",
-                                ).open = false;
-                              }}
-                              className={`w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
-                                isActive
-                                  ? "bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-white"
-                                  : "text-[#493740] hover:bg-gradient-to-r hover:from-[#D4145A] hover:to-[#FF7628] hover:text-white"
-                              }`}
+                              className="flex cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-[#493740] transition hover:bg-[#FFF4F7]"
                             >
-                              {subcategory}
-                            </button>
+                              <input
+                                type="checkbox"
+                                checked={isActive}
+                                onChange={() =>
+                                  setActiveSubcategories((current) =>
+                                    isActive
+                                      ? current.filter(
+                                          (currentSubcategory) =>
+                                            normalize(currentSubcategory) !==
+                                            normalize(subcategory),
+                                        )
+                                      : [...current, subcategory],
+                                  )
+                                }
+                                className="h-4 w-4 accent-[#D4145A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
+                              />
+                              <span>{subcategory}</span>
+                            </label>
                           );
                         })}
                       </div>
