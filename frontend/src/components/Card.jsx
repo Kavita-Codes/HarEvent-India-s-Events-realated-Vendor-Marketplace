@@ -8,6 +8,7 @@ export const EASE_OUT = [0.22, 1, 0.36, 1];
 export function VendorCard({
   vendor,
   index,
+  locationLabel,
   showPricing = true,
   disableActionNavigation = false,
 }) {
@@ -50,7 +51,7 @@ export function VendorCard({
 
             <p className="flex shrink-0 items-center gap-1 text-[12px] font-medium text-[#8A7580]">
               <MapPin size={13} className="shrink-0 text-[#D4145A]" />
-              {vendor.location}
+              {locationLabel || vendor.location}
             </p>
           </div>
         )}

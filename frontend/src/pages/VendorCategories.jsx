@@ -45,6 +45,8 @@ function getTokens(value) {
 function stemToken(value) {
   let token = normalize(value);
 
+  if (token === "djs") return "dj";
+
   if (token.endsWith("ies") && token.length > 4) {
     token = `${token.slice(0, -3)}y`;
   } else if (token.endsWith("s") && token.length > 3) {
@@ -707,7 +709,12 @@ function VendorDirectory({
                 <>
                   <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                     {pageVendors.map((vendor, index) => (
-                      <VendorCard key={vendor.id} vendor={vendor} index={index} />
+                      <VendorCard
+                        key={vendor.id}
+                        vendor={vendor}
+                        index={index}
+                        locationLabel={city || undefined}
+                      />
                     ))}
                   </div>
                   {totalPages > 1 && (
