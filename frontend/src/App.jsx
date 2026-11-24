@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import MainAnimation, { PageTransition } from "./components/MainAnimation";
 import NiDiChatbot from "./services/NiDiChatbot";
 import About from "./pages/About";
@@ -16,10 +22,17 @@ import NotFound from "./pages/NotFound";
 import Search from "./pages/Search";
 import VendorCategoryLanding from "./pages/VendorCategoryLanding";
 import VendorCategories from "./pages/VendorCategories";
+import VendorProfile from "./pages/VendorProfile";
 
 const eventPageModules = import.meta.glob("./pages/events/*.jsx", {
   eager: true,
 });
+
+function VendorProfileRoute() {
+  const { vendorId } = useParams();
+
+  return <VendorProfile key={vendorId} />;
+}
 
 function ScrollToTop() {
   const { pathname, search, hash } = useLocation();
@@ -116,6 +129,12 @@ function App() {
                 />
               }
             />
+            <Route path="/vendors/:vendorId" element={<VendorProfileRoute />} />
+            <Route
+              path="/vendor-profile/:vendorId"
+              element={<VendorProfileRoute />}
+            />
+            <Route path="/vendor-profile" element={<VendorProfileRoute />} />
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />

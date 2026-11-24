@@ -25,6 +25,15 @@ export function VendorCard({
       className="group relative flex flex-col overflow-hidden rounded-[15px] border border-[#F1DDE5] bg-white shadow-[0_3px_14px_rgba(71,34,52,0.04)] transition-[border-color,box-shadow] duration-300 hover:border-[#E9A0BA] hover:shadow-[0_18px_38px_rgba(71,34,52,0.16)] sm:min-h-[408px]"
     >
       <span className="pointer-events-none absolute left-0 top-0 z-30 h-[3px] w-0 bg-gradient-to-r from-[#D4145A] to-[#FF7628] transition-[width] duration-[700ms] group-hover:w-full" />
+      {!disableActionNavigation && (
+        <Link
+          to={vendor.profileUrl}
+          aria-label={`View ${vendor.businessName} profile`}
+          className="absolute inset-0 z-10 rounded-[15px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4145A]"
+        >
+          <span className="sr-only">View vendor profile</span>
+        </Link>
+      )}
 
       <div className="relative h-[186px] shrink-0 overflow-hidden bg-gradient-to-br from-[#FFF0F5] via-[#FFF8F2] to-[#FCE4EC] sm:h-[196px] lg:h-[206px]">
         <img
@@ -69,7 +78,7 @@ export function VendorCard({
         </p>
 
         <div
-          className={`${showPricing ? "mt-auto pt-2.5" : "mt-2 pt-1"} flex gap-2`}
+          className={`${showPricing ? "mt-auto pt-2.5" : "mt-2 pt-1"} relative z-20 flex gap-2`}
         >
           {disableActionNavigation ? (
             <button
