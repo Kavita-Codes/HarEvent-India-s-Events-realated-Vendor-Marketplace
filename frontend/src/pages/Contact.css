@@ -530,14 +530,14 @@
 
 .contact-info-item b {
   color: var(--ct-ink);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .contact-info-item p,
 .contact-info-item a {
   margin: 0;
   color: #675a61;
-  font-size: 10px;
+  font-size: 14px;
   line-height: 1.65;
   text-decoration: none;
   overflow-wrap: anywhere;
@@ -549,7 +549,7 @@
 
 .contact-info-item small {
   color: #8d8187;
-  font-size: 9px;
+  font-size: 13px;
   line-height: 1.5;
 }
 
@@ -581,7 +581,7 @@
 
 .contact-social-card span {
   color: var(--ct-muted);
-  font-size: 9px;
+  font-size: 13px;
 }
 
 .contact-social-card a {
@@ -589,7 +589,7 @@
   align-items: center;
   gap: 5px;
   color: var(--ct-pink);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -646,12 +646,12 @@
 }
 
 .contact-map-label b {
-  font: 700 13px 'Playfair Display', serif;
+  font: 700 14px 'Playfair Display', serif;
 }
 
 .contact-map-label small {
   color: var(--ct-muted);
-  font-size: 9px;
+  font-size: 13px;
   line-height: 1.4;
 }
 
@@ -660,7 +660,7 @@
   align-items: center;
   gap: 4px;
   color: var(--ct-pink);
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -710,7 +710,7 @@
 
 .contact-office-overlay small {
   color: var(--ct-muted);
-  font-size: 9px;
+  font-size: 13px;
 }
 
 /* =========================================
@@ -781,12 +781,12 @@
 }
 
 .contact-quick-links b {
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .contact-quick-links small {
   color: var(--ct-muted);
-  font-size: 9px;
+  font-size: 13px;
   line-height: 1.5;
 }
 
@@ -822,7 +822,7 @@
   color: var(--ct-ink);
   cursor: pointer;
   list-style: none;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -844,7 +844,7 @@
   margin: 0;
   padding: 0 25px 17px 0;
   color: var(--ct-muted);
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.8;
 }
 
@@ -881,7 +881,7 @@
 
 .contact-bottom-cta > div:nth-child(2) > span {
   color: #ffe1e9;
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 1.2px;
 }
@@ -894,7 +894,7 @@
 .contact-bottom-cta p {
   margin: 0;
   color: #ffe9ee;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .contact-bottom-cta > a {
@@ -906,7 +906,7 @@
   border: 1px solid #ffffff90;
   border-radius: 7px;
   color: #fff;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -993,7 +993,7 @@
   }
 
   .contact-hero-copy > p {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .contact-hero-points {
@@ -1001,7 +1001,7 @@
   }
 
   .contact-hero-points b {
-    font-size: 9px;
+    font-size: 13px;
   }
 
   .contact-hero-visual {
@@ -1027,7 +1027,7 @@
   }
 
   .contact-hero-assist div > span {
-    font-size: 8px;
+    font-size: 13px;
   }
 
   .contact-section-heading h2,
@@ -1038,7 +1038,7 @@
 
   .contact-section-heading p,
   .contact-panel-heading p {
-    font-size: 11px;
+    font-size: 14px;
   }
 
   .contact-method-grid,
@@ -1091,7 +1091,7 @@
   }
 
   .contact-bottom-cta p {
-    font-size: 10px;
+    font-size: 14px;
     line-height: 1.6;
   }
 
@@ -1099,6 +1099,59 @@
     grid-column: 1 / -1;
   }
 
+}
+
+/* =========================================
+   PAGE TYPOGRAPHY (16px body, 14px support, 13px accents)
+========================================= */
+
+.contact-page {
+  font-size: 16px;
+}
+
+.contact-hero-points b,
+.contact-info-item b,
+.contact-social-card b,
+.contact-map-label b,
+.contact-quick-links b,
+.contact-faq-item summary,
+.contact-form input:not([type='checkbox']),
+.contact-form select,
+.contact-form textarea {
+  font-size: 16px;
+}
+
+.contact-breadcrumb,
+.contact-hero-assist small,
+.contact-hero-assist div > span,
+.contact-method-links a,
+.contact-form label,
+.contact-form label small,
+.contact-form .contact-privacy-check,
+.contact-info-item a,
+.contact-social-card a,
+.contact-submit,
+.contact-bottom-cta > a {
+  font-size: 14px;
+}
+
+.contact-eyebrow,
+.contact-card-eyebrow,
+.contact-form label:has(input[required]) > span,
+.contact-form label:has(select[required]) > span,
+.contact-form label:has(textarea[required]) > span,
+.contact-info-item small,
+.contact-social-card span,
+.contact-map-label small,
+.contact-map-label a,
+.contact-office-overlay small,
+.contact-quick-links small,
+.contact-bottom-cta > div:nth-child(2) > span {
+  font-size: 13px;
+}
+
+.contact-page p {
+  font-size: 16px;
 }
 
 /* =========================================

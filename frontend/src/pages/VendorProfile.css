@@ -2527,44 +2527,12 @@
   .he-notice {
     border-radius: 12px;
   }
-} 
-/* =========================================================
-   DESCRIPTION FONT SIZE - HOMEPAGE STYLE
-========================================================= */
-
-.he-section-card p,
-.he-about-grid p,
-.he-service-card p,
-.he-package-card p,
-.he-review-card p,
-.he-contact-card p,
-.he-not-found p {
-  font-size: 14px;
 }
-/* =========================================================
-   GET FREE QUOTE - FONT SIZE 14px
-========================================================= */
 
 /* =========================================================
-   PRICING, AMENITIES & PORTFOLIO - FONT SIZE 14px
+   PAGE TYPOGRAPHY AND LAYOUT
+   (16px body, 14px support, 13px accents)
 ========================================================= */
-
-.he-price-row,
-.he-price-row strong,
-.he-amenity-grid button,
-.he-section-heading p {
-  font-size: 14px;
-}
-/* =========================================================
-   LOCATION - FONT SIZE 14px
-========================================================= */
-
-.he-location-details div {
-  font-size: 14px;
-}
-/* Section headings - 16px */
-
-/* Match section headings with Pricing heading */
 
 .he-amenities h3,
 .he-sidebar-card-header h3 {
@@ -2573,7 +2541,6 @@
   font-family: "Playfair Display", serif;
   font-weight: 600;
 }
-/* Align Amenities heading with Pricing heading */
 
 .he-pricing-layout {
   align-items: start;
@@ -2582,48 +2549,87 @@
 .he-amenities {
   margin-top: 0;
   padding-top: 0;
+  transform: translateY(-42px);
 }
 
 .he-amenities h3 {
   margin-top: 0;
 }
-/* Align Amenities heading with Pricing heading */
 
-.he-amenities {
-  transform: translateY(-42px);
-}
-/* =========================================================
-   GET FREE QUOTE - IMPROVED FONT SIZES
-========================================================= */
-
-/* Main heading */
 .he-quote-header h3 {
   font-size: 24px;
 }
 
-/* Subtitle */
-.he-quote-header p {
-  font-size: 14px;
+.he-profile-page {
+  font-size: 16px;
 }
 
-/* Form labels */
-.he-quote-body label {
-  font-size: 14px;
-}
-
-/* Input, select and textarea text */
+.he-feature-list div,
+.he-location-line,
+.he-location-details div,
+.he-quick-stats strong,
+.he-price-row,
+.he-price-row strong,
+.he-service-card h3,
+.he-large-amenity-grid strong,
+.he-review-person section strong,
 .he-quote-body input,
 .he-quote-body select,
-.he-quote-body textarea {
-  font-size: 12px;
+.he-quote-body textarea,
+.he-similar-list strong,
+.he-package-card h3,
+.he-package-card > strong {
+  font-size: 16px;
 }
 
-/* Button */
-.he-main-gradient-button {
+.he-rating-line,
+.he-rating-line strong,
+.he-primary-action,
+.he-secondary-action,
+.he-small-actions button,
+.he-verification-card > div:not(.he-verification-title),
+.he-outline-button,
+.he-amenity-grid button,
+.he-tabs button,
+.he-review-bars > div,
+.he-review-bars strong,
+.he-quote-body label,
+.he-main-gradient-button,
+.he-map-placeholder span,
+.he-contact-card button,
+.he-notice {
   font-size: 14px;
 }
 
-/* Security message */
-.he-secure-note {
-  font-size: 14px;
+.he-breadcrumb,
+.he-verified-badge,
+.he-view-all-photos,
+.he-small-label,
+.he-location-line button,
+.he-tag-row span,
+.he-quick-stats span,
+.he-text-button,
+.he-verification-title,
+.he-verification-card small,
+.he-section-heading > button,
+.he-section-heading > a,
+.he-service-card button,
+.he-large-amenity-grid small,
+.he-review-big span,
+.he-review-person section span,
+.he-review-card small,
+.he-error,
+.he-secure-note,
+.he-sidebar-card-header button,
+.he-sidebar-card-header a,
+.he-similar-list span,
+.he-similar-list small,
+.he-contact-card > a,
+.he-package-card button,
+.he-big-price span {
+  font-size: 13px;
+}
+
+.he-profile-page p {
+  font-size: 16px;
 }

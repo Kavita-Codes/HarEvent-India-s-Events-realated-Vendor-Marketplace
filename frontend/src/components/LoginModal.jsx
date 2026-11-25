@@ -9,6 +9,8 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 function LoginModal({ onClose, onRegister, initialMode = "login" }) {
   const [mode, setMode] = useState(initialMode.startsWith("vendor") ? "vendor" : "customer");
@@ -35,6 +37,8 @@ function LoginModal({ onClose, onRegister, initialMode = "login" }) {
     event.preventDefault();
     setSubmitted(true);
   }
+
+  const navigate = useNavigate()
 
   return (
     <div
@@ -209,7 +213,7 @@ function LoginModal({ onClose, onRegister, initialMode = "login" }) {
                 <input type="checkbox" className="accent-[#D4145A]" />
                 Remember me
               </label>
-              <button type="button" className="font-semibold text-[#D4145A] hover:text-[#A80F46]">
+              <button onClick={()=> navigate("/forgot-password")} type="button" className="font-semibold text-[#D4145A] hover:text-[#A80F46]">
                 Forgot Password?
               </button>
             </div>
@@ -217,9 +221,9 @@ function LoginModal({ onClose, onRegister, initialMode = "login" }) {
 
             <button
               type="submit"
-              className="flex h-11 w-full items-center justify-center rounded-xl bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-sm font-semibold text-white transition hover:brightness-105"
+              className="flex h-11 w-full items-center justify-center rounded-xl bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-sm font-semibold text-white transition hover:brightness-105"  onClick={()=> navigate("/verify-otp")}
             >
-              {view === "signup" ? "Create Account" : "Sign In & Continue"}
+              {view === "signup" ? "Create Account" : "Sign In & Verify OTP"}
             </button>
             {submitted && (
               <p role="status" className="rounded-lg bg-[#FFF0F5] px-3 py-2 text-xs text-[#A80F46]">
