@@ -39,7 +39,6 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 32px;
-  color: #9a8b91;
   font-size: 14px;
 }
 
@@ -566,7 +565,7 @@
   margin-top: 15px;
   padding: 15px;
   border-radius: 11px;
-  background: #fff4f0;
+  background: #FEF0E1;
 }
 
 .contact-social-card > div {
@@ -613,7 +612,7 @@
   overflow: hidden;
   border: 1px solid var(--ct-line);
   border-radius: 14px;
-  background: #fff4f0;
+  background: #FEF0E1;
 }
 
 .contact-map-card iframe {
@@ -725,12 +724,7 @@
   padding: 30px;
   border: 1px solid #f4dfe5;
   border-radius: 16px;
-  background: linear-gradient(
-    110deg,
-    #fff0ed,
-    #fff7f4 55%,
-    #fdeaf0
-  );
+  background: #FEF0E1;
 }
 
 .contact-quick-copy h2 {
