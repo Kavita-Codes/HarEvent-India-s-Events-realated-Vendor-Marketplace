@@ -123,6 +123,36 @@ const categories = [
   },
 ];
 
+const categorySlugMap = {
+  Venues: "venues",
+  "Event Planners": "event-planners",
+  "Photographers & Videographers": "photographers-videographers",
+  Decorators: "decorators",
+  Caterers: "caterers",
+  "Makeup & Mehendi Artists": "makeup-mehendi-artists",
+  Entertainment: "entertainment",
+  "Invitations & Gifts": "invitations-gifts",
+  "Bridal Wear & Couture": "bridal-wear-couture",
+  "Jewelry & Accessories": "jewelry-accessories",
+  "Luxury Transportation": "luxury-transportation",
+  "Bartenders & Mixology": "bartenders-mixology",
+  "Special Effects & Pyro": "special-effects-pyro",
+  "Cakes & Desserts": "cakes-desserts",
+};
+
+function getVendorCategoryRoute(category) {
+  const slug =
+    category.slug ||
+    categorySlugMap[category.name] ||
+    category.name
+      .toLowerCase()
+      .replace(/&/g, " ")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  return `/vendor-categories/all/${slug}`;
+}
+
 /* Photographers aur Invitations & Gifts ke alawa pehli 6 categories dikhengi */
 const featuredCategories = categories.filter(
   ({ featured }) => featured !== false,
@@ -164,6 +194,7 @@ function VendorVisual({ category, index }) {
 /* Desktop: tall pillars */
 function VendorPillar({ category, index, reduced }) {
   const { name, description, icon: Icon } = category;
+  const targetRoute = getVendorCategoryRoute(category);
 
   return (
     <motion.div
@@ -174,7 +205,7 @@ function VendorPillar({ category, index, reduced }) {
       className="flex-1 basis-0 transition-[flex-grow] duration-[650ms] ease-out hover:flex-grow-[3]"
     >
       <Link
-        to="/vendor-categories"
+        to={targetRoute}
         aria-label={`Browse ${name}`}
         className="vendor-card vendor-pillar group relative isolate block h-full overflow-hidden rounded-[22px] shadow-[0_2px_10px_rgba(71,34,52,0.08)] outline-none ring-offset-4 ring-offset-[#fef0e1] focus-visible:ring-2 focus-visible:ring-[#D4145A]"
       >
@@ -220,6 +251,7 @@ function VendorPillar({ category, index, reduced }) {
 /* Touch and narrow screens */
 function VendorTile({ category, index, reduced }) {
   const { name, icon: Icon } = category;
+  const targetRoute = getVendorCategoryRoute(category);
 
   return (
     <motion.div
@@ -229,7 +261,7 @@ function VendorTile({ category, index, reduced }) {
       transition={{ duration: 0.5, delay: (index % 6) * 0.06, ease: EASE_OUT }}
     >
       <Link
-        to="/vendor-categories"
+        to={targetRoute}
         aria-label={`Browse ${name}`}
         className="vendor-card group relative block aspect-[3/4] overflow-hidden rounded-[18px] shadow-[0_2px_8px_rgba(71,34,52,0.07)] outline-none transition-transform duration-200 ring-offset-4 ring-offset-[#fef0e1] focus-visible:ring-2 focus-visible:ring-[#D4145A] active:scale-[0.985]"
       >

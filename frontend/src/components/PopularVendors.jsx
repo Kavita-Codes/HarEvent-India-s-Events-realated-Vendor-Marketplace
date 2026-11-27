@@ -17,29 +17,102 @@ const filters = [
   "Catering",
   "Entertainment",
 ];
-const vendors = vendorListings.filter(
-  (vendor) => vendor.eventSlugs?.includes("wedding") && !vendor.isDemo,
-);
+
+const filterKeywords = {
+  Photography: ["photograph", "photo", "film", "candid"],
+  Decor: ["decor", "mandap", "floral", "rangoli"],
+  Venues: ["venue", "banquet", "hall", "resort", "lawn", "palace"],
+  Catering: ["cater", "food", "cuisine", "buffet"],
+  Entertainment: ["entertainment", "dj", "music", "choreograph", "dance"],
+};
+
+function matchesFilter(vendor, filter) {
+  if (filter === "All") return true;
+
+  const searchableText = [
+    vendor.filterCategory,
+    vendor.category,
+    vendor.serviceType,
+    ...(vendor.subcategories || []),
+    ...(vendor.services || []),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  const keywords = filterKeywords[filter] || [filter.toLowerCase()];
+  return keywords.some((keyword) => searchableText.includes(keyword));
+}
+
+function getFourCardsForFilter(filter) {
+  const weddingPrimary = vendorListings.filter(
+    (vendor) => vendor.eventSlugs?.includes("wedding") && !vendor.isDemo,
+  );
+
+  if (filter === "All") {
+    const allPool = [
+      ...weddingPrimary,
+      ...vendorListings.filter((vendor) => !vendor.isDemo),
+      ...vendorListings,
+    ];
+    const uniqueById = [];
+    const seen = new Set();
+
+    for (const item of allPool) {
+      if (!seen.has(item.id)) {
+        seen.add(item.id);
+        uniqueById.push(item);
+      }
+      if (uniqueById.length === 4) break;
+    }
+
+    return uniqueById;
+  }
+
+  const primaryMatches = weddingPrimary.filter((vendor) =>
+    matchesFilter(vendor, filter),
+  );
+  const secondaryMatches = vendorListings.filter(
+    (vendor) => !vendor.isDemo && matchesFilter(vendor, filter),
+  );
+  const demoAndOtherMatches = vendorListings.filter((vendor) =>
+    matchesFilter(vendor, filter),
+  );
+  const generalFallback = [
+    ...weddingPrimary,
+    ...vendorListings.filter((vendor) => !vendor.isDemo),
+    ...vendorListings,
+  ];
+
+  const pool = [
+    ...primaryMatches,
+    ...secondaryMatches,
+    ...demoAndOtherMatches,
+    ...generalFallback,
+  ];
+
+  const result = [];
+  const usedIds = new Set();
+
+  for (const vendor of pool) {
+    if (!usedIds.has(vendor.id)) {
+      usedIds.add(vendor.id);
+      result.push(vendor);
+    }
+    if (result.length === 4) break;
+  }
+
+  return result;
+}
 
 export default function PopularVendors() {
   const [activeFilter, setActiveFilter] = useState("All");
-
-  const visibleVendors = vendors.filter(
-    (vendor) =>
-      activeFilter === "All" ||
-      (vendor.filterCategory || vendor.category)
-        .toLowerCase()
-        .includes(activeFilter.toLowerCase()),
-  );
+  const visibleVendors = getFourCardsForFilter(activeFilter);
 
   return (
-    /* reducedMotion="user" lets every motion prop below fall back to a
-       transform-free state for visitors who ask for less animation */
     <MotionConfig reducedMotion="user">
       <section className="bg-white px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
         <style>{`
-          /* Idle Ken Burns breathing: animates transform only, so the hover
-             scale utility multiplies on top of it instead of fighting it */
           .vendor-kb {
             animation: vendor-kenburns 18s ease-in-out infinite alternate;
           }
@@ -105,7 +178,6 @@ export default function PopularVendors() {
             </div>
           </div>
 
-          {/* Filtering cross-fades the grid instead of snapping to a new list */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeFilter}
