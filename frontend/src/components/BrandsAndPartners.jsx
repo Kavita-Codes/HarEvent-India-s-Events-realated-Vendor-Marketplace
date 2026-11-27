@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   ArrowRight,
   AudioLines,
@@ -9,10 +8,8 @@ import {
   Star,
   Utensils,
 } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Reveal } from "./MainAnimation";
 
-// Custom lotus icon for Royal Florist
 function LotusIcon({ size = 35 }) {
   return (
     <svg
@@ -107,29 +104,20 @@ const categories = [
 ];
 
 function BrandsAndPartners() {
-  const [isPaused, setIsPaused] = useState(false);
-
   const renderPartnerCard = (
     { name, category, icon: Icon, color, popular },
     index,
     duplicate = false
   ) => (
-    <Link
+    <div
       key={`${name}-${category}-${index}-${duplicate ? "duplicate" : "original"}`}
-      to="/vendor-categories"
-      tabIndex={duplicate ? -1 : undefined}
       aria-hidden={duplicate ? "true" : undefined}
-      onPointerDown={() => setIsPaused(true)}
-      onPointerUp={() => setIsPaused(false)}
-      onPointerCancel={() => setIsPaused(false)}
-      onPointerLeave={() => setIsPaused(false)}
-      className={`partner-card group relative flex h-[190px] w-[175px] shrink-0 flex-col items-center rounded-[16px] border-2 px-2 pt-8 transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:border-[#E9A0BB] hover:shadow-[0_10px_24px_rgba(71,34,52,0.13)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4145A] focus-visible:ring-offset-2 sm:w-[170px] ${
+      className={`partner-card group relative flex h-[190px] w-[175px] shrink-0 flex-col items-center rounded-[16px] border-2 px-2 pt-8 transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:scale-[1.04] hover:border-[#E9A0BB] hover:shadow-[0_10px_24px_rgba(71,34,52,0.13)] sm:w-[170px] ${
         popular
           ? "border-[#F3A0BD] bg-[#fef0e1] shadow-[0_2px_5px_rgba(212,20,90,0.10)]"
           : "border-[#F2D7E1] bg-white shadow-[0_1px_2px_rgba(70,25,45,0.04)]"
       }`}
     >
-      {/* Popular Badge */}
       {popular && (
         <span className="absolute -top-[9px] right-2 flex h-5 items-center gap-1 rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-2.5 font-poppins text-[11px] font-semibold text-white shadow-[0_4px_10px_rgba(212,20,90,0.28)]">
           <Star size={11} fill="currentColor" />
@@ -137,7 +125,6 @@ function BrandsAndPartners() {
         </span>
       )}
 
-      {/* Icon */}
       <span className="mb-3 flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-[15px] bg-gradient-to-br from-[#D4145A] to-[#FF7628] text-white transition-transform duration-300 group-hover:scale-110">
         {name === "Royal Florist" ? (
           <LotusIcon size={35} />
@@ -148,12 +135,10 @@ function BrandsAndPartners() {
         )}
       </span>
 
-      {/* Partner Name */}
       <span className="max-w-full text-center font-poppins text-[13px] font-bold leading-[1.3] text-[#382A32] transition-colors duration-300 group-hover:text-[#D4145A]">
         {name}
       </span>
 
-      {/* Category */}
       <span
         className={`mt-2.5 flex h-6 max-w-full items-center justify-center whitespace-nowrap rounded-full px-5 font-poppins text-[10px] font-semibold leading-none ${
           popular
@@ -165,18 +150,16 @@ function BrandsAndPartners() {
       >
         {category}
       </span>
-    </Link>
+    </div>
   );
 
   return (
     <section className="w-full overflow-hidden bg-white px-5 pb-8 pt-8 sm:px-8 lg:px-[4.55%] lg:pb-10">
       <div className="mx-auto max-w-[1440px]">
-        {/* Heading and View All Partners Button */}
         <Reveal
           className="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center sm:gap-6"
           y={20}
         >
-          {/* Left Content */}
           <div className="min-w-0">
             <p className="mb-[10px] flex items-center gap-[9px] font-poppins text-[13px] font-bold uppercase tracking-[1.25px] text-[#D4145A]">
               <span className="h-[2px] w-[30px] bg-[#fef0e1]" />
@@ -184,16 +167,15 @@ function BrandsAndPartners() {
             </p>
 
             <h2 className="font-playfair text-[36px] font-bold leading-[1.2] tracking-tight text-[#292327]">
-              Trusted Brands &{" "}
+              Trusted Brands &amp;{" "}
               <span className="font-playfair font-bold text-[#D4145A]">
                 Partners
               </span>
             </h2>
           </div>
 
-          {/* View All Partners */}
-          <Link
-            to="/vendor-categories"
+          <a
+            href="#partners"
             className="group inline-flex h-[38px] w-fit shrink-0 items-center justify-center gap-2 self-start rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-5 font-poppins text-[12px] font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:brightness-105 sm:self-auto"
           >
             View all partners
@@ -202,28 +184,18 @@ function BrandsAndPartners() {
               strokeWidth={2}
               className="transition-transform duration-300 group-hover:translate-x-1"
             />
-          </Link>
+          </a>
         </Reveal>
 
-        {/* Infinite Auto-Scrolling Carousel */}
         <div
-          className={`partners-carousel mt-9 ${
-            isPaused ? "is-paused" : ""
-          }`}
+          className="partners-carousel mt-9"
           aria-label="Browse trusted brands and partners"
-          onPointerUp={() => setIsPaused(false)}
-          onPointerCancel={() => setIsPaused(false)}
-          onPointerLeave={() => setIsPaused(false)}
         >
           <div className="partners-track">
-            {/* Original Cards */}
             <div className="partners-group">
-              {categories.map((item, index) =>
-                renderPartnerCard(item, index)
-              )}
+              {categories.map((item, index) => renderPartnerCard(item, index))}
             </div>
 
-            {/* Duplicate Cards for Seamless Loop */}
             <div className="partners-group" aria-hidden="true">
               {categories.map((item, index) =>
                 renderPartnerCard(item, index, true)
@@ -233,14 +205,12 @@ function BrandsAndPartners() {
         </div>
       </div>
 
-      {/* Carousel and Hover Animations */}
       <style>{`
         .partners-carousel {
           width: 100%;
           overflow: hidden;
           padding-top: 12px;
           padding-bottom: 12px;
-          touch-action: pan-y;
         }
 
         .partners-track {
@@ -258,19 +228,13 @@ function BrandsAndPartners() {
           padding-right: 12px;
         }
 
-        .partners-carousel:hover .partners-track,
-        .partners-carousel.is-paused .partners-track,
-        .partners-carousel:focus-within .partners-track {
+        .partners-carousel:hover .partners-track {
           animation-play-state: paused;
         }
 
         .partner-card {
-          animation: partnerCardEnter 550ms ease-out both;
           -webkit-tap-highlight-color: transparent;
-        }
-
-        .partner-card:active {
-          transform: scale(0.98);
+          user-select: none;
         }
 
         @keyframes partnersMarquee {
@@ -279,17 +243,6 @@ function BrandsAndPartners() {
           }
           to {
             transform: translateX(-50%);
-          }
-        }
-
-        @keyframes partnerCardEnter {
-          from {
-            opacity: 0;
-            translate: 0 10px;
-          }
-          to {
-            opacity: 1;
-            translate: 0 0;
           }
         }
 
@@ -305,7 +258,6 @@ function BrandsAndPartners() {
           }
 
           .partner-card {
-            animation: none;
             transition: none;
           }
         }

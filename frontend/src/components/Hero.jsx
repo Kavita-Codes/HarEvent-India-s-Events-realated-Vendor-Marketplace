@@ -78,7 +78,7 @@ const rotatingKeywords = [
 ];
 
 /* Entrance presets: the hero plays on mount (it is above the fold), timed so
-   the pieces land just as the brand intro panel lifts away. */
+   the pieces land just as the brand intro lifts away. */
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
 const rise = (delay) => ({
@@ -100,11 +100,19 @@ function Hero() {
   const [eventType, setEventType] = useState("");
   const [vendorCategory, setVendorCategory] = useState("");
   const [location, setLocation] = useState("");
+  const [searchError, setSearchError] = useState("");
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const [keywordIndex, setKeywordIndex] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const trimmedLocation = location.trim().toLowerCase();
+  const filteredCities = trimmedLocation
+    ? indianCities
+        .filter((city) => city.toLowerCase().includes(trimmedLocation))
+        .slice(0, 8)
+    : [];
 
   useEffect(() => {
     const word = rotatingKeywords[keywordIndex];
@@ -134,11 +142,39 @@ function Hero() {
       setVendorCategory(value);
     }
 
+    setSearchError("");
     setOpenDropdown(null);
+  };
+
+  const handleLocationChange = (e) => {
+    const nextValue = e.target.value;
+    setLocation(nextValue);
+    setSearchError("");
+
+    if (nextValue.trim().length > 0) {
+      setOpenDropdown("city");
+    } else if (openDropdown === "city") {
+      setOpenDropdown(null);
+    }
   };
 
   const handleSearch = (submitEvent) => {
     submitEvent.preventDefault();
+
+    const hasSelection =
+      Boolean(eventType.trim()) ||
+      Boolean(vendorCategory.trim()) ||
+      Boolean(location.trim());
+
+    if (!hasSelection) {
+      setSearchError(
+        "Please select an Event Type, Vendor Category, or enter a City to search.",
+      );
+      return;
+    }
+
+    setSearchError("");
+    setOpenDropdown(null);
 
     const eventName = eventCategoryAliases[eventType] || eventType;
     const selectedEvent = eventCategories.find(
@@ -358,6 +394,7 @@ function Hero() {
           >
             <form
               onSubmit={handleSearch}
+              noValidate
               className="grid grid-cols-1 items-center gap-2.5 sm:grid-cols-2 lg:grid-cols-[1fr_1.1fr_0.85fr_auto]"
             >
               {renderDropdown(
@@ -376,27 +413,72 @@ function Hero() {
                 Camera,
               )}
 
-              <div className="flex h-[44px] w-full min-w-0 items-center gap-2 rounded-[7px] border border-white/35 bg-white/5 px-3 transition-colors focus-within:bg-white/10">
-                <MapPin
-                  size={16}
-                  strokeWidth={2}
-                  className="shrink-0 text-white"
-                />
+              <div className="relative w-full min-w-0">
+                <div className="flex h-[44px] w-full min-w-0 items-center gap-2 rounded-[7px] border border-white/35 bg-white/5 px-3 transition-colors focus-within:bg-white/10">
+                  <MapPin
+                    size={16}
+                    strokeWidth={2}
+                    className="shrink-0 text-white"
+                  />
 
-                <input
-                  type="text"
-                  list="india-city-suggestions"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  placeholder="Enter city"
-                  aria-label="Location"
-                  className="w-full min-w-0 bg-transparent font-poppins text-[12px] font-medium text-white outline-none placeholder:font-normal placeholder:text-white/90 sm:text-[13px]"
-                />
-                <datalist id="india-city-suggestions">
-                  {indianCities.map((city) => (
-                    <option key={city} value={city} />
-                  ))}
-                </datalist>
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={handleLocationChange}
+                    onKeyDown={(e) => {
+                      if (e.key === "Escape") {
+                        setOpenDropdown(null);
+                      }
+                    }}
+                    placeholder="Enter city"
+                    aria-label="Location"
+                    autoComplete="off"
+                    className="w-full min-w-0 bg-transparent font-poppins text-[12px] font-medium text-white outline-none placeholder:font-normal placeholder:text-white/90 sm:text-[13px]"
+                  />
+                </div>
+
+                {openDropdown === "city" && location.trim().length > 0 && (
+                  <>
+                    <button
+                      type="button"
+                      aria-label="Close city suggestions"
+                      className="fixed inset-0 z-20 cursor-default"
+                      onClick={() => setOpenDropdown(null)}
+                    />
+
+                    <div
+                      role="listbox"
+                      aria-label="City suggestions"
+                      className="dropdown-menu absolute left-0 right-0 top-[calc(100%+6px)] z-30 max-h-[220px] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-white/25 bg-[#24151B]/95 text-left shadow-xl backdrop-blur-xl"
+                    >
+                      {filteredCities.length > 0 ? (
+                        filteredCities.map((city) => (
+                          <button
+                            key={city}
+                            type="button"
+                            role="option"
+                            aria-selected={
+                              location.trim().toLowerCase() ===
+                              city.toLowerCase()
+                            }
+                            onClick={() => {
+                              setLocation(city);
+                              setSearchError("");
+                              setOpenDropdown(null);
+                            }}
+                            className="block w-full border-0 bg-transparent px-3 py-2.5 text-left font-poppins text-[12px] font-normal text-white/90 outline-none transition-colors duration-200 hover:bg-gradient-to-r hover:from-[#D4145A] hover:to-[#FF7628] hover:font-semibold hover:text-white sm:text-[13px]"
+                          >
+                            {city}
+                          </button>
+                        ))
+                      ) : (
+                        <p className="px-3 py-2.5 font-poppins text-[12px] text-white/70 sm:text-[13px]">
+                          No matching city found
+                        </p>
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
 
               <button
@@ -407,6 +489,15 @@ function Hero() {
                 Search Vendors
               </button>
             </form>
+
+            {searchError && (
+              <p
+                role="alert"
+                className="mt-2.5 font-poppins text-xs font-medium text-[#FF9E6D]"
+              >
+                {searchError}
+              </p>
+            )}
           </motion.div>
         </div>
       </section>
