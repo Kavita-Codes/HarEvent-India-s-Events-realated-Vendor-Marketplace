@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   BrowserRouter,
+  Navigate,
   Routes,
   Route,
   useLocation,
@@ -15,8 +16,6 @@ import Enquiry from "./pages/Enquiry";
 import EventCategories from "./pages/EventCategories";
 import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
-import JoinAsVendor from "./pages/JoinAsVendor";
-import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import Search from "./pages/Search";
@@ -142,17 +141,23 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/enquiry" element={<Enquiry />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={<Navigate to="/?form=customer" replace />}
+            />
             <Route path="/verify-otp" element={<VerifyOTP />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route
               path="/vendor-login"
-              element={<Login initialMode="vendor" />}
+              element={<Navigate to="/?form=vendor" replace />}
             />
             <Route path="/signup" element={<Signup />} />
             <Route path="/favorites" element={<Favorites />} />
-            <Route path="/join-as-vendor" element={<JoinAsVendor />} />
+            <Route
+              path="/join-as-vendor"
+              element={<Navigate to="/signup?form=vendor" replace />}
+            />
             <Route path="/search" element={<Search />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

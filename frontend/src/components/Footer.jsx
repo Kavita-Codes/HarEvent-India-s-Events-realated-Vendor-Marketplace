@@ -29,8 +29,8 @@ const companyLinks = [
 ];
 
 const vendorLinks = [
-  { label: "Join as Vendor", href: "/join-as-vendor" },
-  { label: "Vendor Login", href: "/vendor-login" },
+  { label: "Join as Vendor", href: "/signup?form=vendor" },
+  { label: "Vendor Login", href: "/?form=vendor" },
   { label: "Vendor Registration", href: "/vendor-registration" },
   { label: "Partner Guidelines", href: "/partner-guidelines" },
 ];

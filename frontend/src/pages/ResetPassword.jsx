@@ -7,20 +7,39 @@ import {
   LockKeyhole,
   ShieldCheck,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  hasErrors,
+  validateResetPasswordForm,
+} from "../utils/validation";
 
 function ResetPassword() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const fieldClass =
-    "flex h-12 w-full items-center gap-2 rounded-lg border border-[#EED5DF] bg-[#FFFAFC] px-3 focus-within:border-2 focus-within:border-[#D4145A]";
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
   const inputClass =
     "w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-[#B3A3AA]";
 
+  function fieldClass(hasError) {
+    return `flex h-12 w-full items-center gap-2 rounded-lg border bg-[#FFFAFC] px-3 focus-within:border-2 ${
+      hasError
+        ? "border-red-500 focus-within:border-red-500"
+        : "border-[#EED5DF] focus-within:border-[#D4145A]"
+    }`;
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
+
+    const nextErrors = validateResetPasswordForm({ password, confirmPassword });
+    setErrors(nextErrors);
+    if (hasErrors(nextErrors)) return;
+
+    navigate("/?form=customer");
   }
 
   return (
@@ -86,7 +105,7 @@ function ResetPassword() {
               Your OTP has been verified. Set a new password for your account.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} noValidate className="space-y-4">
 
               {/* New Password */}
               <div>
@@ -94,16 +113,19 @@ function ResetPassword() {
                   New Password
                 </label>
 
-                <div className={fieldClass}>
+                <div className={fieldClass(errors.password)}>
                   <LockKeyhole
                     size={17}
                     className="shrink-0 text-[#D4145A]"
                   />
 
                   <input
-                    required
                     type={showPassword ? "text" : "password"}
-                    minLength={8}
+                    value={password}
+                    onChange={(event) => {
+                      setPassword(event.target.value);
+                      setErrors((current) => ({ ...current, password: "" }));
+                    }}
                     placeholder="Enter new password"
                     className={inputClass}
                   />
@@ -117,6 +139,9 @@ function ResetPassword() {
                     {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
                   </button>
                 </div>
+                {errors.password && (
+                  <p className="mt-1 text-xs text-red-600">{errors.password}</p>
+                )}
               </div>
 
               {/* Confirm Password */}
@@ -125,16 +150,22 @@ function ResetPassword() {
                   Confirm New Password
                 </label>
 
-                <div className={fieldClass}>
+                <div className={fieldClass(errors.confirmPassword)}>
                   <LockKeyhole
                     size={17}
                     className="shrink-0 text-[#D4145A]"
                   />
 
                   <input
-                    required
                     type={showConfirmPassword ? "text" : "password"}
-                    minLength={8}
+                    value={confirmPassword}
+                    onChange={(event) => {
+                      setConfirmPassword(event.target.value);
+                      setErrors((current) => ({
+                        ...current,
+                        confirmPassword: "",
+                      }));
+                    }}
                     placeholder="Re-enter new password"
                     className={inputClass}
                   />
@@ -154,6 +185,11 @@ function ResetPassword() {
                     )}
                   </button>
                 </div>
+                {errors.confirmPassword && (
+                  <p className="mt-1 text-xs text-red-600">
+                    {errors.confirmPassword}
+                  </p>
+                )}
               </div>
 
               <p className="text-sm leading-5 text-[#A8959D]">
@@ -172,7 +208,7 @@ function ResetPassword() {
             <p className="mt-5 text-center text-sm text-[#78646E]">
               Remember your password?{" "}
               <Link
-                to="/vendor-login"
+                to="/?form=customer"
                 className="font-semibold text-[#D4145A] hover:underline"
               >
                 Sign in

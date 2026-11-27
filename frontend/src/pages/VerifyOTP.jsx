@@ -1,15 +1,20 @@
 
 import { useRef, useState } from "react";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { validateOtp } from "../utils/validation";
 
 function VerifyOTP() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const location = useLocation();
 
+  const navigate = useNavigate();
   const phone = location.state?.phone || "+91 XXXXX XXXXX";
   const purpose = location.state?.purpose || "login";
+  const role = location.state?.role === "vendor" ? "vendor" : "customer";
+  const [otpError, setOtpError] = useState("");
+  const loginPath = `/?form=${role}`;
 
   const fieldClass =
     "h-12 w-11 rounded-lg border border-[#EED5DF] bg-[#FFFAFC] text-center text-lg font-semibold text-[#493640] outline-none transition focus:border-2 focus:border-[#D4145A] focus:ring-2 focus:ring-[#D4145A]/10";
@@ -20,6 +25,7 @@ function VerifyOTP() {
     const updatedOtp = [...otp];
     updatedOtp[index] = value;
     setOtp(updatedOtp);
+    setOtpError("");
 
     if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
@@ -51,6 +57,17 @@ function VerifyOTP() {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    const error = validateOtp(otp);
+    setOtpError(error);
+    if (error) return;
+
+    if (purpose === "reset") {
+      navigate("/reset-password");
+      return;
+    }
+
+    navigate("/");
   }
 
   return (
@@ -87,7 +104,7 @@ function VerifyOTP() {
 
             <div className="relative mb-5 flex min-h-[64px] items-center justify-center">
               <Link
-                to={purpose === "reset" ? "/forgot-password" : "/login"}
+                to={purpose === "reset" ? "/forgot-password" : loginPath}
                 className="absolute left-0 top-1/2 inline-flex -translate-y-1/2 items-center gap-1.5 text-sm font-medium text-[#78646E] transition hover:text-[#D4145A]"
               >
                 <ArrowLeft size={16} />
@@ -119,7 +136,7 @@ function VerifyOTP() {
               Enter the code below to continue.
             </p>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} noValidate>
               <div className="mb-5">
                 <label className="mb-3 block text-sm font-semibold text-[#493640]">
                   Enter 6-digit OTP
@@ -144,6 +161,11 @@ function VerifyOTP() {
                     />
                   ))}
                 </div>
+                {otpError && (
+                  <p className="mt-2 text-center text-xs text-red-600 sm:text-left">
+                    {otpError}
+                  </p>
+                )}
               </div>
 
               <button

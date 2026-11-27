@@ -619,7 +619,7 @@ function Navbar({ onLoginClick }) {
               {loginContent(16)}
             </motion.button>
           ) : (
-            <Link to="/login" className={loginClassBase}>
+            <Link to="/?form=customer" className={loginClassBase}>
               {loginContent(14)}
             </Link>
           )}
@@ -939,7 +939,7 @@ function Navbar({ onLoginClick }) {
               </motion.button>
             ) : (
               <Link
-                to="/login"
+                to="/?form=customer"
                 onClick={closeMenu}
                 className={mobileLoginClass}
               >

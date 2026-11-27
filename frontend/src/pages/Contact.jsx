@@ -69,7 +69,7 @@ const contactOptions = [
       },
       {
         label: "List your business",
-        href: "/join-as-vendor",
+        href: "/signup?form=vendor",
         Icon: ArrowRight,
       },
     ],

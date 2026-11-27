@@ -349,7 +349,7 @@ export default function VendorProfile() {
     showNotice(`${action} requires login. Redirecting...`);
 
     window.setTimeout(() => {
-      navigate("/login");
+      navigate("/?form=customer");
     }, 1000);
   };
 

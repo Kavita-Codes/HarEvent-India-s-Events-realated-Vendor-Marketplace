@@ -73,7 +73,7 @@ function VendorRegistrationBanner({
             </button>
           ) : (
             <Link
-              to="/join-as-vendor"
+              to="/signup?form=vendor"
               className="group inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-xs font-bold text-[#B20F4B] shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
             >
               <Store
@@ -98,7 +98,7 @@ function VendorRegistrationBanner({
             </button>
           ) : (
             <Link
-              to="/vendor-login"
+              to="/?form=vendor"
               className="text-xs font-medium text-white/90 underline decoration-white/50 underline-offset-4 transition-colors duration-200 hover:text-white hover:decoration-white"
             >
               Already a vendor? Log in

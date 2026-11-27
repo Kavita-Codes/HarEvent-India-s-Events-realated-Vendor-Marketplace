@@ -13,24 +13,36 @@ import LatestBlogs from "../components/LatestBlogs";
 import Footer from "../components/Footer";
 import LoginModal from "../components/LoginModal";
 
+function resolveLoginForm(requestedForm) {
+  if (requestedForm === "vendor") return "vendor";
+  if (requestedForm === "customer" || requestedForm === "login") return "customer";
+  return null;
+}
+
 function Home({ onChecklistVisibilityChange }) {
   const location = useLocation();
   const navigate = useNavigate();
   const requestedForm = new URLSearchParams(location.search).get("form");
-  const loginMode = ["login", "vendor"].includes(requestedForm)
-    ? requestedForm
-    : null;
+  const loginMode = resolveLoginForm(requestedForm);
 
-  const openLogin = (mode = "login") => {
+  const openLogin = (mode = "customer") => {
     navigate(`/?form=${mode}`);
   };
 
   const closeLogin = () => navigate("/");
 
+  if (requestedForm === "login") {
+    return <Navigate to="/?form=customer" replace />;
+  }
+
   if (requestedForm === "signup" || requestedForm === "vendor-signup") {
     return (
       <Navigate
-        to={requestedForm === "vendor-signup" ? "/join-as-vendor" : "/signup"}
+        to={
+          requestedForm === "vendor-signup"
+            ? "/signup?form=vendor"
+            : "/signup?form=customer"
+        }
         replace
       />
     );
@@ -38,7 +50,7 @@ function Home({ onChecklistVisibilityChange }) {
 
   return (
     <>
-      <Navbar onLoginClick={() => openLogin("login")} />
+      <Navbar onLoginClick={() => openLogin("customer")} />
       <Hero />
       <BrandsAndPartners />
       <HowItWorks />
@@ -48,21 +60,19 @@ function Home({ onChecklistVisibilityChange }) {
       <WhyChooseHarEvent />
       <VendorRegistrationBanner
         onVendorLoginClick={() => openLogin("vendor")}
-        onVendorRegisterClick={() => openLogin("vendor-signup")}
+        onVendorRegisterClick={() => navigate("/signup?form=vendor")}
       />
       <CustomerAssistance />
       <LatestBlogs />
       <Footer />
       {loginMode && (
         <LoginModal
-          key={loginMode}
-          initialMode={loginMode}
+          mode={loginMode}
           onClose={closeLogin}
-          onRegister={(mode) => {
-            if (mode === "vendor-signup") navigate("/join-as-vendor");
-            else if (mode === "signup") navigate("/signup");
-            else openLogin(mode);
-          }}
+          onModeChange={(nextMode) =>
+            navigate(`/?form=${nextMode}`, { replace: true })
+          }
+          onRegister={(role) => navigate(`/signup?form=${role}`)}
         />
       )}
     </>
