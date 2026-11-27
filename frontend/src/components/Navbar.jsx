@@ -6,9 +6,7 @@ import {
   UserRound,
   X,
   ChevronDown,
-  ChevronRight,
   ArrowRight,
-  Sparkles,
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
@@ -468,8 +466,6 @@ function Navbar({ onLoginClick }) {
   const loginClassBase =
     "btn-sheen btn-lift group inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] px-[18px] py-2 text-[14px] font-semibold font-poppins text-white hover:brightness-105";
 
-  /* The motion pill animates its own tap, so it opts out of the global CSS
-     press (`press-off`) to avoid stacking two shrinks on top of each other. */
   const loginClass = `press-off ${loginClassBase}`;
 
   const mobileLoginClass =
@@ -637,21 +633,21 @@ function Navbar({ onLoginClick }) {
         </button>
       </div>
 
-      {/* DESKTOP MEGA MENU DROPDOWN */}
+      {/* SIMPLE ICON-FREE DESKTOP MEGA MENU DROPDOWN */}
       {activeMegaMenu && currentMegaData && (
         <motion.div
-          initial={{ opacity: 0, y: -12 }}
+          initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           onMouseEnter={() => {
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
           }}
           onMouseLeave={handleMouseLeave}
-          className="absolute left-0 top-[68px] z-50 w-full border-t border-rose-100 bg-[#fef0e1] shadow-2xl"
+          className="absolute left-0 top-[68px] z-50 w-full border-t border-[#F2DCE4] bg-white shadow-xl"
         >
           <div className="mx-auto max-w-[1440px]">
-            {/* Top Horizontal Tabs */}
-            <div className="flex items-center overflow-x-auto border-b border-gray-100 px-6 sm:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {/* Clean Top Text Tabs */}
+            <div className="flex items-center gap-2 overflow-x-auto border-b border-[#F4E6EC] bg-[#FFF9FB] px-6 sm:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {currentMegaData.tabs.map((tab) => {
                 const isActive = tab.id === activeTabObj.id;
 
@@ -673,7 +669,7 @@ function Navbar({ onLoginClick }) {
                         setActiveVendorTab(tab.id);
                       }
                     }}
-                    className={`relative cursor-pointer whitespace-nowrap px-5 py-3.5 text-[14px] font-semibold transition-colors ${
+                    className={`relative cursor-pointer whitespace-nowrap px-4 py-3 text-[14px] font-semibold transition-colors ${
                       isActive
                         ? "text-[#D4145A]"
                         : "text-[#584852] hover:text-[#D4145A]"
@@ -682,32 +678,23 @@ function Navbar({ onLoginClick }) {
                     <span>{tab.name}</span>
 
                     {isActive && (
-                      <motion.span
-                        layoutId="mega-tab-underline"
-                        transition={{
-                          type: "spring",
-                          stiffness: 420,
-                          damping: 34,
-                        }}
-                        className="absolute bottom-0 left-0 right-0 h-[3px] rounded-t-full bg-gradient-to-r from-[#D4145A] to-[#FF7628]"
-                      />
+                      <span className="absolute bottom-0 left-4 right-4 h-[2.5px] rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628]" />
                     )}
                   </button>
                 );
               })}
             </div>
 
-            {/* Subcategories 4-Column Grid */}
-            <div className="bg-[#fef0e1] px-6 py-7 sm:px-10 sm:py-8">
+            {/* Clean 4-Column Plain Text Links */}
+            <div className="bg-white px-6 py-6 sm:px-10">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
                 {activeTabObj.columns.map((col, cIdx) => (
                   <div
                     key={col.title || cIdx}
-                    className="flex flex-col"
+                    className="flex flex-col border-b border-[#F8EDF1] pb-4 last:border-b-0 lg:border-b-0 lg:pb-0"
                   >
-                    <h4 className="mb-3.5 flex items-center gap-1.5 text-[16px] font-bold tracking-tight text-[#D4145A]">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#D4145A]" />
-                      <span>{col.title}</span>
+                    <h4 className="mb-3 border-b border-[#F6E7ED] pb-1.5 text-[14px] font-bold tracking-wide text-[#292327]">
+                      {col.title}
                     </h4>
 
                     <ul className="m-0 flex list-none flex-col gap-2 p-0">
@@ -716,13 +703,9 @@ function Navbar({ onLoginClick }) {
                           <Link
                             to={`/search?query=${encodeURIComponent(item)}`}
                             onClick={closeMenu}
-                            className="group flex items-center gap-1.5 text-[15px] text-[#4d3e47] transition-all duration-150 hover:translate-x-1 hover:text-[#D4145A]"
+                            className="inline-block text-[14px] font-normal text-[#5A4B54] transition-colors duration-150 hover:text-[#D4145A]"
                           >
-                            <ChevronRight
-                              size={13}
-                              className="text-gray-300 transition-colors group-hover:text-[#D4145A]"
-                            />
-                            <span>{item}</span>
+                            {item}
                           </Link>
                         </li>
                       ))}
@@ -731,19 +714,16 @@ function Navbar({ onLoginClick }) {
                 ))}
               </div>
 
-              {/* Bottom Quick Bar inside Mega Menu */}
-              <div className="mt-8 flex items-center justify-between border-t border-rose-100/70 pt-4">
-                <div className="flex items-center gap-2 text-[12px] text-[#7a6c75]">
-                  <Sparkles size={14} className="text-[#D4145A]" />
-                  <span>
-                    Discover 1000+ verified professionals across India
-                  </span>
-                </div>
+              {/* Clean Footer Link */}
+              <div className="mt-6 flex items-center justify-between border-t border-[#F4E6EC] pt-3.5 text-[13px]">
+                <span className="text-[#7A6C75]">
+                  Explore categories tailored for your event
+                </span>
 
                 <Link
                   to={currentMegaData.path}
                   onClick={closeMenu}
-                  className="group inline-flex items-center gap-1.5 text-[12px] font-bold text-[#D4145A] transition hover:text-[#D4145A]"
+                  className="group inline-flex items-center gap-1.5 font-semibold text-[#D4145A] transition hover:text-[#A80F46]"
                 >
                   <span>View all {currentMegaData.label}</span>
 
