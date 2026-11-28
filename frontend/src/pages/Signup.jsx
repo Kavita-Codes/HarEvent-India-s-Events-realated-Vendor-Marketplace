@@ -53,9 +53,8 @@ function Signup() {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const fieldClass = vendorMode
-    ? "flex h-9 w-full min-w-0 items-center gap-2 rounded-lg border bg-[#FFFAFC] px-3 focus-within:border-2"
-    : "flex h-10 w-full min-w-0 items-center gap-2 rounded-lg border bg-[#FFFAFC] px-3 focus-within:border-2";
+  const fieldClass =
+    "flex h-9 w-full min-w-0 items-center gap-2 rounded-lg border bg-[#FFFAFC] px-3 focus-within:border-2";
   const inputClass =
     "w-full min-w-0 bg-transparent text-xs outline-none placeholder:text-[#B3A3AA]";
 
@@ -101,21 +100,18 @@ function Signup() {
         purpose: "signup",
         role: vendorMode ? "vendor" : "customer",
         phone,
+        fullName,
+        email,
+        businessName: vendorMode ? businessName : "",
+        city: vendorMode ? city : "",
+        serviceCategory: vendorMode ? serviceCategory : "",
       },
     });
   }
 
   return (
-    <main
-      className={`flex min-h-screen w-full items-center justify-center bg-[#FFFAFC] font-poppins ${
-        vendorMode ? "p-2.5 sm:p-3" : "p-4 sm:p-6"
-      }`}
-    >
-      <div
-        className={`flex w-full overflow-hidden rounded-[24px] bg-white shadow-[0_24px_60px_rgba(55,25,40,0.16)] ${
-          vendorMode ? "max-w-[860px]" : "max-w-[900px]"
-        }`}
-      >
+    <main className="flex min-h-screen w-full items-center justify-center bg-[#FFFAFC] p-3 font-poppins sm:p-4">
+      <div className="flex w-full max-w-[760px] overflow-hidden rounded-[22px] bg-white shadow-[0_24px_60px_rgba(55,25,40,0.16)]">
         <div
           className={`relative hidden overflow-hidden transition-colors duration-500 lg:block lg:w-[34%] ${
             vendorMode
@@ -125,95 +121,61 @@ function Signup() {
         >
           <div className="absolute inset-0 bg-black/5" />
 
-          <div className="absolute inset-0 flex flex-col items-center justify-center px-7 text-center text-white">
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-center text-white">
             <img
               src="/logoForm.jpeg"
               alt="HarEvent"
-              className={`rounded-2xl bg-white/95 object-contain p-2 shadow-lg ${
-                vendorMode ? "mb-5 h-20 w-20" : "mb-7 h-24 w-24"
-              }`}
+              className="mb-5 h-24 w-24 rounded-2xl bg-white/95 object-contain p-2 shadow-lg"
             />
 
-            <h2
-              className={`font-playfair font-bold leading-tight ${
-                vendorMode ? "text-2xl" : "text-3xl"
-              }`}
-            >
+            <h2 className="font-playfair text-xl font-bold leading-tight">
               {vendorMode
                 ? "Grow Your Event Business"
                 : "Every Celebration Starts Here"}
             </h2>
 
-            <p
-              className={`max-w-[240px] text-sm leading-6 text-white/90 ${
-                vendorMode ? "mt-3" : "mt-4"
-              }`}
-            >
+            <p className="mt-2.5 max-w-[205px] text-xs leading-5 text-white/90">
               {vendorMode
                 ? "Connect with customers and showcase your services with HarEvent."
                 : "Discover trusted professionals and bring your special occasions to life."}
             </p>
 
-            <div
-              className={`h-1 w-16 rounded-full bg-white/80 ${
-                vendorMode ? "mt-6" : "mt-8"
-              }`}
-            />
+            <div className="mt-5 h-1 w-14 rounded-full bg-white/80" />
           </div>
-
-          <div className="absolute -left-16 -top-16 h-48 w-48 rounded-full border border-white/15" />
-          <div className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full border border-white/15" />
         </div>
 
-        <div
-          className={`flex w-full flex-col justify-center px-5 sm:px-9 lg:w-[66%] lg:px-10 ${
-            vendorMode ? "py-3.5" : "py-7"
-          }`}
-        >
-          <div className="mx-auto w-full max-w-[520px]">
-            <div
-              className={`relative flex items-center justify-center ${
-                vendorMode ? "mb-2 min-h-[44px]" : "mb-4 min-h-[64px]"
-              }`}
-            >
-              <Link
-                to="/"
+        <div className="flex w-full flex-col justify-center px-4 py-4 sm:px-7 lg:w-[66%] lg:px-8">
+          <div className="mx-auto w-full max-w-[440px]">
+            <div className="relative mb-2.5 flex min-h-[48px] items-center justify-center">
+              <button
+                type="button"
+                onClick={() => navigate("/")}
                 className="absolute left-0 top-1/2 inline-flex -translate-y-1/2 items-center gap-1.5 text-xs font-medium text-[#78646E] transition hover:text-[#D4145A]"
               >
                 <ArrowLeft size={15} />
                 Back
-              </Link>
+              </button>
 
               <Link to="/" aria-label="HarEvent Home">
                 <img
                   src="/logoForm.jpeg"
                   alt="HarEvent"
-                  className={`object-contain ${
-                    vendorMode ? "h-11 w-11" : "h-16 w-16"
-                  }`}
+                  className="h-12 w-12 object-contain"
                 />
               </Link>
             </div>
 
-            <div className={vendorMode ? "mb-2" : "mb-3"}>
+            <div className="mb-2">
               <p className="text-[9px] font-bold uppercase tracking-[1.5px] text-[#D4145A]">
                 {vendorMode ? "Vendor Portal" : "Customer Portal"}
               </p>
 
-              <h1
-                className={`font-playfair font-bold tracking-tight text-[#30232B] ${
-                  vendorMode ? "mt-0.5 text-xl" : "mt-1 text-xl sm:text-2xl"
-                }`}
-              >
+              <h1 className="mt-0.5 font-playfair text-lg font-bold tracking-tight text-[#30232B] sm:text-xl">
                 {vendorMode ? "Join as a Vendor" : "Create an account"}
               </h1>
             </div>
 
-            <div
-              className={`grid grid-cols-2 rounded-xl bg-[#F3F5F9] p-1 ${
-                vendorMode ? "mb-2.5" : "mb-4"
-              }`}
-            >
+            <div className="mb-2.5 grid grid-cols-2 rounded-xl bg-[#F3F5F9] p-1">
               {[
                 { value: "customer", label: "Customer", icon: UserRound },
                 { value: "vendor", label: "Vendor", icon: Store },
@@ -223,10 +185,8 @@ function Signup() {
                   type="button"
                   aria-pressed={(value === "vendor") === vendorMode}
                   onClick={() => switchMode(value)}
-                  className={`flex items-center justify-center gap-2 rounded-lg px-3 text-xs font-semibold transition ${
-                    vendorMode ? "py-2" : "py-2.5"
-                  } ${
-                    ((value === "vendor") === vendorMode)
+                  className={`flex items-center justify-center gap-2 rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                    (value === "vendor") === vendorMode
                       ? "bg-white text-[#D4145A] shadow-sm"
                       : "text-[#718096] hover:text-[#493640]"
                   }`}
@@ -236,11 +196,7 @@ function Signup() {
               ))}
             </div>
 
-            <p
-              className={`text-xs text-[#8A7580] ${
-                vendorMode ? "mb-2.5 leading-4" : "mb-4 leading-5"
-              }`}
-            >
+            <p className="mb-2.5 text-xs leading-4 text-[#8A7580]">
               {vendorMode
                 ? "Enter your business details to start receiving client leads."
                 : "It only takes a moment to get started with your planning."}
@@ -249,9 +205,7 @@ function Signup() {
             <form
               onSubmit={handleSubmit}
               noValidate
-              className={`grid w-full grid-cols-1 gap-x-3 sm:grid-cols-2 ${
-                vendorMode ? "gap-y-2" : "gap-y-3"
-              }`}
+              className="grid w-full grid-cols-1 gap-x-2.5 gap-y-2 sm:grid-cols-2"
             >
               <div>
                 <label className="mb-0.5 block text-[11px] font-semibold text-[#493640]">
@@ -317,7 +271,7 @@ function Signup() {
                       setPhone(digitsOnly(event.target.value).slice(0, 10));
                       setErrors((current) => ({ ...current, phone: "" }));
                     }}
-                    placeholder="9876543210"
+                    placeholder="+919876543210"
                     className={inputClass}
                   />
                 </div>
@@ -360,7 +314,7 @@ function Signup() {
 
               {vendorMode && (
                 <>
-                  <div className="grid grid-cols-1 gap-3 sm:col-span-2 sm:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-2.5 sm:col-span-2 sm:grid-cols-2">
                     <div>
                       <label className="mb-0.5 block text-[11px] font-semibold text-[#493640]">
                         Business Name
@@ -509,11 +463,7 @@ function Signup() {
                 </>
               )}
 
-              <label
-                className={`flex cursor-pointer items-start gap-2 text-[10px] leading-4 text-[#78646E] sm:col-span-2 ${
-                  vendorMode ? "pt-0.5" : "pt-1"
-                }`}
-              >
+              <label className="flex cursor-pointer items-start gap-2 pt-0.5 text-[10px] leading-4 text-[#78646E] sm:col-span-2">
                 <input
                   name="acceptTerms"
                   type="checkbox"
@@ -544,19 +494,13 @@ function Signup() {
 
               <button
                 type="submit"
-                className={`flex w-full items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105 sm:col-span-2 ${
-                  vendorMode ? "h-9" : "h-10"
-                }`}
+                className="flex h-9 w-full items-center justify-center rounded-full bg-gradient-to-r from-[#D4145A] to-[#FF7628] text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105 sm:col-span-2"
               >
                 {vendorMode ? "Create Vendor Account" : "Create Account"}
               </button>
             </form>
 
-            <p
-              className={`text-center text-xs text-[#78646E] ${
-                vendorMode ? "mt-2.5" : "mt-4"
-              }`}
-            >
+            <p className="mt-2.5 text-center text-xs text-[#78646E]">
               Already have an account?{" "}
               <Link
                 to={vendorMode ? "/?form=vendor" : "/?form=customer"}

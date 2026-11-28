@@ -18,6 +18,110 @@ const weddingServices = [
   "Entertainment",
 ];
 
+const receptionServices = [
+  "Venues",
+  "Decorators",
+  "Caterers",
+  "Makeup Artists",
+  "Photographers",
+  "Mehndi Artists",
+  "DJ'S",
+  "Jewellery on Rent",
+  "Invitation Cards / Designers",
+  "Choreographers",
+  "Groom Wear",
+  "Bridal Wear",
+  "Gifts",
+  "Rangoli Artists",
+  "Entertainment",
+];
+
+const engagementServices = [
+  "Venues",
+  "Decorators",
+  "Caterers",
+  "Makeup Artists",
+  "Photographers",
+  "Mehndi Artists",
+  "DJ'S",
+  "Jewellery on Rent",
+  "Invitation Cards / Designers",
+  "Choreographers",
+  "Gifts",
+  "Pandits",
+  "Entertainment",
+  "Rangoli Artists",
+];
+
+const sangeetServices = [
+  "Venues",
+  "Decorators",
+  "Caterers",
+  "Makeup Artists",
+  "Photographers",
+  "Mehndi Artists",
+  "DJ'S",
+  "Jewellery on Rent",
+  "Invitation Cards / Designers",
+  "Choreographers",
+  "Groom Wear",
+  "Bridal Wear",
+  "Entertainment",
+];
+
+const anniversaryServices = [
+  "Venues",
+  "Decorators",
+  "Caterers",
+  "Makeup Artists",
+  "Photographers",
+  "Mehndi Artists",
+  "DJ'S",
+  "Gifts",
+  "Invitation Cards / Designers",
+  "Choreographers",
+  "Rangoli Artists",
+  "Entertainment",
+];
+
+const namingBabyShowerServices = [
+  "Venues",
+  "Decorators",
+  "Caterers",
+  "Makeup Artists",
+  "Photographers",
+  "Mehndi Artists",
+  "Rangoli Artists",
+  "Jewellery on Rent",
+  "Invitation Cards / Designers",
+  "Entertainment",
+];
+
+const birthdayServices = [
+  "Venues",
+  "Decorators",
+  "Caterers",
+  "DJ'S",
+  "Photographers",
+  "Invitation Cards / Designers",
+  "Choreographers",
+  "Gifts",
+  "Entertainment",
+];
+
+const housewarmingServices = [
+  "Decorators",
+  "Caterers",
+  "Makeup Artists",
+  "Photographers",
+  "Mehndi Artists",
+  "Invitation Cards / Designers",
+  "Gifts",
+  "Pandits",
+  "Rangoli Artists",
+  "Entertainment",
+];
+
 const celebrationServices = [
   "Venues",
   "Decorators",
@@ -47,87 +151,29 @@ const corporateServices = [
   "LED Wall & Screen Rentals",
 ];
 
-const eventVendorCategories = {
+const conferenceServices = [
+  "Conference Event Planners",
+  "Conference & Meeting Halls",
+  "Hotels & Resorts",
+  "Decorators",
+  "Corporate Caterers",
+  "Photographers",
+  "Videographers",
+  "Anchors & Emcees",
+  "DJs & Music",
+  "Live Bands & Singers",
+];
+
+export const eventVendorCategories = {
   wedding: weddingServices,
-  reception: weddingServices.filter((service) => service !== "Honeymoon"),
-  engagement: [
-    ...weddingServices.filter(
-      (service) =>
-        service !== "Groom Wear" &&
-        service !== "Bridal Wear" &&
-        service !== "Honeymoon",
-    ),
-  ],
-  anniversary: [
-    "Venues",
-    "Decorators",
-    "Caterers",
-    "Makeup Artists",
-    "Photographers",
-    "Mehndi Artists",
-    "DJ'S",
-    "Gifts",
-    "Invitation Cards / Designers",
-    "Choreographers",
-    "Rangoli Artists",
-    "Entertainment",
-  ],
-  "sangeet-ceremony": [
-    ...weddingServices.filter(
-      (service) =>
-        service !== "Honeymoon" &&
-        service !== "Pandits" &&
-        service !== "Gifts" &&
-        service !== "Rangoli Artists",
-    ),
-  ],
-  "naming-ceremony": [
-    "Venues",
-    "Decorators",
-    "Caterers",
-    "Makeup Artists",
-    "Photographers",
-    "Mehndi Artists",
-    "Rangoli Artists",
-    "Jewellery on Rent",
-    "Invitation Cards / Designers",
-    "Entertainment",
-  ],
-  "baby-shower": [
-    "Venues",
-    "Decorators",
-    "Caterers",
-    "Makeup Artists",
-    "Photographers",
-    "Mehndi Artists",
-    "Rangoli Artists",
-    "Jewellery on Rent",
-    "Invitation Cards / Designers",
-    "Entertainment",
-  ],
-  birthday: [
-    "Venues",
-    "Decorators",
-    "Caterers",
-    "DJ'S",
-    "Photographers",
-    "Invitation Cards / Designers",
-    "Choreographers",
-    "Gifts",
-    "Entertainment",
-  ],
-  "housewarming-griha-pravesh": [
-    "Decorators",
-    "Caterers",
-    "Makeup Artists",
-    "Photographers",
-    "Mehndi Artists",
-    "Invitation Cards / Designers",
-    "Gifts",
-    "Pandits",
-    "Rangoli Artists",
-    "Entertainment",
-  ],
+  reception: receptionServices,
+  engagement: engagementServices,
+  anniversary: anniversaryServices,
+  "sangeet-ceremony": sangeetServices,
+  "naming-ceremony": namingBabyShowerServices,
+  "baby-shower": namingBabyShowerServices,
+  birthday: birthdayServices,
+  "housewarming-griha-pravesh": housewarmingServices,
   "bachelor-party": celebrationServices,
   "cocktail-party": celebrationServices,
   "private-parties": celebrationServices,
@@ -147,18 +193,7 @@ const eventVendorCategories = {
     "DJs & Music",
   ],
   "corporate-events": corporateServices,
-  "conferences-seminars": [
-    "Conference Event Planners",
-    "Conference & Meeting Halls",
-    "Hotels & Resorts",
-    "Decorators",
-    "Corporate Caterers",
-    "Photographers",
-    "Videographers",
-    "Anchors & Emcees",
-    "DJs & Music",
-    "Live Bands & Singers",
-  ],
+  "conferences-seminars": conferenceServices,
   "award-ceremonies": [
     "Corporate Event Planners",
     "Corporate Venues",
@@ -313,26 +348,27 @@ export function buildVendorDirectoryPath(
   selectedCategories,
   allCategories,
 ) {
-  const selected = new Set(selectedCategories);
-  const selectedInDisplayOrder = allCategories.filter((category) =>
+  const selected = new Set(selectedCategories || []);
+  const selectedInDisplayOrder = (allCategories || []).filter((category) =>
     selected.has(category),
   );
   const categorySlug =
-    selectedInDisplayOrder.length === 0
-      ? "none"
-      : selectedInDisplayOrder.length === allCategories.length
-        ? "all"
-        : selectedInDisplayOrder.map(slugifyVendorCategory).join("+");
+    selectedInDisplayOrder.length === 0 ||
+    selectedInDisplayOrder.length === (allCategories || []).length
+      ? "all"
+      : selectedInDisplayOrder.map(slugifyVendorCategory).join("+");
 
   return `/vendor-categories/${eventSlug || "all"}/${categorySlug}`;
 }
 
 export function parseVendorDirectoryCategories(categorySlug, allCategories) {
-  if (!categorySlug || categorySlug === "all") return [...allCategories];
-  if (categorySlug === "none") return [];
+  if (!categorySlug || categorySlug === "all" || categorySlug === "none") {
+    return [...allCategories];
+  }
 
   const selectedSlugs = new Set(categorySlug.split("+"));
-  return allCategories.filter((category) =>
+  const matched = allCategories.filter((category) =>
     selectedSlugs.has(slugifyVendorCategory(category)),
   );
+  return matched.length > 0 ? matched : [...allCategories];
 }

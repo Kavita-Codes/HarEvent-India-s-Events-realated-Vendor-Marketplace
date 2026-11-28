@@ -7,6 +7,11 @@ import {
   X,
   ChevronDown,
   ArrowRight,
+  LogOut,
+  User,
+  ShieldCheck,
+  Heart,
+  Calendar,
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
@@ -397,6 +402,57 @@ function Navbar({ onLoginClick }) {
   const [mobileEventOpen, setMobileEventOpen] = useState(false);
   const [mobileVendorOpen, setMobileVendorOpen] = useState(false);
 
+  // Authenticated user state
+  const [user, setUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem("harevent_user");
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      try {
+        const stored = localStorage.getItem("harevent_user");
+        setUser(stored ? JSON.parse(stored) : null);
+      } catch {
+        setUser(null);
+      }
+    };
+
+    window.addEventListener("harevent_auth_change", handleAuthChange);
+    window.addEventListener("storage", handleAuthChange);
+
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setUserMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("harevent_auth_change", handleAuthChange);
+      window.removeEventListener("storage", handleAuthChange);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem("harevent_user");
+      window.dispatchEvent(new Event("harevent_auth_change"));
+    } catch (e) {
+      console.error(e);
+    }
+    setUser(null);
+    setUserMenuOpen(false);
+    navigate("/");
+  };
+
   const navigate = useNavigate();
   const navRef = useRef(null);
   const timeoutRef = useRef(null);
@@ -604,8 +660,82 @@ function Navbar({ onLoginClick }) {
             />
           </form>
 
-          {/* Login */}
-          {onLoginClick ? (
+          {/* Login or User Profile Icon */}
+          {user ? (
+            <div className="relative" ref={userMenuRef}>
+              <button
+                type="button"
+                onClick={() => setUserMenuOpen((prev) => !prev)}
+                aria-label="User account"
+                className="btn-lift group flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tr from-[#D4145A] to-[#FF7628] p-0.5 shadow-[0_4px_16px_rgba(212,20,90,0.22)] transition hover:scale-105 hover:shadow-[0_6px_20px_rgba(212,20,90,0.32)]"
+              >
+                <div className="flex h-full w-full items-center justify-center rounded-full bg-white text-[#D4145A] transition group-hover:bg-[#FFF7FA]">
+                  <UserRound size={20} className="text-[#D4145A]" />
+                </div>
+              </button>
+
+              {userMenuOpen && (
+                <div className="absolute right-0 top-12 z-50 w-64 overflow-hidden rounded-2xl border border-[#F2DEE6] bg-white shadow-[0_16px_40px_rgba(50,20,35,0.14)] animate-in fade-in zoom-in-95">
+                  {/* Header Card */}
+                  <div className="relative overflow-hidden border-b border-[#F5E6EC] bg-gradient-to-br from-[#FFF5F8] to-[#FFF0EA] p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-[#D4145A] to-[#FF7628] p-0.5 shadow-sm">
+                        <div className="flex h-full w-full items-center justify-center rounded-full bg-white text-[#D4145A]">
+                          <UserRound size={20} className="text-[#D4145A]" />
+                        </div>
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-[14px] font-bold text-[#30232B]">
+                          {user.fullName || (user.role === "vendor" ? "Vendor Partner" : "HarEvent User")}
+                        </p>
+                        <p className="truncate text-[12px] font-medium text-[#7C6973]">
+                          {user.phone || user.email || "Member"}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-2.5 flex items-center justify-between gap-2 border-t border-[#F2DEE6]/70 pt-2.5">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#D4145A] shadow-sm">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#D4145A]" />
+                        {user.role === "vendor" ? "Vendor" : "Customer"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Menu Items - Only Vendor Dashboard */}
+                  <div className="p-1.5">
+                    <Link
+                      to="/vendor-dashboard"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="group flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-[13px] font-semibold text-[#4A3B44] transition hover:bg-[#FFF2F6] hover:text-[#D4145A]"
+                    >
+                      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FFF2F6] text-[#D4145A] transition group-hover:bg-gradient-to-tr group-hover:from-[#D4145A] group-hover:to-[#FF7628] group-hover:text-white shadow-sm">
+                        <Calendar size={18} />
+                      </span>
+                      <div className="flex-1">
+                        <p className="leading-tight text-[14px]">Vendor Dashboard</p>
+                        <p className="text-[11px] font-normal text-[#8A7882]">Manage services, leads & bookings</p>
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* Logout Button */}
+                  <div className="border-t border-[#F5E6EC] p-1.5">
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="group flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-left text-[13px] font-semibold text-[#D62842] transition hover:bg-[#FFF0F2]"
+                    >
+                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#FFF0F2] text-[#D62842] transition group-hover:bg-[#D62842] group-hover:text-white">
+                        <LogOut size={16} />
+                      </span>
+                      <span>Logout from HarEvent</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : onLoginClick ? (
             <motion.button
               type="button"
               onClick={onLoginClick}
@@ -900,9 +1030,52 @@ function Navbar({ onLoginClick }) {
             </div>
           </nav>
 
-          {/* Mobile Login */}
+          {/* Mobile Login / User Profile */}
           <div className="mt-4 grid grid-cols-1 gap-3 border-t border-[#F0DDE5] pt-4">
-            {onLoginClick ? (
+            {user ? (
+              <div className="rounded-2xl border border-[#F1DDE5] bg-gradient-to-br from-[#FFF8FA] to-[#FFF1EC] p-3.5 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-[#D4145A] to-[#FF7628] p-0.5 shadow-sm">
+                      <div className="flex h-full w-full items-center justify-center rounded-full bg-white text-[#D4145A]">
+                        <UserRound size={20} className="text-[#D4145A]" />
+                      </div>
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-bold text-[#30232B]">
+                        {user.fullName || (user.role === "vendor" ? "Vendor Partner" : "HarEvent User")}
+                      </p>
+                      <span className="text-[11px] font-semibold text-[#D4145A] uppercase tracking-wider">
+                        {user.role === "vendor" ? "Vendor" : "Customer"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      closeMenu();
+                      handleLogout();
+                    }}
+                    className="flex shrink-0 items-center gap-1.5 rounded-full border border-red-200 bg-white px-3 py-1.5 text-xs font-semibold text-red-600 transition hover:bg-red-50"
+                  >
+                    <LogOut size={13} />
+                    <span>Logout</span>
+                  </button>
+                </div>
+
+                <div className="mt-3 border-t border-[#F0DDE5]/80 pt-2.5">
+                  <Link
+                    to="/vendor-dashboard"
+                    onClick={closeMenu}
+                    className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-white px-3 py-2.5 text-xs font-bold text-[#D4145A] shadow-sm ring-1 ring-[#F0DDE5]"
+                  >
+                    <Calendar size={14} />
+                    Vendor Dashboard
+                  </Link>
+                </div>
+              </div>
+            ) : onLoginClick ? (
               <motion.button
                 type="button"
                 onClick={() => {

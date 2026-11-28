@@ -41,12 +41,8 @@ export function validateEmail(value) {
 
 export function validatePhone(value) {
   const raw = String(value ?? "").trim();
-  const digits = digitsOnly(raw);
 
   if (!raw) return "Phone number is required";
-  if (/[a-zA-Z]/.test(raw)) return "Phone number can only contain numbers";
-  if (digits.length !== 10) return "Enter a valid 10-digit phone number";
-  if (!/^[6-9]/.test(digits)) return "Enter a valid Indian mobile number";
 
   return "";
 }

@@ -25,6 +25,8 @@ import VendorProfile from "./pages/VendorProfile";
 import VerifyOTP from "./pages/VerifyOTP";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import MyProfile from "./pages/MyProfile";
+import VendorDashboard from "./pages/VendorDashboard";
 
 const eventPageModules = import.meta.glob("./pages/events/*.jsx", {
   eager: true,
@@ -148,6 +150,8 @@ function App() {
             <Route path="/verify-otp" element={<VerifyOTP />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/my-profile" element={<MyProfile />} />
+            <Route path="/vendor-dashboard" element={<VendorDashboard />} />
             <Route
               path="/vendor-login"
               element={<Navigate to="/?form=vendor" replace />}

@@ -67,6 +67,24 @@ function VerifyOTP() {
       return;
     }
 
+    const userData = {
+      isLoggedIn: true,
+      phone,
+      role,
+      fullName: location.state?.fullName || (role === "vendor" ? "Vendor Partner" : "HarEvent User"),
+      email: location.state?.email || "",
+      businessName: location.state?.businessName || "",
+      city: location.state?.city || "",
+      serviceCategory: location.state?.serviceCategory || "",
+      verifiedAt: new Date().toISOString(),
+    };
+    try {
+      localStorage.setItem("harevent_user", JSON.stringify(userData));
+      window.dispatchEvent(new Event("harevent_auth_change"));
+    } catch (e) {
+      console.error(e);
+    }
+
     navigate("/");
   }
 
