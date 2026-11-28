@@ -28,11 +28,9 @@ const eventCategoryAliases = {
   Weddings: "Wedding",
   Birthdays: "Birthday",
   Engagements: "Engagement",
-  "Baby Showers": "Baby Shower",
   Anniversaries: "Anniversary",
   Receptions: "Reception",
   "Pre-Wedding Events": "Wedding",
-  "Naming Ceremonies": "Naming Ceremony",
 };
 
 const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9]/g, "");

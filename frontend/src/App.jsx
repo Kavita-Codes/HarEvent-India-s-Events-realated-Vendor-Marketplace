@@ -32,6 +32,10 @@ const eventPageModules = import.meta.glob("./pages/events/*.jsx", {
   eager: true,
 });
 
+const eventPageRouteAliases = {
+  "ceremony-baby-shower": "naming-ceremony-baby-shower",
+};
+
 function VendorProfileRoute() {
   const { vendorId } = useParams();
 
@@ -109,13 +113,17 @@ function App() {
               const slug = fileName.replace(/\.jsx$/, "");
               const EventPage = pageModule.default;
 
-              return (
+              const routeSlugs = [slug, eventPageRouteAliases[slug]].filter(
+                Boolean,
+              );
+
+              return routeSlugs.map((routeSlug) => (
                 <Route
-                  key={slug}
-                  path={`/event-categories/${slug}`}
+                  key={routeSlug}
+                  path={`/event-categories/${routeSlug}`}
                   element={<EventPage />}
                 />
-              );
+              ));
             })}
             <Route
               path="/vendor-categories"

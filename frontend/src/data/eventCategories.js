@@ -29,8 +29,11 @@ export const eventCategories = [
   { name: "Engagement", image: "/engagement.jpg", icon: Heart },
   { name: "Anniversary", image: "/anniversary.jpg", icon: Gift },
   { name: "Sangeet Ceremony", image: "/sangeet.jpg", icon: Music },
-  { name: "Naming Ceremony", image: "/naming.jpg", icon: Baby },
-  { name: "Baby Shower", image: "/babyshower.jpg", icon: Baby },
+  {
+    name: "Naming Ceremony/Baby Shower",
+    image: "/babyshower.jpg",
+    icon: Baby,
+  },
   { name: "Birthday", image: "/birthday.jpg", icon: Cake },
   {
     name: "Housewarming / Griha Pravesh",
@@ -78,3 +81,12 @@ export const eventCategories = [
 
 export const getEventCategorySlug = (name) =>
   name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+const eventCategorySlugAliases = {
+  "ceremony-baby-shower": "naming-ceremony-baby-shower",
+  "naming-ceremony": "naming-ceremony-baby-shower",
+  "baby-shower": "naming-ceremony-baby-shower",
+};
+
+export const resolveEventCategorySlug = (slug) =>
+  eventCategorySlugAliases[slug] || slug;

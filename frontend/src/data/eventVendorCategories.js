@@ -84,7 +84,7 @@ const anniversaryServices = [
   "Entertainment",
 ];
 
-const namingBabyShowerServices = [
+const namingCeremonyBabyShowerServices = [
   "Venues",
   "Decorators",
   "Caterers",
@@ -170,8 +170,10 @@ export const eventVendorCategories = {
   engagement: engagementServices,
   anniversary: anniversaryServices,
   "sangeet-ceremony": sangeetServices,
-  "naming-ceremony": namingBabyShowerServices,
-  "baby-shower": namingBabyShowerServices,
+  "naming-ceremony-baby-shower": namingCeremonyBabyShowerServices,
+  "ceremony-baby-shower": namingCeremonyBabyShowerServices,
+  "naming-ceremony": namingCeremonyBabyShowerServices,
+  "baby-shower": namingCeremonyBabyShowerServices,
   birthday: birthdayServices,
   "housewarming-griha-pravesh": housewarmingServices,
   "bachelor-party": celebrationServices,

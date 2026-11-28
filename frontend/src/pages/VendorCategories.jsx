@@ -20,7 +20,11 @@ import EventVendorChecklistModal from "../components/EventVendorChecklistModal";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { VendorCard } from "../components/Card";
-import { eventCategories, getEventCategorySlug } from "../data/eventCategories";
+import {
+  eventCategories,
+  getEventCategorySlug,
+  resolveEventCategorySlug,
+} from "../data/eventCategories";
 import {
   buildVendorDirectoryPath,
   getVendorCategoriesForEvent,
@@ -839,17 +843,26 @@ const VendorCategories = ({ onChecklistVisibilityChange }) => {
   const legacySearchParams = new URLSearchParams(search);
   const legacyEventName = legacySearchParams.get("event");
   const legacyCategories = legacySearchParams.get("categories");
+  const resolvedEventSlug = resolveEventCategorySlug(eventSlug);
   const event = eventCategories.find(
-    (category) => getEventCategorySlug(category.name) === eventSlug,
+    (category) => getEventCategorySlug(category.name) === resolvedEventSlug,
   );
   const categoryOptions = event
-    ? getVendorCategoriesForEvent(eventSlug)
+    ? getVendorCategoriesForEvent(resolvedEventSlug)
     : availableCategories;
   const selectedCategories = categorySlug
     ? parseVendorDirectoryCategories(categorySlug, categoryOptions)
     : categoryOptions;
 
   useEffect(() => {
+    if (eventSlug && resolvedEventSlug !== eventSlug) {
+      navigate(
+        `/vendor-categories/${resolvedEventSlug}/${categorySlug || "all"}${search}`,
+        { replace: true },
+      );
+      return;
+    }
+
     if (eventSlug || !legacyEventName) return;
 
     const legacyEvent = eventCategories.find(
@@ -876,12 +889,20 @@ const VendorCategories = ({ onChecklistVisibilityChange }) => {
       ),
       { replace: true },
     );
-  }, [eventSlug, legacyCategories, legacyEventName, navigate]);
+  }, [
+    eventSlug,
+    resolvedEventSlug,
+    categorySlug,
+    search,
+    legacyCategories,
+    legacyEventName,
+    navigate,
+  ]);
 
   return (
     <VendorDirectory
       event={event}
-      eventSlug={eventSlug || "all"}
+      eventSlug={resolvedEventSlug || "all"}
       categoryOptions={categoryOptions}
       selectedCategories={selectedCategories}
       onChecklistVisibilityChange={onChecklistVisibilityChange}

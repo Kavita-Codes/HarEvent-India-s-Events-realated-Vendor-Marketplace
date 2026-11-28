@@ -1,6 +1,6 @@
 const eventSampleServices = {
-  "baby-shower": {
-    name: "Baby Shower",
+  "naming-ceremony-baby-shower": {
+    name: "Naming Ceremony/Baby Shower",
     services: [
       ["Venues", "/baby shower venues.jpg"],
       ["Decorators", "/baby shower decorators.jpg"],

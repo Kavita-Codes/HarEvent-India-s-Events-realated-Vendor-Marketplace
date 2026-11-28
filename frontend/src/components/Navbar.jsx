@@ -94,8 +94,7 @@ const EVENT_MEGA_MENU = {
         {
           title: "Baby Celebrations",
           items: [
-            "Baby Showers",
-            "Naming Ceremonies",
+            "Naming Ceremony/Baby Shower",
             "Gender Reveal",
             "Annaprashan Ceremony",
             "Cradle Ceremonies",
