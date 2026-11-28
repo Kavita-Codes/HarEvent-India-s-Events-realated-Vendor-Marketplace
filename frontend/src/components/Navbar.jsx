@@ -713,7 +713,7 @@ function Navbar({ onLoginClick }) {
                         <Calendar size={18} />
                       </span>
                       <div className="flex-1">
-                        <p className="leading-tight text-[14px]">Vendor Dashboard</p>
+                        <p className="leading-tight text-[14px]">Dashboard</p>
                         <p className="text-[11px] font-normal text-[#8A7882]">Manage services, leads & bookings</p>
                       </div>
                     </Link>
