@@ -1,4 +1,3 @@
-
 import { useRef, useState } from "react";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -85,7 +84,7 @@ function VerifyOTP() {
       console.error(e);
     }
 
-    navigate("/");
+    navigate(role === "vendor" ? "/vendor-dashboard" : "/");
   }
 
   return (
@@ -217,4 +216,4 @@ function VerifyOTP() {
   );
 }
 
-export default VerifyOTP
+export default VerifyOTP;

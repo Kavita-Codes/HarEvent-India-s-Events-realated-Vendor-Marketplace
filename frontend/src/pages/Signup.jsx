@@ -20,13 +20,22 @@ import {
 } from "../utils/validation";
 
 const serviceOptions = [
-  "Photography & Videography",
-  "Wedding & Event Decor",
-  "Venues & Banquets",
-  "Catering Services",
-  "Makeup & Styling",
-  "DJ & Entertainment",
-  "Other",
+  "Venues",
+  "Decorators",
+  "Caterers",
+  "Makeup Artist",
+  "Photographers",
+  "DJ'S",
+  "Mehndi Artist",
+  "Jwellery on Rent",
+  "Invitation Cards/Designers",
+  "Choreographers",
+  "Groom Wear",
+  "Bridal Wear",
+  "Honeymoon",
+  "Gifts",
+  "Entertainment",
+  "Pandits"
 ];
 
 function Signup() {
@@ -426,7 +435,7 @@ function Signup() {
                         <div
                           role="listbox"
                           aria-label="Service Category"
-                          className="absolute left-0 right-0 top-full z-30 mt-1 max-h-44 overflow-y-auto rounded-lg border border-[#F1DDE5] bg-white py-1 shadow-[0_12px_30px_rgba(55,25,40,0.18)]"
+                          className="absolute bottom-full left-0 right-0 z-30 mb-1 max-h-44 overflow-y-auto rounded-lg border border-[#F1DDE5] bg-white py-1 shadow-[0_12px_30px_rgba(55,25,40,0.18)]"
                         >
                           {serviceOptions.map((option) => {
                             const selected = serviceCategory === option;
