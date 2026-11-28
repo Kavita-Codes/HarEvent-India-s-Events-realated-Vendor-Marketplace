@@ -441,6 +441,18 @@ function Navbar({ onLoginClick }) {
     };
   }, []);
 
+  const navigate = useNavigate();
+  const navRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const isVendor = user?.role === "vendor";
+  const accountPath = isVendor ? "/vendor-dashboard" : "/my-profile";
+  const accountLabel = isVendor ? "Dashboard" : "My Profile";
+  const accountDescription = isVendor
+    ? "Manage services, leads & bookings"
+    : "View your profile & saved events";
+
   const handleLogout = () => {
     try {
       localStorage.removeItem("harevent_user");
@@ -453,10 +465,11 @@ function Navbar({ onLoginClick }) {
     navigate("/");
   };
 
-  const navigate = useNavigate();
-  const navRef = useRef(null);
-  const timeoutRef = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
+  const handleAccountNavigate = () => {
+    setUserMenuOpen(false);
+    setOpen(false);
+    navigate(accountPath);
+  };
 
   const links = [
     { name: "Home", to: "/" },
@@ -686,7 +699,7 @@ function Navbar({ onLoginClick }) {
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-[14px] font-bold text-[#30232B]">
-                          {user.fullName || (user.role === "vendor" ? "Vendor Partner" : "HarEvent User")}
+                          {user.fullName || (isVendor ? "Vendor Partner" : "HarEvent User")}
                         </p>
                         <p className="truncate text-[12px] font-medium text-[#7C6973]">
                           {user.phone || user.email || "Member"}
@@ -697,26 +710,26 @@ function Navbar({ onLoginClick }) {
                     <div className="mt-2.5 flex items-center justify-between gap-2 border-t border-[#F2DEE6]/70 pt-2.5">
                       <span className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#D4145A] shadow-sm">
                         <span className="h-1.5 w-1.5 rounded-full bg-[#D4145A]" />
-                        {user.role === "vendor" ? "Vendor" : "Customer"}
+                        {isVendor ? "Vendor" : "Customer"}
                       </span>
                     </div>
                   </div>
 
-                  {/* Menu Items - Only Vendor Dashboard */}
+                  {/* Menu Items */}
                   <div className="p-1.5">
-                    <Link
-                      to="/vendor-dashboard"
-                      onClick={() => setUserMenuOpen(false)}
+                    <button
+                      type="button"
+                      onClick={handleAccountNavigate}
                       className="group flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-[13px] font-semibold text-[#4A3B44] transition hover:bg-[#FFF2F6] hover:text-[#D4145A]"
                     >
-                      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FFF2F6] text-[#D4145A] transition group-hover:bg-gradient-to-tr group-hover:from-[#D4145A] group-hover:to-[#FF7628] group-hover:text-white shadow-sm">
-                        <Calendar size={18} />
+                      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FFF2F6] text-[#D4145A] shadow-sm transition group-hover:bg-gradient-to-tr group-hover:from-[#D4145A] group-hover:to-[#FF7628] group-hover:text-white">
+                        {isVendor ? <Calendar size={18} /> : <User size={18} />}
                       </span>
                       <div className="flex-1">
-                        <p className="leading-tight text-[14px]">Dashboard</p>
-                        <p className="text-[11px] font-normal text-[#8A7882]">Manage services, leads & bookings</p>
+                        <p className="text-[14px] leading-tight">{accountLabel}</p>
+                        <p className="text-[11px] font-normal text-[#8A7882]">{accountDescription}</p>
                       </div>
-                    </Link>
+                    </button>
                   </div>
 
                   {/* Logout Button */}
@@ -1035,7 +1048,7 @@ function Navbar({ onLoginClick }) {
             {user ? (
               <div className="rounded-2xl border border-[#F1DDE5] bg-gradient-to-br from-[#FFF8FA] to-[#FFF1EC] p-3.5 shadow-sm">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 min-w-0">
+                  <div className="flex min-w-0 items-center gap-3">
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-[#D4145A] to-[#FF7628] p-0.5 shadow-sm">
                       <div className="flex h-full w-full items-center justify-center rounded-full bg-white text-[#D4145A]">
                         <UserRound size={20} className="text-[#D4145A]" />
@@ -1043,10 +1056,10 @@ function Navbar({ onLoginClick }) {
                     </div>
                     <div className="min-w-0">
                       <p className="truncate text-sm font-bold text-[#30232B]">
-                        {user.fullName || (user.role === "vendor" ? "Vendor Partner" : "HarEvent User")}
+                        {user.fullName || (isVendor ? "Vendor Partner" : "HarEvent User")}
                       </p>
-                      <span className="text-[11px] font-semibold text-[#D4145A] uppercase tracking-wider">
-                        {user.role === "vendor" ? "Vendor" : "Customer"}
+                      <span className="text-[11px] font-semibold uppercase tracking-wider text-[#D4145A]">
+                        {isVendor ? "Vendor" : "Customer"}
                       </span>
                     </div>
                   </div>
@@ -1065,14 +1078,14 @@ function Navbar({ onLoginClick }) {
                 </div>
 
                 <div className="mt-3 border-t border-[#F0DDE5]/80 pt-2.5">
-                  <Link
-                    to="/vendor-dashboard"
-                    onClick={closeMenu}
+                  <button
+                    type="button"
+                    onClick={handleAccountNavigate}
                     className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-white px-3 py-2.5 text-xs font-bold text-[#D4145A] shadow-sm ring-1 ring-[#F0DDE5]"
                   >
-                    <Calendar size={14} />
-                    Vendor Dashboard
-                  </Link>
+                    {isVendor ? <Calendar size={14} /> : <User size={14} />}
+                    {accountLabel}
+                  </button>
                 </div>
               </div>
             ) : onLoginClick ? (
